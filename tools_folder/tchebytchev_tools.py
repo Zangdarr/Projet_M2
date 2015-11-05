@@ -42,11 +42,9 @@ def getFrontPareto(start_fct, nb_functions, decision_space, objective_space,
     init_decisions = initRandom(decision_space, nb_functions, bitstring_size)
     #get objective space representation of the solution
     objective_space = rf.getObjectiveSpace(start_fct, decision_space)
-    #initialisation of the graphe
-    fig = gph.get2DGraphe("Front pareto Tcheby Evolution")#gph.get2DGraphe(objective_space, "", )
 
     param = [objective_space, decision_space, start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, bitstring_size, nb_flips]
-    result = gph.runAnimatedGraph(fig, runTcheby,"Front pareto Tcheby Evolution","f1 - count 1" ,"f2 - count 0", sleep=sleeptime)
+    result = gph.runAnimatedGraph(runTcheby,"Front pareto Tcheby Evolution","f1 - count 1" ,"f2 - count 0", sleep=sleeptime)
 
     return result
 
