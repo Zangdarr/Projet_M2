@@ -6,7 +6,7 @@ import decomposition_tools as dec
 sys.path.insert(0, "../functions_folder/")
 import bitstring_functions as fct
 import math
-import readfile_tools as rf
+import space_tools as sp
 
 #--------------------------------------------------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ def getFrontPareto(start_fct, nb_functions, decision_space, objective_space,
     #random initialisation
     init_decisions = initRandom(decision_space, nb_functions, bitstring_size)
     #get objective space representation of the solution
-    objective_space = rf.getObjectiveSpace(start_fct, decision_space)
+    objective_space = sp.getObjectiveSpace(start_fct, decision_space)
     #algorithm parameters
     param = [objective_space, decision_space, start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, bitstring_size, nb_flips]
     #launch the graphic view and the algorithm
