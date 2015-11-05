@@ -1,5 +1,24 @@
 import random
 
+########################################################################
+# Bitstrings generation functions
+########################################################################
+
+def genBS(taille):
+    bstr = []
+    for i in range(taille):
+       r = random.SystemRandom().randint(0,1)
+       if(r):
+           bstr.append(1)
+       else:
+           bstr.append(0)
+    return bstr
+
+
+########################################################################
+# Objective functions
+########################################################################
+
 #return number of '1' in a binary string
 def f1(bin_str):
    cpt_1 = 0
@@ -13,15 +32,11 @@ def f2(bin_str):
    return len(bin_str) - f1(bin_str)
 
 
-def genBS(taille):
-    bstr = []
-    for i in range(taille):
-       r = random.SystemRandom().randint(0,1)
-       if(r):
-           bstr.append(1)
-       else:
-           bstr.append(0)
-    return bstr
+
+
+########################################################################
+# Crossovers functions
+########################################################################
 
 def mixOperator(l, k, p):
     r = random.SystemRandom().randint(1,len(l)-1)
@@ -37,7 +52,11 @@ def mixOperator(l, k, p):
     return mix
 
 
-def onebitflip(bitstring, f):
+########################################################################
+# Mutations functions
+########################################################################
+
+def onebitflip(bitstring):
 
     l_bs = bitstring.copy()
     l = len(bitstring)
@@ -47,7 +66,7 @@ def onebitflip(bitstring, f):
 
     return l_bs
 
-def bitflip(bitstring, f, flip=1):
+def bitflip(bitstring, flip=1):
     #TODO passé la longueur en param
     #proba de flip pour 1 bit donne
     bs_len = len(bitstring)
@@ -60,11 +79,3 @@ def bitflip(bitstring, f, flip=1):
             l_bs[i] = 0 if l_bs[i] == 1 else 1
 
     return l_bs
-
-#return false optimals scores that could not be reach by any bitstring of a certain size with the starting function
-def get_Z_optimal(nb_start_fct, bitstring_size):
-    #TODO la position du z optimal dépend des best f1 et f2 actuel
-
-    #this is the score for a string with two time more of caractere with half 0 and 1
-    scores_tab = [bitstring_size for i in range(nb_start_fct)]
-    return scores_tab
