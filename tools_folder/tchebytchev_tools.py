@@ -11,7 +11,7 @@ import readfile_tools as rf
 #--------------------------------------------------------------------------------------------------------------
 
 #Randomly initialise the best solution for each functions generated
-def initRandom(objective_space, decision_space, nb_functions, taille):
+def initRandom(decision_space, nb_functions, taille):
     tab = []
     for i in range(nb_functions):#taille de la pop
         tmp_bs = fct.genBS(taille)
@@ -39,7 +39,7 @@ def getFrontPareto(start_fct, list_aggreg_fct, decision_space, objective_space,
                nb_iterations, neighboring_size, bitstring_size, nb_flips,sleeptime=10):
     global param
     #random initialisation
-    init_decisions = initRandom(objective_space, decision_space, len(list_aggreg_fct), bitstring_size)
+    init_decisions = initRandom(decision_space, len(list_aggreg_fct), bitstring_size)
     #get objective space representation of the solution
     objective_space = rf.getObjectiveSpace(start_fct, decision_space)
     #initialisation of the graphe
