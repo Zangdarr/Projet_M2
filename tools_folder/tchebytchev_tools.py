@@ -19,7 +19,7 @@ def initRandom(decision_space, nb_functions, taille):
         tab.append(tmp_bs)
     return tab
 
-#evaluate the distance of a solution from the best current solution
+#evaluate the distance of a solution from the z-optimal solution
 def g_tcheby(dir, score, opt_scores):
     return max(dir[0]*abs(score[0]-opt_scores[0]),dir[1]*abs(score[1]-opt_scores[1]))
 
