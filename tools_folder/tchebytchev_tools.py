@@ -35,17 +35,17 @@ def eval(start_fct, bitstring):
 
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
 param = None
-def getFrontPareto(start_fct, list_aggreg_fct, decision_space, objective_space,
+def getFrontPareto(start_fct, nb_functions, decision_space, objective_space,
                nb_iterations, neighboring_size, bitstring_size, nb_flips,sleeptime=10):
     global param
     #random initialisation
-    init_decisions = initRandom(decision_space, len(list_aggreg_fct), bitstring_size)
+    init_decisions = initRandom(decision_space, nb_functions, bitstring_size)
     #get objective space representation of the solution
     objective_space = rf.getObjectiveSpace(start_fct, decision_space)
     #initialisation of the graphe
     fig = gph.get2DGraphe(objective_space, "", )
 
-    param = [objective_space, decision_space, start_fct, list_aggreg_fct, nb_iterations, neighboring_size, init_decisions, bitstring_size, nb_flips]
+    param = [objective_space, decision_space, start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, bitstring_size, nb_flips]
     result = gph.runAnimatedGraph(fig, runTcheby,"Front pareto Tcheby Evolution","f1 - count 1" ,"f2 - count 0", sleep=sleeptime)
 
     return result
@@ -54,12 +54,12 @@ def runTcheby():
     global param, nb_evals
 
     objective_space, decision_space          = param[0:2]
-    start_fct, list_aggreg_fct               = param[2:4]
+    start_fct, nb_functions               = param[2:4]
     nb_iterations, neighboring_size          = param[4:6]
     init_decisions, bitstring_size, nb_flips = param[6:]
     best_decisions = init_decisions.copy()
+
     #start_fct + new_fct
-    nb_functions = len(list_aggreg_fct)
     #current optimal scores for both axes
     max_f1 = max(objective_space[0])
     max_f2 = max(objective_space[1])
@@ -67,7 +67,7 @@ def runTcheby():
     #initial best decisions scores
     best_decisions_scores = [eval(start_fct, best_decisions[i]) for i in range(nb_functions)]
 
-    directions = dec.genRatio_fctbase2(len(list_aggreg_fct)-2)
+    directions = dec.genRatio_fctbase2(nb_functions-2)
     #iterations loop
     for itera in range(nb_iterations):
         #functions loop
