@@ -1,5 +1,5 @@
 import random
-
+import numpy as np
 
 #return randomly n indice in range n
 def get_n_indices_of(n, size_l):
@@ -16,13 +16,12 @@ def get_n_indices_of(n, size_l):
 #return randomly n element of the list_l
 def get_n_elements_of(n, list_l):
     indices = get_n_indices_of(n, len(list_l))
-
     elements = get_elements_of(indices, list_l)
 
     return elements
 
 def get_elements_of(indices, list_l):
-    elements = [ list_l[indices[i]] for i in range(len(indices))]
+    elements = (np.array(list_l))[indices]
     return elements
 
 
@@ -56,5 +55,4 @@ def getNeighborsInclusive(pos, neighboring_size, size_l):
         pos_left += size_l - (pos_right)
         pos_right = size_l
 
-    
     return t[pos_left : pos_right]
