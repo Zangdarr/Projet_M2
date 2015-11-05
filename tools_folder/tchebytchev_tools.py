@@ -1,6 +1,6 @@
 import sys
 sys.path.insert(0,"../tools_folder/")
-import graphe_tools as gph
+import animated_graph_tools as gph
 import generics_tools as gt
 import decomposition_tools as dec
 sys.path.insert(0, "../functions_folder/")
@@ -43,7 +43,7 @@ def getFrontPareto(start_fct, nb_functions, decision_space, objective_space,
     #get objective space representation of the solution
     objective_space = rf.getObjectiveSpace(start_fct, decision_space)
     #initialisation of the graphe
-    fig = gph.get2DGraphe(objective_space, "", )
+    fig = gph.get2DGraphe("Front pareto Tcheby Evolution")#gph.get2DGraphe(objective_space, "", )
 
     param = [objective_space, decision_space, start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, bitstring_size, nb_flips]
     result = gph.runAnimatedGraph(fig, runTcheby,"Front pareto Tcheby Evolution","f1 - count 1" ,"f2 - count 0", sleep=sleeptime)
