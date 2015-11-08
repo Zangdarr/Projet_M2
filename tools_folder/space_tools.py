@@ -23,3 +23,14 @@ def getObjectiveSpace(start_fct, decision_space, check=False):
        print("# getObjectiveSpace return list :\n", l)
 
      return l
+
+
+#Retourne l'espace objectif selon les fonctions de base et l'espace de decision/
+def getObjectiveSpace_UF(start_fct, decision_space, vector_size, check=False):
+     l = [[] for i in range(len(start_fct))]
+     for token in decision_space:
+
+        for i in range(len(start_fct)):
+            l[i].append((start_fct[i])(token, vector_size))
+
+     return l
