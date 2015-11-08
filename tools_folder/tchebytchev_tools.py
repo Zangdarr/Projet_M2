@@ -98,7 +98,7 @@ def maintain_population(decision_space, objective_space, pop_size):
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
 param = None
 def getFrontPareto(start_fct, nb_functions, decision_space, objective_space,
-               nb_iterations, neighboring_size, bitstring_size, nb_flips,sleeptime=10):
+               nb_iterations, neighboring_size, bitstring_size, nb_flips, max_decisions_maj, sleeptime=10):
     global param
     #random initialisation
     init_decisions = initRandom(decision_space, nb_functions, bitstring_size)
