@@ -1,0 +1,51 @@
+Tchebytchev :
+step 1 :
+- on a 2 fonctions objectif de base
+- on va générer param_N nouvelles fonctions objectif à partir des fonctions de base
+- on a donc N = 2 + param_N fonctions objectif
+
+step 2 :
+- on va générer N solutions dans l'espace de décision aléatoirement
+- on calcul leur représentation dans l'espace objectif
+- on attribut les réparties parmis les N fonctions objectifs en tant que meilleur solution au temps 0
+- on conserve les valeurs maximales des fonctions de base
+
+step 3 :
+- lancement de l'affichage graphique de l'évolution de la population de point
+- points rouges : représentation des max de chacune des N fonctions
+
+step 4 :
+- lancement de l'algorithme d'évolution de la population
+- critère d'arrêt : nombre d'iteration paramétrable
+- critère d'arrêt : nombre d'évaluation paramétable (PAS ENCORE)
+- taille du voisinnage paramétrable
+- nombre de mutation paramétrable
+
+
+Instructions d'une iteration de l'algorithme :
+- pour chacune des N fonctions
+- prend les size_v voisins les plus proches de la fonction courante
+- en conserver deux
+- appliquer l'opérateur de croisement 1 point
+- appliquer l'opérateur de mutation
+- évaluation des scores de l'offspring pour les fonctions de bases
+- mise à jour des valeurs maximales des fonctions de base si besoin
+- pour chacune des fonctions voisinnes (fonctions courante incluse) :
+- multiplication par les ratios de la fonctions de chacun des scores de l'offspring
+- calcul du score du point z-optimal pour la fonction
+- somme des valeurs absolues des différences entre les chacuns des scores de l'offspring et des scores du z-optimal
+- somme des valeurs absolues des différences entre les chacuns des scores de la meilleur solution courante de la fonction et des scores du z-optimal
+- MAJ de la meilleur solution de la fonction courante SI la somme de l'offspring est inférieur à celle de la meilleur solution courante de la fonction
+- fin d'iteration sur les fonctions voisinnes
+- fin d'iteration sur les N fonctions objectif
+- MAJ de l'affichage graphique
+
+
+
+À faire :
+- ajout d'un parametre nom?  :  nouveau critère d'arrêt, nombre d'évaluation paramétable (PAS ENCORE)
+- ajout d'un parametre nr    :  MAJ d'un nombre max  de fonction pour chaque offspring créer
+- ajout d'un parametre delta :  selection des voisins parmis toutes les fonctions proba delta, 1 - delta = proba de prendre le voisinnage de la taille paramétrée
+- retrait du stockage de l'ensemble des points généré
+- création de la fonction "archive" pour stocker l'ensemble des points (ne pas implémenter le code)
+- mise à jour de la population dans l'ED et l'EO pour ne conserver que les points non dominés 

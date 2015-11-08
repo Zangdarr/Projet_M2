@@ -9,7 +9,16 @@ import math
 import space_tools as sp
 
 #--------------------------------------------------------------------------------------------------------------
-
+archive = []
+def archivePut(solution, score):
+    return "not yet"
+    """
+    global archive
+    archive.append((solution, score))
+    """
+def archiveGet():
+    global archive
+    return archive
 #Randomly initialise the best solution for each functions generated
 def initRandom(decision_space, nb_functions, taille):
     tab = []
@@ -90,6 +99,8 @@ def runTcheby():
                 max_f2 = mix_scores[1]
                 z_opt_scores[1] = max_f2
             #loop on all the neighbors + f
+            #archive not yet
+            archivePut(mix_bis, mix_scores)
             for j in f_neighbors:
                 #if the g_tcheby of the new solution is less distant from the z_optimal solution than the current best solution of the function j
                 objective_space[0].append(mix_scores[0])

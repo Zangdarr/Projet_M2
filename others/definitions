@@ -1,0 +1,29 @@
+Espace de décision :
+- représente l'ensemble des solutions générés pour un problèmes données.
+
+Fonction objectif :
+- retourne une évaluation d'une solution donnée selon certains critère.
+
+Optimisation mono-objectif :
+- selectionne la solution maximisant (ou minimisant) une fonction objectif.
+
+Optimisation multi-objectif :
+- possède plusieurs fonctions objectif à maximiser (ou minimiser).
+- chaque fonctions objectif possèdent une solution la maximisant (ou minimisant)
+  à un instant donné.
+- cette solution varie au cours du temps suivant les scores des nouvelles
+  solutions générées à partir des précédentes.
+
+
+Espace objectif    :
+ - représentation des solutions dans un espace multi-dimensionnel avec pour
+   axes les différentes fonctions objectifs et pour représentation les scores
+   des solutions aux fonctions.
+
+Front pareto :
+- ensemble des solutions dans l'espace objectif qui sont non dominées entre
+  elles.
+
+Ensemble pareto :
+- ensemble des solutions de l'espace de décision qui ont leur représentation
+  dans l'espace objectif présente au sein du front pareto
