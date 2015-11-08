@@ -12,10 +12,10 @@ def update(data):
     plt.title(title)
     plt.xlabel(axe_x_name)
     plt.ylabel(axe_y_name)
-    datax1y1, datax2y2, tic, evals, max_f1, max_f2 = data
+    datax1y1, datax2y2, tic, evals, max_f1, max_f2, pop_size = data
 
     x,y = datax1y1
-    #plt.scatter(x, y,  color='blue', label="Objective space")
+    plt.scatter(x, y,  color='blue', label="Objective space")
     x1,y1 = np.transpose(datax2y2)
     plt.scatter(x1, y1, color='red', label="functions's best solutions" )
     nb_functions = len(datax2y2)
@@ -41,12 +41,14 @@ def update(data):
     """
     plt.legend()
     txt = []
-    txt.append("iter ")
+    txt.append("population size ")
+    txt.append(str(pop_size))
+    txt.append("\niter ")
     txt.append(str(tic))
     txt.append("\n")
     txt.append(str(nb_functions))
     txt.append(" functions\n")
-    txt.append("Nb Evaluations : ")
+    txt.append("nb evaluations : ")
     txt.append(str(evals))
     plt.text(5, 5, ''.join(txt))
     plt.scatter(max_f1, max_f2, color="yellow")

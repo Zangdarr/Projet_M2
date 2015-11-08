@@ -174,6 +174,6 @@ def runTcheby():
         decision_space, objective_space, pop_size = maintain_population(decision_space, objective_space, pop_size)
         print("Update", itera, "done.")
         #graphic update
-        yield objective_space, best_decisions_scores, itera, nb_evals, max_f1, max_f2
+        yield objective_space, best_decisions_scores, itera, nb_evals, max_f1, max_f2, pop_size
 
-    return objective_space, best_decisions_scores, itera, nb_evals,  max_f1, max_f2
+    return objective_space, best_decisions_scores, itera, nb_evals,  max_f1, max_f2, pop_size
