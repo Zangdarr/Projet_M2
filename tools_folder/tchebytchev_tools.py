@@ -114,7 +114,7 @@ def getFrontPareto(start_fct, nb_functions, decision_space, objective_space,
 
 def runTcheby():
     global param, nb_evals
-
+    isReals = False
     objective_space, decision_space = param[0:2]
     start_fct, nb_functions         = param[2:4]
     nb_iterations, neighboring_size = param[4:6]
@@ -181,6 +181,6 @@ def runTcheby():
         decision_space, objective_space, pop_size = maintain_population(decision_space, objective_space, pop_size)
         print("Update", itera, "done.")
         #graphic update
-        yield objective_space, best_decisions_scores, itera, nb_evals, max_f1, max_f2, pop_size
+        yield objective_space, best_decisions_scores, itera, nb_evals, max_f1, max_f2, pop_size, isReals
 
-    return objective_space, best_decisions_scores, itera, nb_evals,  max_f1, max_f2, pop_size
+    return objective_space, best_decisions_scores, itera, nb_evals,  max_f1, max_f2, pop_size, isReals
