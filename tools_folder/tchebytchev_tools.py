@@ -105,7 +105,7 @@ def getFrontPareto(start_fct, nb_functions, decision_space, objective_space,
     #get objective space representation of the solution
     objective_space = sp.getObjectiveSpace(start_fct, decision_space)
     #algorithm parameters
-    param = [objective_space, decision_space, start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, bitstring_size, nb_flips, max_decisions_maj]
+    param = [objective_space, decision_space, start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, bitstring_size, nb_flips, max_decisions_maj, delta_neighbourhood]
     #launch the graphic view and the algorithm
     result = gph.runAnimatedGraph(runTcheby,"Front pareto Tcheby Evolution","f1 - count 1" ,"f2 - count 0", sleep=sleeptime)
 
@@ -119,7 +119,7 @@ def runTcheby():
     start_fct, nb_functions         = param[2:4]
     nb_iterations, neighboring_size = param[4:6]
     init_decisions, bitstring_size  = param[6:8]
-    nb_flips, max_decisions_maj     = param[8:]
+    nb_flips, max_decisions_maj, delta_neighbourhood = param[8:]
     best_decisions = init_decisions.copy()
 
     pop_size = len(decision_space)
