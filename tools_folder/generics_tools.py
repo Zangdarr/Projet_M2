@@ -29,6 +29,11 @@ def get_elements_of(indices, list_l):
 def getNeighborsInclusive(pos, neighboring_size, size_l, delta=0):
     t = [i for i in range(size_l)]
 
+    #proba to give all functions as neighbourhood
+    rnd = random.SystemRandom().random()
+    if( rnd < delta):
+       return t
+
     #[2,3,4,5,6]
     if(neighboring_size > size_l):
         print("ERROR - neighboring_size too long :", neighboring_size)
