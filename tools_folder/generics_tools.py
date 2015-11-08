@@ -26,7 +26,7 @@ def get_elements_of(indices, list_l):
 
 
 #return the neighboring_size indice of elements that are the nearest from pos in a list of size size_l
-def getNeighborsInclusive(pos, neighboring_size, size_l):
+def getNeighborsInclusive(pos, neighboring_size, size_l, delta=0):
     t = [i for i in range(size_l)]
 
     #[2,3,4,5,6]

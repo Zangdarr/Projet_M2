@@ -137,7 +137,7 @@ def runTcheby():
         #functions loop
         for f in range(nb_functions):
             #get all the indice of neighbors of a function in a certain distance of f and include f in
-            f_neighbors = gt.getNeighborsInclusive(f, neighboring_size, nb_functions)
+            f_neighbors = gt.getNeighborsInclusive(f, neighboring_size, nb_functions, delta_neighbourhood)
             #select two indice of function in the neighbors + f
             l, k = gt.get_n_elements_of(2, f_neighbors)
             #application of a crossing operator between the current best solution of l and k
