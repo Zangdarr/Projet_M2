@@ -161,6 +161,9 @@ def runTcheby():
             #archive not yet
             archivePut(mix_bis, mix_scores)
             for j in f_neighbors:
+                #stop maj best if maj limit reach
+                if(cmpt_best_maj >= max_decisions_maj):
+                    break
                 #if the g_tcheby of the new solution is less distant from the z_optimal solution than the current best solution of the function j
                 wj = (directions[0][j]/directions[2][j],directions[1][j]/directions[2][j])
                 if(g_tcheby(wj, mix_scores, z_opt_scores) < g_tcheby(wj, best_decisions_scores[j], z_opt_scores)):
