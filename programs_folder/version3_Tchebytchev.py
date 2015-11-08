@@ -28,6 +28,6 @@ objective_space = []
 #number of functions that will be used for the algorithm
 nb_functions = start_fct_len + N_new_fct
 
-result = tcheby.getFrontPareto(start_fct, nb_functions, decision_space, objective_space, nb_iterations, neighboring_size, bitstring_size, nb_flips, max_decisions_maj, sleeptime)
+result = tcheby.getFrontPareto(start_fct, nb_functions, decision_space, objective_space, nb_iterations, neighboring_size, bitstring_size, nb_flips, max_decisions_maj, delta_neighbourhood, sleeptime)
 
 #---------------------------------------------------------------------------------------------------------------------
