@@ -89,7 +89,6 @@ def maintain_population(decision_space, objective_space, pop_size):
             defenders_OS_0.append(OS_0[challenger])
             defenders_OS_1.append(OS_1[challenger])
 
-    print("nb_defenders", nb_defenders)
     return defenders_DS, [defenders_OS_0, defenders_OS_1], nb_defenders
 
 
