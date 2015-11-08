@@ -17,7 +17,7 @@ nb_flips = 1
 N_new_fct = 20
 sleeptime = 0
 max_decisions_maj = 3
-delta_neighbourhood = 0.1
+delta_neighbourhood = 0.9
 CR = 0.9
 
 #####################################################################################################################
