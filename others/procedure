@@ -1,3 +1,5 @@
+PAS A JOURS
+
 Tchebytchev :
 step 1 :
 - on a 2 fonctions objectif de base
@@ -48,4 +50,4 @@ Instructions d'une iteration de l'algorithme :
 - ajout d'un parametre delta :  selection des voisins parmis toutes les fonctions proba delta, 1 - delta = proba de prendre le voisinnage de la taille paramétrée
 - retrait du stockage de l'ensemble des points généré
 - création de la fonction "archive" pour stocker l'ensemble des points (ne pas implémenter le code)
-- mise à jour de la population dans l'ED et l'EO pour ne conserver que les points non dominés 
+- mise à jour de la population dans l'ED et l'EO pour ne conserver que les points non dominés
