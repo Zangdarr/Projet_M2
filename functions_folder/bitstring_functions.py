@@ -38,9 +38,9 @@ def f2(bin_str):
 # Crossovers functions
 ########################################################################
 
-def mixOperator(l, k, p):
+def mixOperator(l, k, CR):
     r = random.SystemRandom().randint(1,len(l)-1)
-    if(r>p):
+    if(r< 1-p):
         return l
     r = random.SystemRandom().randint(1,len(l)-1)
     o = random.SystemRandom().randint(0,1)

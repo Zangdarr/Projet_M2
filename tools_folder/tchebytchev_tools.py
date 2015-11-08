@@ -142,7 +142,7 @@ def runTcheby():
             #select two indice of function in the neighbors + f
             l, k = gt.get_n_elements_of(2, f_neighbors)
             #application of a crossing operator between the current best solution of l and k
-            mix = fct.mixOperator(best_decisions[l],best_decisions[k], p=0.1)
+            mix = fct.mixOperator(best_decisions[l],best_decisions[k], CR)
             #application a a bit flip on the newly made solution
             mix_bis = fct.bitflip(mix, flip=nb_flips)
             #evaluation of the newly made solution
