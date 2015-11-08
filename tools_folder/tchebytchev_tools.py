@@ -48,6 +48,7 @@ def eval(start_fct, bitstring):
     bs_scores = [start_fct[f](bitstring) for f in range(len(start_fct))]
     return bs_scores
 
+
 #--------------------------------------------------------------------------------------------------------------
 #MAIN ALGORITHMS
 
@@ -124,7 +125,7 @@ def runTcheby():
                        objective_space[1].append(mix_scores[1])
                        decision_space.append(mix_bis)
                        pop_size += 1
-                       added_to_OS = True
+                       added_to_S = True
 
         print("Update", itera, "done.")
         #graphic update
