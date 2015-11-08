@@ -58,6 +58,7 @@ def getFrontPareto(start_fct, nb_functions, decision_space, objective_space,
 
     return result
 
+
 def runTcheby():
     global param, nb_evals
 
@@ -99,16 +100,19 @@ def runTcheby():
                 max_f2 = mix_scores[1]
                 z_opt_scores[1] = max_f2
             #loop on all the neighbors + f
+            added_to_OS = False
             #archive not yet
             archivePut(mix_bis, mix_scores)
             for j in f_neighbors:
                 #if the g_tcheby of the new solution is less distant from the z_optimal solution than the current best solution of the function j
-                objective_space[0].append(mix_scores[0])
-                objective_space[1].append(mix_scores[1])
                 wj = (directions[0][j]/directions[2][j],directions[1][j]/directions[2][j])
                 if(g_tcheby(wj, mix_scores, z_opt_scores) < g_tcheby(wj, best_decisions_scores[j], z_opt_scores)):
                     best_decisions[j] = mix_bis
                     best_decisions_scores[j] = mix_scores
+                    if(not(added_to_OS)):
+                       objective_space[0].append(mix_scores[0])
+                       objective_space[1].append(mix_scores[1])
+                       added_to_OS = True
 
 
         print("Update", itera, "done.")
