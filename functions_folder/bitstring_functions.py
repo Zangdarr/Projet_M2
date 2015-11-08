@@ -40,7 +40,7 @@ def f2(bin_str):
 
 def mixOperator(l, k, CR):
     r = random.SystemRandom().randint(1,len(l)-1)
-    if(r< 1-p):
+    if(r< 1-CR):
         return l
     r = random.SystemRandom().randint(1,len(l)-1)
     o = random.SystemRandom().randint(0,1)
