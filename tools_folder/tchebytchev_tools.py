@@ -77,6 +77,7 @@ def runTcheby():
     init_decisions, bitstring_size, nb_flips = param[6:]
     best_decisions = init_decisions.copy()
 
+    pop_size = len(decision_space)
     #start_fct + new_fct
     #current optimal scores for both axes
     max_f1 = max(objective_space[0])
@@ -122,6 +123,7 @@ def runTcheby():
                        objective_space[0].append(mix_scores[0])
                        objective_space[1].append(mix_scores[1])
                        decision_space.append(mix_bis)
+                       pop_size += 1
                        added_to_OS = True
 
         print("Update", itera, "done.")
