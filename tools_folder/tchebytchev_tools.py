@@ -155,12 +155,15 @@ def runTcheby():
                 z_opt_scores[1] = max_f2
             #loop on all the neighbors + f
             added_to_S = False
+            #count how many best decisions has been changed
+            cmpt_best_maj = 0
             #archive not yet
             archivePut(mix_bis, mix_scores)
             for j in f_neighbors:
                 #if the g_tcheby of the new solution is less distant from the z_optimal solution than the current best solution of the function j
                 wj = (directions[0][j]/directions[2][j],directions[1][j]/directions[2][j])
                 if(g_tcheby(wj, mix_scores, z_opt_scores) < g_tcheby(wj, best_decisions_scores[j], z_opt_scores)):
+                    cmpt_best_maj += 1
                     best_decisions[j] = mix_bis
                     best_decisions_scores[j] = mix_scores
                     if(not(added_to_S)):
