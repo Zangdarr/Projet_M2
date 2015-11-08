@@ -19,7 +19,7 @@ def update(data):
 
     #front pareto position in objective space
     x,y = datax1y1
-    plt.scatter(x, y,  color='blue', label="Front pareto")
+    plt.scatter(x, y,  color='blue', label="front pareto")
     #best decision representation in objective space of the n functions
     x1,y1 = np.transpose(datax2y2)
     plt.scatter(x1, y1, color='red', label="functions's best solutions" )
