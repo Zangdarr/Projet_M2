@@ -36,7 +36,7 @@ def update(data):
        max_f1 = int(max_f1)+1
        max_f2 = int(max_f2)+1
        mm = max(max_f1, max_f2)+ 1
-       plt.plot(tf1, tf2, color="purple", alpha=0.3)
+       plt.plot(tf1, tf2, color="purple", alpha=0.5, label="UF1 front pareto")
        text_pos_x = 1
        text_pos_y = 1
     else:
