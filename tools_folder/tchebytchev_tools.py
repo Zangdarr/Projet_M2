@@ -9,6 +9,7 @@ import math
 import space_tools as sp
 
 #--------------------------------------------------------------------------------------------------------------
+#ARCHIVE
 archive = []
 def archivePut(solution, score):
     return "not yet"
@@ -19,6 +20,10 @@ def archivePut(solution, score):
 def archiveGet():
     global archive
     return archive
+
+#--------------------------------------------------------------------------------------------------------------
+#INITIALISATION
+
 #Randomly initialise the best solution for each functions generated
 def initRandom(decision_space, nb_functions, taille):
     tab = []
@@ -27,6 +32,9 @@ def initRandom(decision_space, nb_functions, taille):
         decision_space.append(tmp_bs)
         tab.append(tmp_bs)
     return tab
+
+#--------------------------------------------------------------------------------------------------------------
+#EVALUATION
 
 #evaluate the distance of a solution from the z-optimal solution
 def g_tcheby(dir, score, opt_scores):
@@ -41,6 +49,7 @@ def eval(start_fct, bitstring):
     return bs_scores
 
 #--------------------------------------------------------------------------------------------------------------
+#MAIN ALGORITHMS
 
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
 param = None
@@ -114,7 +123,6 @@ def runTcheby():
                        objective_space[1].append(mix_scores[1])
                        decision_space.append(mix_bis)
                        added_to_OS = True
-
 
         print("Update", itera, "done.")
         #graphic update
