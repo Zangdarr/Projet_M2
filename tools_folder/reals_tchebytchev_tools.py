@@ -4,7 +4,6 @@ import animated_graph_tools as gph
 import generics_tools as gt
 import decomposition_tools as dec
 sys.path.insert(0, "../functions_folder/")
-import UF_functions as fct
 import math
 import space_tools as sp
 import numpy as np
@@ -26,10 +25,10 @@ def archiveGet():
 #INITIALISATION
 
 #Randomly initialise the best solution for each functions generated
-def initRandom(decision_space, nb_functions, vector_size, search_space):
+def initRandom(decision_space, generation_fct, nb_functions, vector_size, search_space):
     tab = []
     for i in range(nb_functions):
-        tmp = fct.genVector(vector_size, search_space)
+        tmp = generation_fct(vector_size, search_space)
         decision_space.append(tmp)
         tab.append(tmp)
     return tab
@@ -97,15 +96,15 @@ def maintain_population(decision_space, objective_space, pop_size):
 
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
 param = None
-def getFrontPareto(start_fct, nb_functions, decision_space, objective_space,
+def getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions, decision_space, objective_space,
                nb_iterations, neighboring_size, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, sleeptime=10):
     global param
     #random initialisation
-    init_decisions = initRandom(decision_space, nb_functions, vector_size, search_space)
+    init_decisions = initRandom(decision_space, generation_fct, nb_functions, vector_size, search_space)
     #get objective space representation of the solution
     objective_space = sp.getObjectiveSpace_UF(start_fct, decision_space, vector_size)
     #algorithm parameters
-    param = [objective_space, decision_space, start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm]
+    param = [objective_space, decision_space, start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct]
     #launch the graphic view and the algorithm
     result = gph.runAnimatedGraph(runTcheby,"Front pareto Tcheby Evolution","f1 - count 1" ,"f2 - count 0", sleep=sleeptime)
 
@@ -122,7 +121,8 @@ def runTcheby():
     nb_flips, max_decisions_maj     = param[8:10]
     delta_neighbourhood, CR         = param[10:12]
     search_space, F                 = param[12:14]
-    distrib_index_n, pm             = param[14:]
+    distrib_index_n, pm             = param[14:16]
+    operator_fct                    = param[16]
 
     best_decisions = init_decisions.copy()
 
@@ -136,6 +136,7 @@ def runTcheby():
     best_decisions_scores = [eval(start_fct, best_decisions[i], vector_size) for i in range(nb_functions)]
 
     directions = dec.genRatio_fctbase2(nb_functions)
+    crossover_fct, mutation_fct, repair_fct = operator_fct
     #iterations loop
     for itera in range(nb_iterations):
         #functions loop
@@ -146,11 +147,11 @@ def runTcheby():
             l, k = gt.get_n_elements_of(2, f_neighbors)
             #application of a crossing operator between the current best solution of l and k
             r1, r2, r3 = f, l, k
-            mix = fct.DE_Operator(best_decisions[r1],best_decisions[r2],best_decisions[r3], F, vector_size, CR)
+            mix = crossover_fct(best_decisions[r1],best_decisions[r2],best_decisions[r3], F, vector_size, CR)
             #application of a a bit flip on the newly made solution
-            mix_bis = fct.polynomial_mutation(mix, vector_size, search_space, distrib_index_n, pm)
+            mix_bis = mutation_fct(mix, vector_size, search_space, distrib_index_n, pm)
             #repair step : search space
-            mix_ter = fct.repair_offspring(mix_bis, search_space)
+            mix_ter = repair_fct(mix_bis, search_space)
             #evaluation of the newly made solution
             mix_scores = eval(start_fct, mix_ter, vector_size)
             #MAJ max of f1

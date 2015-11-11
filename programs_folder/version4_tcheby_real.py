@@ -2,22 +2,33 @@
 
 import sys
 sys.path.insert(0, "../functions_folder/")
-import UF_functions as fct
+import UF1_functions as fct
+import operators_functions as op
 sys.path.insert(0,"../tools_folder/")
 import reals_tchebytchev_tools as tcheby
 
 #-----PARAM-----------------
-start_fct = [fct.uf1_f1, fct.uf1_f2]
+start_fct    = [fct.uf1_f1, fct.uf1_f2]
+operator_fct = [op.DE_Operator, op.polynomial_mutation, op.repair_offspring]
+generation_fct = op.genVector
 start_fct_len = len(start_fct)
 
+#stop critera : number of iterations
 nb_iterations = 1000
+#data parameter : size of the input
 vector_size = 30
+#size of the neighbourhood, include the current pos
 neighboring_size = 21
+#no need
 nb_flips = 1
+#number of new funtions to be generated
 N_new_fct = 98 #population size -2
+#slow down process parameter
 sleeptime = 0
+#number max of replacement for each offspring
 max_decisions_maj = 2 #nr
-delta_neighbourhood = 0.1
+#proba to give the neighboring_size. ex : 0 = return always all, 1 = return always neighboring_size
+delta_neighbourhood = 0.9
 CR = 1.0
 F = 0.5
 pm = 1 / vector_size
@@ -35,6 +46,6 @@ objective_space = []
 #number of functions that will be used for the algorithm
 nb_functions = start_fct_len + N_new_fct
 
-result = tcheby.getFrontPareto(start_fct, nb_functions, decision_space, objective_space, nb_iterations, neighboring_size, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, sleeptime)
+result = tcheby.getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions, decision_space, objective_space, nb_iterations, neighboring_size, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, sleeptime)
 
 #---------------------------------------------------------------------------------------------------------------------
