@@ -31,7 +31,7 @@ approx_pareto_front = None
 def getResult():
     global archive_sol, approx_pareto_front, archiveOK
     if(archiveOK):
-        tmp = approx_pareto_front, archive_sol 
+        tmp = approx_pareto_front, archive_sol
     else:
         tmp = approx_pareto_front
     return tmp
@@ -110,17 +110,17 @@ def maintain_population(decision_space, objective_space, pop_size):
 
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
 param = None
-def getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions, decision_space, objective_space,
+def getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions,
                nb_iterations, neighboring_size, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive,sleeptime=10):
     global param, archiveOK
     if(manage_archive):
         archiveOK = True
     #random initialisation
-    init_decisions = initRandom(decision_space, generation_fct, nb_functions, vector_size, search_space)
+    init_decisions = initRandom([], generation_fct, nb_functions, vector_size, search_space)
     #get objective space representation of the solution
     #objective_space = sp.getObjectiveSpace_UF(start_fct, decision_space, vector_size)
     #algorithm parameters
-    param = [objective_space, decision_space, start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct]
+    param = [[], [], start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct]
     #function that will be called by runAnimatedGraph before it's end
     end_function = getResult
     #launch the graphic view and the algorithm

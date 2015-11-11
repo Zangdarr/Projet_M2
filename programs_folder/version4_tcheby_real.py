@@ -43,13 +43,9 @@ search_space = [[1,(0,1)], [vector_size-1, (-1,1)]]
 
 #####################################################################################################################
 
-decision_space = []
-
-objective_space = []
-
 #number of functions that will be used for the algorithm
 nb_functions = start_fct_len + N_new_fct
 
-result = tcheby.getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions, decision_space, objective_space, nb_iterations, neighboring_size, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, sleeptime)
+result = tcheby.getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions, nb_iterations, neighboring_size, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, sleeptime)
 
 #---------------------------------------------------------------------------------------------------------------------
