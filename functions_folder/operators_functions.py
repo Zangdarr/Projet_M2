@@ -41,21 +41,16 @@ def repair_offspring(offspring, search_space):
 ########################################################################
 
 def DE_Operator(x_r1, x_r2, x_r3, F, vector_size, CR):
-    r = random.SystemRandom().random()
-    if(r < 1 - CR):
-        return x_r1
     mix = []
-    if(vector_size < 500):
-        for i in range(vector_size):
+    for i in range(vector_size):
+
+        r = random.SystemRandom().random()
+        if(r < 1 - CR):
+            mix.append(x_r1)
+        else:
             tmp = x_r1[i] + F * (x_r2[i] - x_r3[i])
             mix.append(tmp)
-    else:
-       array_1 = np.array(x_r1)
-       array_2 = np.array(x_r2)
-       array_3 = np.array(x_r3)
 
-       tmp = array_1 + F * (array_2 - array_3)
-       mix = list(tmp)
     return mix
 
 
@@ -72,38 +67,27 @@ def bk_ak(search_space):
             tmp.append(lim_h - lim_b)
     return tmp
 
-def sigmak(vector_size, distrib_index_n):
+def sigmak(distrib_index_n):
     rand = random.SystemRandom().random()
-    tab = []
+
     if(rand < 0.5):
-       for i in range(vector_size):
-           tmp = (2*rand)**(1/(distrib_index_n+1)) -1
-           tab.append(tmp)
+       tmp = (2*rand)**(1/(distrib_index_n+1)) -1
     else:
-       for i in range(vector_size):
-           tmp = 1 - (2-2*rand)**(1/(distrib_index_n+1))
-           tab.append(tmp)
-    return tab
+       tmp = 1 - (2-2*rand)**(1/(distrib_index_n+1))
+
+    return tmp
 
 def polynomial_mutation(mix, vector_size, search_space, distrib_index_n, pm):
-    r = random.SystemRandom().random()
-    if(r < 1 - pm):
-        return mix
-
+    mix_bis = []
     bk_ak_tab = bk_ak(search_space)
 
-    sigmak_tab = sigmak(vector_size, distrib_index_n)
-
-    mix_bis = []
-    if(vector_size < 500):
-        for i in range(vector_size):
-            tmp = mix[i] + sigmak_tab[i] * bk_ak_tab[i]
+    for i in range(vector_size):
+        r = random.SystemRandom().random()
+        if(r < 1 - pm):
+            mix_bis.append(mix[i])
+        else:
+            sigma = sigmak(distrib_index_n)
+            tmp = mix[i] + sigma * bk_ak_tab[i]
             mix_bis.append(tmp)
-    else:
-         array_1 = np.array(mix)
-         array_2 = np.array(sigmak_tab)
-         array_3 = np.array(bk_ak_tab)
 
-         tmp = array_1 + array_2 * array_3
-         mix_bis = list(tmp)
     return mix_bis
