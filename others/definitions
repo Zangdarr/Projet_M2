@@ -21,8 +21,13 @@ Espace objectif    :
    des solutions aux fonctions.
 
 Front pareto :
-- ensemble des solutions dans l'espace objectif qui sont non dominées entre
+- ensemble optimal des solutions dans l'espace objectif qui sont non dominées entre
   elles.
+
+Approximation du front pareto :
+- ensemble des solutions dans l'espace objectif courant qui sont non dominées entre
+  elles
+- la taille de la population dépend du nombre de directions que l'on utilise pour effectuer l'approximation.
 
 Ensemble pareto :
 - ensemble des solutions de l'espace de décision qui ont leur représentations
