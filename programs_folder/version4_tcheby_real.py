@@ -11,17 +11,17 @@ start_fct = [fct.uf1_f1, fct.uf1_f2]
 start_fct_len = len(start_fct)
 
 nb_iterations = 1000
-vector_size = 4
-neighboring_size = 3
+vector_size = 30
+neighboring_size = 21
 nb_flips = 1
-N_new_fct = 20
+N_new_fct = 98 #population size -2
 sleeptime = 0
-max_decisions_maj = 3
-delta_neighbourhood = 0.5
-CR = 0.9
-F = 1
-pm = 0.9
-distrib_index_n = 10
+max_decisions_maj = 2 #nr
+delta_neighbourhood = 0.1
+CR = 1.0
+F = 0.5
+pm = 1 / vector_size
+distrib_index_n = 20
 
 
 search_space = [[1,(0,1)], [vector_size-1, (-1,1)]]
