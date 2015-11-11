@@ -29,8 +29,10 @@ sleeptime = 0
 max_decisions_maj = 2 #nr
 #proba to give the neighboring_size. ex : 0 = return always all, 1 = return always neighboring_size
 delta_neighbourhood = 0.9
+#proba to do the crossover, evaluate for each item in a single vector
 CR = 1.0
 F = 0.5
+#proba to do the mutation, evaluate for each item in a single vector
 pm = 1 / vector_size
 distrib_index_n = 20
 
