@@ -119,7 +119,7 @@ def getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions,
     #get objective space representation of the solution
     #objective_space = sp.getObjectiveSpace_UF(start_fct, decision_space, vector_size)
     #algorithm parameters
-    param = [[], [], start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct]
+    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct]
     #function that will be called by runAnimatedGraph before it's end
     end_function = getResult
     #launch the graphic view and the algorithm
@@ -131,15 +131,14 @@ def getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions,
 def runTcheby():
     global param, nb_evals, archive_score, approx_pareto_front, archiveOK
     isReals = True
-    objective_space, decision_space = param[0:2]
-    start_fct, nb_functions         = param[2:4]
-    nb_iterations, neighboring_size = param[4:6]
-    init_decisions, vector_size     = param[6:8]
-    nb_flips, max_decisions_maj     = param[8:10]
-    delta_neighbourhood, CR         = param[10:12]
-    search_space, F                 = param[12:14]
-    distrib_index_n, pm             = param[14:16]
-    operator_fct                    = param[16]
+    start_fct, nb_functions         = param[0:2]
+    nb_iterations, neighboring_size = param[2:4]
+    init_decisions, vector_size     = param[4:6]
+    nb_flips, max_decisions_maj     = param[6:8]
+    delta_neighbourhood, CR         = param[8:10]
+    search_space, F                 = param[10:12]
+    distrib_index_n, pm             = param[12:14]
+    operator_fct                    = param[14]
 
     best_decisions = init_decisions.copy()
     approx_pareto_front = best_decisions
