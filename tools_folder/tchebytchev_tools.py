@@ -132,7 +132,7 @@ def runTcheby():
     #initial best decisions scores
     best_decisions_scores = [eval(start_fct, best_decisions[i]) for i in range(nb_functions)]
 
-    directions = dec.genRatio_fctbase2(nb_functions-2)
+    directions = dec.genRatio_fctbase2(nb_functions)
     #iterations loop
     for itera in range(nb_iterations):
         #functions loop
@@ -166,7 +166,7 @@ def runTcheby():
                 if(cmpt_best_maj >= max_decisions_maj):
                     break
                 #if the g_tcheby of the new solution is less distant from the z_optimal solution than the current best solution of the function j
-                wj = (directions[0][j]/directions[2][j],directions[1][j]/directions[2][j])
+                wj = (directions[0][j],directions[1][j])
                 if(g_tcheby(wj, mix_scores, z_opt_scores) < g_tcheby(wj, best_decisions_scores[j], z_opt_scores)):
                     cmpt_best_maj += 1
                     best_decisions[j] = mix_bis
