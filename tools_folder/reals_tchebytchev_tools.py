@@ -7,7 +7,7 @@ sys.path.insert(0, "../functions_folder/")
 import math
 import space_tools as sp
 import numpy as np
-
+import random
 #--------------------------------------------------------------------------------------------------------------
 #ARCHIVE
 archive = []
@@ -168,6 +168,7 @@ def runTcheby():
             cmpt_best_maj = 0
             #archive not yet
             archivePut(mix_ter, mix_scores)
+            random.SystemRandom().shuffle(f_neighbors)
             for j in f_neighbors:
                 #stop maj best if maj limit reach
                 if(cmpt_best_maj >= max_decisions_maj):
