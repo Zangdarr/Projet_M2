@@ -116,8 +116,6 @@ def getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions,
         archiveOK = True
     #random initialisation
     init_decisions = initRandom(generation_fct, nb_functions, vector_size, search_space)
-    #get objective space representation of the solution
-    #objective_space = sp.getObjectiveSpace_UF(start_fct, decision_space, vector_size)
     #algorithm parameters
     param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct]
     #function that will be called by runAnimatedGraph before it's end
@@ -125,6 +123,7 @@ def getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions,
     #launch the graphic view and the algorithm
     result = gph.runAnimatedGraph(runTcheby,end_function,"Front pareto Tcheby Evolution","f1 - count 1" ,"f2 - count 0", sleep=sleeptime)
 
+    #return the approximation of the pareto front and the archive if managed
     return result
 
 
@@ -145,7 +144,6 @@ def runTcheby():
     #initial best decisions scores
     best_decisions_scores = [eval(start_fct, best_decisions[i], vector_size) for i in range(nb_functions)]
     pop_size = nb_functions
-    #start_fct + new_fct
     #current optimal scores for both axes
     max_f1 = max(best_decisions_scores[0])
     max_f2 = max(best_decisions_scores[1])
@@ -194,11 +192,13 @@ def runTcheby():
                     cmpt_best_maj += 1
                     best_decisions[j] = mix_ter
                     best_decisions_scores[j] = mix_scores
+                    #if we manga the archive and the solution have not been add already
                     if(archiveOK and not(added_to_S)):
                        archivePut(mix_ter, mix_scores)
                        added_to_S = True
 
         print("Update", itera, "done.")
+        #if manage archive
         if(archiveOK):
            maintain_archive()
         #graphic update
