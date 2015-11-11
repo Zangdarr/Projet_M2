@@ -10,16 +10,26 @@ import numpy as np
 import random
 #--------------------------------------------------------------------------------------------------------------
 #ARCHIVE
-archive = []
+archive_sol = []
+archive_score = [[],[]]
+archive_size = 0
 def archivePut(solution, score):
-    return "not yet"
-    """
-    global archive
-    archive.append((solution, score))
-    """
-def archiveGet():
-    global archive
-    return archive
+    global archive_sol, archive_score, archive_size
+    archive_sol.append(solution)
+    archive_score[0].append(score[0])
+    archive_score[1].append(score[1])
+    archive_size += 1
+
+def maintain_archive():
+    global archive_sol, archive_score, archive_size
+    archive_sol, archive_score, archive_size = maintain_population(archive_sol, archive_score, archive_size)
+
+#--------------------------------------------------------------------------------------------------------------
+approx_pareto_front = None
+
+def getResult():
+    global archive_sol, approx_pareto_front
+    return archive_sol, approx_pareto_front
 
 #--------------------------------------------------------------------------------------------------------------
 #INITIALISATION
@@ -102,17 +112,19 @@ def getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions, decisi
     #random initialisation
     init_decisions = initRandom(decision_space, generation_fct, nb_functions, vector_size, search_space)
     #get objective space representation of the solution
-    objective_space = sp.getObjectiveSpace_UF(start_fct, decision_space, vector_size)
+    #objective_space = sp.getObjectiveSpace_UF(start_fct, decision_space, vector_size)
     #algorithm parameters
     param = [objective_space, decision_space, start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct]
+    #function that will be called by runAnimatedGraph before it's end
+    end_function = getResult
     #launch the graphic view and the algorithm
-    result = gph.runAnimatedGraph(runTcheby,"Front pareto Tcheby Evolution","f1 - count 1" ,"f2 - count 0", sleep=sleeptime)
+    result = gph.runAnimatedGraph(runTcheby,end_function,"Front pareto Tcheby Evolution","f1 - count 1" ,"f2 - count 0", sleep=sleeptime)
 
     return result
 
 
 def runTcheby():
-    global param, nb_evals
+    global param, nb_evals, archive_score, approx_pareto_front
     isReals = True
     objective_space, decision_space = param[0:2]
     start_fct, nb_functions         = param[2:4]
@@ -125,15 +137,14 @@ def runTcheby():
     operator_fct                    = param[16]
 
     best_decisions = init_decisions.copy()
-
-    pop_size = len(decision_space)
-    #start_fct + new_fct
-    #current optimal scores for both axes
-    max_f1 = max(objective_space[0])
-    max_f2 = max(objective_space[1])
-    z_opt_scores = [max_f1, max_f2]
     #initial best decisions scores
     best_decisions_scores = [eval(start_fct, best_decisions[i], vector_size) for i in range(nb_functions)]
+    pop_size = nb_functions
+    #start_fct + new_fct
+    #current optimal scores for both axes
+    max_f1 = max(best_decisions_scores[0])
+    max_f2 = max(best_decisions_scores[1])
+    z_opt_scores = [max_f1, max_f2]
 
     directions = dec.genRatio_fctbase2(nb_functions)
     crossover_fct, mutation_fct, repair_fct = operator_fct
@@ -167,7 +178,6 @@ def runTcheby():
             #count how many best decisions has been changed
             cmpt_best_maj = 0
             #archive not yet
-            archivePut(mix_ter, mix_scores)
             random.SystemRandom().shuffle(f_neighbors)
             for j in f_neighbors:
                 #stop maj best if maj limit reach
@@ -180,15 +190,13 @@ def runTcheby():
                     best_decisions[j] = mix_ter
                     best_decisions_scores[j] = mix_scores
                     if(not(added_to_S)):
-                       objective_space[0].append(mix_scores[0])
-                       objective_space[1].append(mix_scores[1])
-                       decision_space.append(mix_ter)
-                       pop_size += 1
+                       archivePut(mix_ter, mix_scores)
                        added_to_S = True
 
-        decision_space, objective_space, pop_size = maintain_population(decision_space, objective_space, pop_size)
         print("Update", itera, "done.")
+        maintain_archive()
         #graphic update
-        yield objective_space, best_decisions_scores, itera, nb_evals, max_f1, max_f2, pop_size, isReals
+        yield archive_score, best_decisions_scores, itera, nb_evals, max_f1, max_f2, pop_size, isReals
 
-    return objective_space, best_decisions_scores, itera, nb_evals,  max_f1, max_f2, pop_size, isReals
+    approx_pareto_front = best_decisions
+    return 1

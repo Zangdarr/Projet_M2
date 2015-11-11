@@ -86,7 +86,7 @@ def update(data):
 
 tf1 = []
 tf2 = None
-def runAnimatedGraph(fct, titre, name_x, name_y, sleep=10):
+def runAnimatedGraph(fct, end_fct, titre, name_x, name_y, sleep=10):
     global title, axe_x_name, axe_y_name, tf1, tf2
     tmp = 0.001
     for i in range(1000):
@@ -100,3 +100,4 @@ def runAnimatedGraph(fct, titre, name_x, name_y, sleep=10):
     ani = animation.FuncAnimation(fig ,update, fct, blit=False, interval=sleep,
     repeat=False)
     plt.show()
+    return end_fct()
