@@ -13,6 +13,7 @@ import random
 archive_sol = []
 archive_score = [[],[]]
 archive_size = 0
+archiveOK = False
 def archivePut(solution, score):
     global archive_sol, archive_score, archive_size
     archive_sol.append(solution)
@@ -28,9 +29,12 @@ def maintain_archive():
 approx_pareto_front = None
 
 def getResult():
-    global archive_sol, approx_pareto_front
-    return archive_sol, approx_pareto_front
-
+    global archive_sol, approx_pareto_front, archiveOK
+    if(archiveOK):
+        tmp = approx_pareto_front, archive_sol 
+    else:
+        tmp = approx_pareto_front
+    return tmp
 #--------------------------------------------------------------------------------------------------------------
 #INITIALISATION
 
@@ -107,8 +111,10 @@ def maintain_population(decision_space, objective_space, pop_size):
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
 param = None
 def getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions, decision_space, objective_space,
-               nb_iterations, neighboring_size, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, sleeptime=10):
-    global param
+               nb_iterations, neighboring_size, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive,sleeptime=10):
+    global param, archiveOK
+    if(manage_archive):
+        archiveOK = True
     #random initialisation
     init_decisions = initRandom(decision_space, generation_fct, nb_functions, vector_size, search_space)
     #get objective space representation of the solution
@@ -124,7 +130,7 @@ def getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions, decisi
 
 
 def runTcheby():
-    global param, nb_evals, archive_score, approx_pareto_front
+    global param, nb_evals, archive_score, approx_pareto_front, archiveOK
     isReals = True
     objective_space, decision_space = param[0:2]
     start_fct, nb_functions         = param[2:4]
@@ -137,6 +143,7 @@ def runTcheby():
     operator_fct                    = param[16]
 
     best_decisions = init_decisions.copy()
+    approx_pareto_front = best_decisions
     #initial best decisions scores
     best_decisions_scores = [eval(start_fct, best_decisions[i], vector_size) for i in range(nb_functions)]
     pop_size = nb_functions
@@ -189,14 +196,14 @@ def runTcheby():
                     cmpt_best_maj += 1
                     best_decisions[j] = mix_ter
                     best_decisions_scores[j] = mix_scores
-                    if(not(added_to_S)):
+                    if(archiveOK and not(added_to_S)):
                        archivePut(mix_ter, mix_scores)
                        added_to_S = True
 
         print("Update", itera, "done.")
-        maintain_archive()
+        if(archiveOK):
+           maintain_archive()
         #graphic update
         yield archive_score, best_decisions_scores, itera, nb_evals, max_f1, max_f2, pop_size, isReals
 
-    approx_pareto_front = best_decisions
     return 1

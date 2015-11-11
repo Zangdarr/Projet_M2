@@ -13,6 +13,8 @@ operator_fct = [op.DE_Operator, op.polynomial_mutation, op.repair_offspring]
 generation_fct = op.genVector
 start_fct_len = len(start_fct)
 
+#Shall it maintain an archive and return it in the result ?
+manage_archive = False
 #stop critera : number of iterations
 nb_iterations = 1000
 #data parameter : size of the input
@@ -48,6 +50,6 @@ objective_space = []
 #number of functions that will be used for the algorithm
 nb_functions = start_fct_len + N_new_fct
 
-result = tcheby.getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions, decision_space, objective_space, nb_iterations, neighboring_size, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, sleeptime)
+result = tcheby.getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions, decision_space, objective_space, nb_iterations, neighboring_size, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, sleeptime)
 
 #---------------------------------------------------------------------------------------------------------------------
