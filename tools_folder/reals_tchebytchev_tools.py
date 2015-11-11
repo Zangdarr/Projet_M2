@@ -39,11 +39,10 @@ def getResult():
 #INITIALISATION
 
 #Randomly initialise the best solution for each functions generated
-def initRandom(decision_space, generation_fct, nb_functions, vector_size, search_space):
+def initRandom(generation_fct, nb_functions, vector_size, search_space):
     tab = []
     for i in range(nb_functions):
         tmp = generation_fct(vector_size, search_space)
-        decision_space.append(tmp)
         tab.append(tmp)
     return tab
 
@@ -116,7 +115,7 @@ def getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions,
     if(manage_archive):
         archiveOK = True
     #random initialisation
-    init_decisions = initRandom([], generation_fct, nb_functions, vector_size, search_space)
+    init_decisions = initRandom(generation_fct, nb_functions, vector_size, search_space)
     #get objective space representation of the solution
     #objective_space = sp.getObjectiveSpace_UF(start_fct, decision_space, vector_size)
     #algorithm parameters
