@@ -145,9 +145,9 @@ def runTcheby():
     best_decisions_scores = [eval(start_fct, best_decisions[i], vector_size) for i in range(nb_functions)]
     pop_size = nb_functions
     #current optimal scores for both axes
-    max_f1 = max(best_decisions_scores[0])
-    max_f2 = max(best_decisions_scores[1])
-    z_opt_scores = [max_f1, max_f2]
+    min_f1 = min(best_decisions_scores[0])
+    min_f2 = min(best_decisions_scores[1])
+    z_opt_scores = [min_f1, min_f2]
 
     directions = dec.genRatio_fctbase2(nb_functions)
     crossover_fct, mutation_fct, repair_fct = operator_fct
@@ -168,14 +168,14 @@ def runTcheby():
             mix_ter = repair_fct(mix_bis, search_space)
             #evaluation of the newly made solution
             mix_scores = eval(start_fct, mix_ter, vector_size)
-            #MAJ max of f1
-            if(mix_scores[0] < max_f1):
-                max_f1 = mix_scores[0]
-                z_opt_scores[0] = max_f1
-            #MAJ max of f2
-            if(mix_scores[1] < max_f2):
-                max_f2 = mix_scores[1]
-                z_opt_scores[1] = max_f2
+            #MAJ min of f1
+            if(mix_scores[0] < min_f1):
+                min_f1 = mix_scores[0]
+                z_opt_scores[0] = min_f1
+            #MAJ min of f2
+            if(mix_scores[1] < min_f2):
+                min_f2 = mix_scores[1]
+                z_opt_scores[1] = min_f2
             #loop on all the neighbors + f
             added_to_S = False
             #count how many best decisions has been changed
@@ -202,6 +202,6 @@ def runTcheby():
         if(archiveOK):
            maintain_archive()
         #graphic update
-        yield archive_score, best_decisions_scores, itera, nb_evals, max_f1, max_f2, pop_size, isReals
+        yield archive_score, best_decisions_scores, itera, nb_evals, min_f1, min_f2, pop_size, isReals
 
     return 1
