@@ -159,7 +159,7 @@ def runTcheby():
             f_neighbors = gt.getNeighborsInclusive(f, neighboring_size, nb_functions, delta_neighbourhood)
             #select two indice of function in the neighbors + f
             l, k = gt.get_n_elements_of(2, f_neighbors)
-            #application of a crossing operator between the current best solution of l and k
+            #application of a crossing operator with the current best solution and 2 others from the neighbourhood l & k
             r1, r2, r3 = f, l, k
             mix = crossover_fct(best_decisions[r1],best_decisions[r2],best_decisions[r3], F, vector_size, CR)
             #application of a a bit flip on the newly made solution
