@@ -103,9 +103,30 @@ def maintain_population(decision_space, objective_space, pop_size):
 
     return defenders_DS, [defenders_OS_0, defenders_OS_1], nb_defenders
 
+#--------------------------------------------------------------------------------------------------------------
+#  Sampling
+
+def sampling(f, f_neighbors, sampling_param):
+    crossover_fct, mutation_fct, repair_fct, best_decisions, F, vector_size, CR, search_space, distrib_index_n, pm = sampling_param
+    #select two indice of function in the neighbors + f
+    l, k = gt.get_n_elements_of(2, f_neighbors)
+    #application of a crossing operator with the current best solution and 2 others from the neighbourhood l & k
+    r1, r2, r3 = f, l, k
+    mix = crossover_fct(best_decisions[r1],best_decisions[r2],best_decisions[r3], F, vector_size, CR)
+    #application of a a bit flip on the newly made solution
+    mix_bis = mutation_fct(mix, vector_size, search_space, distrib_index_n, pm)
+    #repair step : search space
+    mix_ter = repair_fct(mix_bis, search_space)
+
+    return mix_ter
+
+
+
+
 
 #--------------------------------------------------------------------------------------------------------------
 #MAIN ALGORITHMS
+
 
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
 param = None
@@ -151,21 +172,17 @@ def runTcheby():
 
     directions = dec.genRatio_fctbase2(nb_functions)
     crossover_fct, mutation_fct, repair_fct = operator_fct
+
+    sampling_param = [crossover_fct, mutation_fct, repair_fct, best_decisions, F, vector_size, CR, search_space, distrib_index_n, pm]
+
     #iterations loop
     for itera in range(nb_iterations):
         #functions loop
         for f in range(nb_functions):
             #get all the indice of neighbors of a function in a certain distance of f and include f in
             f_neighbors = gt.getNeighborsInclusive(f, neighboring_size, nb_functions, delta_neighbourhood)
-            #select two indice of function in the neighbors + f
-            l, k = gt.get_n_elements_of(2, f_neighbors)
-            #application of a crossing operator with the current best solution and 2 others from the neighbourhood l & k
-            r1, r2, r3 = f, l, k
-            mix = crossover_fct(best_decisions[r1],best_decisions[r2],best_decisions[r3], F, vector_size, CR)
-            #application of a a bit flip on the newly made solution
-            mix_bis = mutation_fct(mix, vector_size, search_space, distrib_index_n, pm)
-            #repair step : search space
-            mix_ter = repair_fct(mix_bis, search_space)
+            #generate a new valide offspring
+            mix_ter = sampling(f, f_neighbors, sampling_param)
             #evaluation of the newly made solution
             mix_scores = eval(start_fct, mix_ter, vector_size)
             #MAJ min of f1
