@@ -180,7 +180,7 @@ def runTcheby():
         #functions loop
         for f in range(nb_functions):
             #get all the indice of neighbors of a function in a certain distance of f and include f in
-            f_neighbors = gt.getNeighborsInclusive(f, neighboring_size, nb_functions, delta_neighbourhood)
+            f_neighbors, current_neighbourhing_size = gt.getNeighborsInclusive(f, neighboring_size, nb_functions, delta_neighbourhood)
             #generate a new valide offspring
             mix_ter = sampling(f, f_neighbors, sampling_param)
             #evaluation of the newly made solution

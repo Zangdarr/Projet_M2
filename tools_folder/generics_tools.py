@@ -32,7 +32,7 @@ def getNeighborsInclusive(pos, neighboring_size, size_l, delta=0):
     #proba to give all functions as neighbourhood
     rnd = random.SystemRandom().random()
     if( not(rnd < delta)):
-       return t
+       return t, size_l
 
     #[2,3,4,5,6]
     if(neighboring_size > size_l):
@@ -60,4 +60,4 @@ def getNeighborsInclusive(pos, neighboring_size, size_l, delta=0):
         pos_left += size_l - (pos_right)
         pos_right = size_l
 
-    return t[pos_left : pos_right]
+    return t[pos_left : pos_right], neighboring_size
