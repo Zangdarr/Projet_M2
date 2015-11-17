@@ -149,7 +149,8 @@ def getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions,
 
 
 def runTcheby():
-    global param, nb_evals, archive_score, approx_pareto_front, archiveOK
+    global param, nb_evals, archive_score, approx_pareto_front, archiveOK, nb_evals
+    
     isReals = True
     start_fct, nb_functions         = param[0:2]
     nb_iterations, neighboring_size = param[2:4]
@@ -164,6 +165,9 @@ def runTcheby():
     approx_pareto_front = best_decisions
     #initial best decisions scores
     best_decisions_scores = [eval(start_fct, best_decisions[i], vector_size) for i in range(nb_functions)]
+
+    nb_evals = 0
+
     pop_size = nb_functions
     #current optimal scores for both axes
     min_f1 = min(best_decisions_scores[0])
