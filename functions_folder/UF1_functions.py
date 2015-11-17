@@ -6,6 +6,12 @@ import numpy
 # Objective functions
 ########################################################################
 
+
+
+def getSearchSpace(vector_size):
+    search_space = [[1,(0,1)], [vector_size-1, (-1,1)]]
+    return search_space
+
 #FAIRE ATTENTION A PAIRE ET IMPAIRE : il y a un décalage
 def uf1_f1(x_vector, vector_size):
    decalage = 1

@@ -16,7 +16,7 @@ start_fct_len = len(start_fct)
 #Shall it maintain an archive and return it in the result ?
 manage_archive = False
 #stop critera : number of iterations
-nb_iterations = 1000
+nb_iterations = 100
 #data parameter : size of the input
 vector_size = 30
 #size of the neighbourhood, include the current pos
@@ -39,7 +39,7 @@ pm = 1 / vector_size
 distrib_index_n = 20
 
 
-search_space = [[1,(0,1)], [vector_size-1, (-1,1)]]
+search_space = fct.getSearchSpace(vector_size)
 
 #####################################################################################################################
 
