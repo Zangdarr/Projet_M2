@@ -6,7 +6,16 @@ import numpy
 # Objective functions
 ########################################################################
 
+def getFrontPareto():
+    tf1 = []
+    tf2 = []
+    tmp = 0.001
+    for i in range(1000):
+        tf1.append(tmp)
+        tmp += 0.001
+    tf2 = [1 - math.sqrt(tf1[i]) for i in range(1000)]
 
+    return tf1, tf2
 
 def getSearchSpace(vector_size):
     search_space = [[1,(0,1)], [vector_size-1, (-1,1)]]
