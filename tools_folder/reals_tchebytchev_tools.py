@@ -236,12 +236,12 @@ def runTcheby():
                     cmpt_best_maj += 1
                     best_decisions[j] = mix_ter
                     best_decisions_scores[j] = mix_scores
-                    #if we manga the archive and the solution have not been add already
+                    #if the archive and the solution have not been add already
                     if(archiveOK and not(added_to_S)):
                        archivePut(mix_ter, mix_scores)
                        added_to_S = True
 
-        print("Update", itera, "done.")
+        #print("Update", itera, "done.")
         #if manage archive
         if(archiveOK):
            maintain_archive()
