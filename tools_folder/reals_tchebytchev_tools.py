@@ -14,6 +14,9 @@ archive_sol = []
 archive_score = [[],[]]
 archive_size = 0
 archiveOK = False
+NO_FILE_TO_WRITE = -1
+
+
 def archivePut(solution, score):
     global archive_sol, archive_score, archive_size
     archive_sol.append(solution)
@@ -191,8 +194,12 @@ def runTcheby():
     directions = dec.genRatio_fctbase2(nb_functions)
     crossover_fct, mutation_fct, repair_fct = operator_fct
 
-    sampling_param = [crossover_fct, mutation_fct, repair_fct, best_decisions, F, vector_size, CR, search_space, distrib_index_n, pm]
-
+    sampling_param = [crossover_fct, mutation_fct, repair_fct, best_decisions, F, problem_size, CR, search_space, distrib_index_n, pm]
+    writeOK = False
+    if(file_to_write != NO_FILE_TO_WRITE):
+        writeOK = True
+    if(writeOK):
+        printObjectives(file_to_write, nb_evals, 0, best_decisions_scores, problem_size)
     #iterations loop
     for itera in range(nb_iterations):
         #functions loop
@@ -202,7 +209,7 @@ def runTcheby():
             #generate a new valide offspring
             mix_ter = sampling(f, f_neighbors, sampling_param)
             #evaluation of the newly made solution
-            mix_scores = eval(start_fct, mix_ter, vector_size)
+            mix_scores = eval(start_fct, mix_ter, problem_size)
             #MAJ min of f1
             if(mix_scores[0] < min_f1):
                 min_f1 = mix_scores[0]
@@ -237,6 +244,9 @@ def runTcheby():
         if(archiveOK):
            maintain_archive()
         #graphic update
+        if(writeOK):
+            printObjectives(file_to_write, nb_evals, itera+1, best_decisions_scores, problem_size)
+            continue
         yield archive_score, best_decisions_scores, itera, nb_evals, min_f1, min_f2, pop_size, isReals
 
     return 1
