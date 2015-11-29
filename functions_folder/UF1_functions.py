@@ -26,7 +26,7 @@ def getSearchSpace(problem_size):
     return search_space
 
 #FAIRE ATTENTION A PAIRE ET IMPAIRE : il y a un décalage
-def uf1_f1(x_vector, vector_size):
+def f1(x_vector, vector_size):
    decalage = 1
    tmp_1 = x_vector[0]
 
@@ -45,7 +45,7 @@ def uf1_f1(x_vector, vector_size):
 
 
 #return number of '0' in a binary string
-def uf1_f2(x_vector, vector_size):
+def f2(x_vector, vector_size):
     x_1 = x_vector[0]
     decalage = 1
     tmp_1 = 1 - math.sqrt(x_1)
