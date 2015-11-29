@@ -39,10 +39,10 @@ def getResult():
 #INITIALISATION
 
 #Randomly initialise the best solution for each functions generated
-def initRandom(generation_fct, nb_functions, vector_size, search_space):
+def initRandom(generation_fct, nb_functions, problem_size, search_space):
     tab = []
     for i in range(nb_functions):
-        tmp = generation_fct(vector_size, search_space)
+        tmp = generation_fct(problem_size, search_space)
         tab.append(tmp)
     return tab
 
@@ -55,11 +55,11 @@ def g_tcheby(dir, score, opt_scores):
 
 #evaluation of an offspring with the 2 base functions
 nb_evals = 0
-def eval(start_fct, vector, vector_size):
+def eval(start_fct, problem, problem_size):
     global nb_evals
     nb_evals += 1
-    vector_scores = [start_fct[f](vector, vector_size) for f in range(len(start_fct))]
-    return vector_scores
+    problem_scores = [start_fct[f](problem, problem_size) for f in range(len(start_fct))]
+    return problem_scores
 
 def maintain_population(decision_space, objective_space, pop_size):
     OS_0 = objective_space[0]
@@ -107,14 +107,14 @@ def maintain_population(decision_space, objective_space, pop_size):
 #  Sampling
 
 def sampling(f, f_neighbors, sampling_param):
-    crossover_fct, mutation_fct, repair_fct, best_decisions, F, vector_size, CR, search_space, distrib_index_n, pm = sampling_param
+    crossover_fct, mutation_fct, repair_fct, best_decisions, F, problem_size, CR, search_space, distrib_index_n, pm = sampling_param
     #select two indice of function in the neighbors + f
     l, k = gt.get_n_elements_of(2, f_neighbors)
     #application of a crossing operator with the current best solution and 2 others from the neighbourhood l & k
     r1, r2, r3 = f, l, k
-    mix = crossover_fct(best_decisions[r1],best_decisions[r2],best_decisions[r3], F, vector_size, CR)
+    mix = crossover_fct(best_decisions[r1],best_decisions[r2],best_decisions[r3], F, problem_size, CR)
     #application of a a bit flip on the newly made solution
-    mix_bis = mutation_fct(mix, vector_size, search_space, distrib_index_n, pm)
+    mix_bis = mutation_fct(mix, problem_size, search_space, distrib_index_n, pm)
     #repair step : search space
     mix_ter = repair_fct(mix_bis, search_space)
 
