@@ -49,7 +49,7 @@ nb_functions = start_fct_len + N_new_fct
 
 #---------------------------------------------------------------------------------------------------------------------
 
-def runOneTime(problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy):
+def runOneTime(problem_size, nb_iterations):
        global problem_title, start_fct, operator_fct, generation_fct, pareto_front_fct, nb_functions, neighboring_size, max_decisions_maj, delta_neighbourhood, CR, F, distrib_index_n, pm, manage_archive, sleeptime
        pm = 1 / problem_size
        search_space = fct.getSearchSpace(problem_size)
