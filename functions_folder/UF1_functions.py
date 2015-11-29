@@ -17,8 +17,12 @@ def getFrontPareto():
 
     return tf1, tf2
 
-def getSearchSpace(vector_size):
-    search_space = [[1,(0,1)], [vector_size-1, (-1,1)]]
+def getProblemTitle():
+    return "Unconstrained Problem 1"
+
+
+def getSearchSpace(problem_size):
+    search_space = [[1,(0,1)], [problem_size-1, (-1,1)]]
     return search_space
 
 #FAIRE ATTENTION A PAIRE ET IMPAIRE : il y a un décalage
