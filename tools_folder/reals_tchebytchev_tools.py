@@ -252,3 +252,16 @@ def runTcheby():
         yield archive_score, best_decisions_scores, itera, nb_evals, min_f1, min_f2, pop_size, isReals
 
     return 1
+
+def printObjectives(file_to_write, eval_number,iteration_number,  objectives_table, problem_size):
+    if(iteration_number % problem_size == 0):
+        tab = [''," ", '', " ", '', " ", '', "\n"]
+        for objectives in objectives_table:
+            tab[0] = str(iteration_number)
+            tab[2] = str(eval_number)
+            tab[4] = str(objectives[0])
+            tab[6] = str(objectives[1])
+
+
+            file_to_write.write(''.join(tab))
+            #print(iteration_number, eval_number, objectives[0], objectives[1])
