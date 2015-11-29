@@ -130,19 +130,22 @@ def sampling(f, f_neighbors, sampling_param):
 
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
 param = None
-def getFrontPareto(start_fct, operator_fct, generation_fct, nb_functions,
-               nb_iterations, neighboring_size, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive,sleeptime=10):
+def getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation_fct, pareto_front_fct, nb_functions,
+               nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, file_to_write, sleeptime=10):
     global param, archiveOK
     if(manage_archive):
         archiveOK = True
     #random initialisation
-    init_decisions = initRandom(generation_fct, nb_functions, vector_size, search_space)
+    init_decisions = initRandom(generation_fct, nb_functions, problem_size, search_space)
     #algorithm parameters
-    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, vector_size, nb_flips, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct]
+    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, file_to_write]
     #function that will be called by runAnimatedGraph before it's end
     end_function = getResult
     #launch the graphic view and the algorithm
-    result = gph.runAnimatedGraph(runTcheby,end_function,"Front pareto Tcheby Evolution","f1 - count 1" ,"f2 - count 0", sleep=sleeptime)
+    result = gph.runAnimatedGraph(runTcheby,end_function, pareto_front_fct, problem_title ,"f1" ,"f2", sleep=sleeptime)
+
+    #return the approximation of the pareto front and the archive if managed
+    return result
 
     #return the approximation of the pareto front and the archive if managed
     return result
