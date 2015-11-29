@@ -17,6 +17,8 @@ def update(data):
     plt.title(title)
     plt.xlabel(axe_x_name)
     plt.ylabel(axe_y_name)
+    plt.xlim([0,1.2])
+    plt.ylim([0,1.2])
     #recuparation data separetly
     datax1y1, datax2y2, tic, evals, max_f1, max_f2, pop_size, isReals = data
 
