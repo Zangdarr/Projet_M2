@@ -230,7 +230,9 @@ def runTcheby():
                     break
                 #if the g_tcheby of the new solution is less distant from the z_optimal solution than the current best solution of the function j
                 wj = (directions[0][j],directions[1][j])
-                if(g_tcheby(wj, mix_scores, z_opt_scores) < g_tcheby(wj, best_decisions_scores[j], z_opt_scores)):
+                g_mix = g_tcheby(wj, mix_scores, z_opt_scores)
+                g_best = g_tcheby(wj, best_decisions_scores[j], z_opt_scores)
+                if( g_mix < g_best):
                     cmpt_best_maj += 1
                     best_decisions[j] = mix_ter
                     best_decisions_scores[j] = mix_scores
