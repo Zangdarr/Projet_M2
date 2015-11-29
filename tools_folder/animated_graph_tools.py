@@ -87,14 +87,11 @@ def update(data):
     return 1
 
 tf1 = []
-tf2 = None
-def runAnimatedGraph(fct, end_fct, titre, name_x, name_y, sleep=10):
+tf2 = []
+def runAnimatedGraph(fct, end_fct, pareto_front_fct, titre, name_x, name_y, sleep=10):
     global title, axe_x_name, axe_y_name, tf1, tf2
-    tmp = 0.001
-    for i in range(1000):
-        tf1.append(tmp)
-        tmp += 0.001
-    tf2 = [1 - math.sqrt(tf1[i]) for i in range(1000)]
+    if(pareto_front_fct != -1):
+        tf1, tf2 = pareto_front_fct()
     title = titre
     axe_x_name = name_x
     axe_y_name = name_y
