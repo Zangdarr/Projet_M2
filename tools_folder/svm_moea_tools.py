@@ -129,9 +129,6 @@ def runTcheby():
     min_f2 = min(best_decisions_scores[1])
     z_opt_scores = [min_f1, min_f2]
 
-    #initial best g_tcheby scores
-    best_g_tcheby = [eval_to.g_tcheby((directions[0][i], directions[1][i]), best_decisions_scores[i], z_opt_scores) for i in range(nb_functions)]
-
     #get the first training part of the item we will learn on
     model_directions = train_to.getDirectionsTrainingMatrix(directions)
 
@@ -201,7 +198,7 @@ def runTcheby():
                     cmpt_best_maj += 1
                     best_decisions[j] = best_candidate
                     best_decisions_scores[j] = mix_scores
-                    best_g_tcheby[j] = g_mix
+
                     #if we manage the archive and the solution have not been add already
                     if(archiveOK and not(added_to_S)):
                        arch_to.archivePut(best_candidate, mix_scores)
