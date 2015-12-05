@@ -1,29 +1,31 @@
 import sys
-sys.path.insert(0,"../prediction_folder/")
-import training_tools as train_to
-sys.path.insert(0,"../tools_folder/")
-import animated_graph_tools as gph
-import generics_tools as gt
-import decomposition_tools as dec
 sys.path.insert(0, "../functions_folder/")
-import math
-import space_tools as sp
-import random
+sys.path.insert(0, "../prediction_folder/")
+sys.path.insert(0, "../tools_folder/")
+
 import copy
-import evaluation_tools as eval_to
+import math
+import random
+
+import animated_graph_tools as gph
 import archive_tools as arch_to
+import decomposition_tools as dec
+import evaluation_tools as eval_to
+import filtring_tools as filt_to
+import generics_tools as gt
 import initialisation_tools as init_to
 import sampling_tools as samp_to
-import filtring_tools as filt_to
+import space_tools as sp
+import training_tools as train_to
 
 from sklearn.svm import SVR
 
 #-------------------------------------------------------------------------------
 archiveOK = False
 NO_FILE_TO_WRITE = -1
+approx_pareto_front = None
 
 #-------------------------------------------------------------------------------
-approx_pareto_front = None
 
 def getResult():
     global approx_pareto_front, archiveOK
@@ -34,7 +36,7 @@ def getResult():
     return tmp
 
 
-#--------------------------------------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 #MAIN ALGORITHMS
 
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
@@ -77,6 +79,8 @@ def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_fun
     #return the approximation of the pareto front and the archive if managed
     return result
 
+
+#-------------------------------------------------------------------------------
 
 def runTcheby():
     global param, nb_evals, approx_pareto_front, archiveOK, nb_evals, NO_FILE_TO_WRITE
