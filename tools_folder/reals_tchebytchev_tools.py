@@ -8,6 +8,7 @@ import math
 import space_tools as sp
 import numpy as np
 import random
+import evaluation_tools as eval_to
 #--------------------------------------------------------------------------------------------------------------
 #ARCHIVE
 archive_sol = []
@@ -181,7 +182,7 @@ def runTcheby():
     best_decisions = init_decisions.copy()
     approx_pareto_front = best_decisions
     #initial best decisions scores
-    best_decisions_scores = [eval(start_fct, best_decisions[i], problem_size) for i in range(nb_functions)]
+    best_decisions_scores = [eval_to.free_eval(start_fct, best_decisions[i], problem_size) for i in range(nb_functions)]
 
     nb_evals = 0
 
@@ -209,7 +210,7 @@ def runTcheby():
             #generate a new valide offspring
             mix_ter = sampling(f, f_neighbors, sampling_param)
             #evaluation of the newly made solution
-            mix_scores = eval(start_fct, mix_ter, problem_size)
+            mix_scores, nb_evals = eval_to.eval(start_fct, mix_ter, problem_size)
             #MAJ min of f1
             if(mix_scores[0] < min_f1):
                 min_f1 = mix_scores[0]
@@ -230,8 +231,8 @@ def runTcheby():
                     break
                 #if the g_tcheby of the new solution is less distant from the z_optimal solution than the current best solution of the function j
                 wj = (directions[0][j],directions[1][j])
-                g_mix = g_tcheby(wj, mix_scores, z_opt_scores)
-                g_best = g_tcheby(wj, best_decisions_scores[j], z_opt_scores)
+                g_mix = eval_to.g_tcheby(wj, mix_scores, z_opt_scores)
+                g_best = eval_to.g_tcheby(wj, best_decisions_scores[j], z_opt_scores)
                 if( g_mix < g_best):
                     cmpt_best_maj += 1
                     best_decisions[j] = mix_ter
