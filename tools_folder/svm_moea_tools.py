@@ -41,14 +41,14 @@ def getResult():
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
 param = None
 def getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation_fct, pareto_front_fct, nb_functions,
-               nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, sleeptime=10):
+               nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, filter_strat, free_eval, sleeptime=10):
     global param, archiveOK
     if(manage_archive):
         archiveOK = True
     #random initialisation
     init_decisions = init_to.initRandom(generation_fct, nb_functions, problem_size, search_space)
     #algorithm parameters
-    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, -1]
+    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, -1, filter_strat, free_eval]
     #function that will be called by runAnimatedGraph before it's end
     end_function = getResult
     #launch the graphic view and the algorithm
@@ -61,7 +61,7 @@ def getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation
 
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
 def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_functions,
-               nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, file_to_write, sleeptime=10):
+               nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, sleeptime=10):
     global param, archiveOK
 
     if(manage_archive):
@@ -69,7 +69,7 @@ def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_fun
     #random initialisation
     init_decisions = init_to.initRandom(generation_fct, nb_functions, problem_size, search_space)
     #algorithm parameters
-    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, file_to_write]
+    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval]
     #function that will be called by runAnimatedGraph before it's end
     end_function = getResult
     #launch the graphic view and the algorithm
@@ -98,6 +98,7 @@ def runTcheby():
     pm, operator_fct                       = param[12:14]
     nb_samples, training_neighborhood_size = param[14:16]
     strategy, file_to_write                = param[16:18]
+    filter_strat, free_eval                = param[18:20]
 
 
     #get separatly offspring operator fct
@@ -159,8 +160,6 @@ def runTcheby():
             list_offspring = samp_to.extended_sampling(f, f_neighbors, sampling_param, nb_samples)
 
             #apply a filter on the offspring list and select the best one
-            filter_strat = "average"
-            free_eval = False
             filter_param = [clf, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_opt_scores]
             best_candidate = filt_to.model_based_filtring(filter_strat, free_eval, filter_param)
 
