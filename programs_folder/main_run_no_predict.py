@@ -2,10 +2,7 @@ import version4_tcheby_real as v4
 import sys
 
 
-problem_size               = 10
-training_neighborhood_size = 21
-nb_samples                 = 10
-strategy                  = 'single'
+problem_size               = 30
 
 
 #TODO sauvegarder les R² à chaques générations
