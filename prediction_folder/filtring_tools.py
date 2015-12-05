@@ -15,7 +15,7 @@ def model_based_filtring(filter_strat, param):
         return free_model_based(model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star)
 
 
-def average_model_based(model, f_neighbors, list_offspring, model_directions):
+def average_model_based(model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, free_eval):
     id_offspring = -1
     index_best = -1
     score_best = 0
@@ -24,11 +24,18 @@ def average_model_based(model, f_neighbors, list_offspring, model_directions):
         average_score = 0
 
         f_input_data = getInputData(f_neighbors, model_directions, offspring)
-        f_input_data = np.matrix(f_input_data)
+        if(not free_eval):
+           f_input_data = np.matrix(f_input_data)
 
         count = 0
         for data in f_input_data:
-            tmp = model.predict(data)
+            if(free_eval):
+                w = data[0:2]
+                offs = data[2:]
+                score_eval = eval_to.free_eval(start_fct, offs, problem_size)
+                tmp = eval_to.g_tcheby(w, score_eval, z_star)
+            else:
+                tmp = model.predict(data)
             average_score += tmp
             count +=1
 
