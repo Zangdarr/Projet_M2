@@ -13,6 +13,7 @@ def model_based_filtring(model, f_neighbors, list_offspring, model_directions):
         average_score = 0
 
         f_input_data = getInputData(f_neighbors, model_directions, offspring)
+        f_input_data = np.matrix(f_input_data)
 
         count = 0
         for data in f_input_data:
@@ -45,4 +46,4 @@ def getInputData(f_neighbors, model_directions, offspring):
 
         l[id_l].extend(offspring)
 
-    return np.matrix(l)
+    return l
