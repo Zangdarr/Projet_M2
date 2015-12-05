@@ -3,8 +3,14 @@ import numpy as np
 #--------------------------------------------------------------------------------------------------------------
 # MODEL-BASED-FILTRING
 
+def model_based_filtring(filter_strat, param):
 
-def model_based_filtring(model, f_neighbors, list_offspring, model_directions):
+    if(filter_strat == 'average'):
+        model, f_neighbors, list_offspring, model_directions = param
+        return average_model_based(model, f_neighbors, list_offspring, model_directions)
+
+
+def average_model_based(model, f_neighbors, list_offspring, model_directions):
     id_offspring = -1
     index_best = -1
     score_best = 0
