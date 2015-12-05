@@ -11,6 +11,8 @@ import random
 import evaluation_tools as eval_to
 import archive_tools as arch_to
 import initialisation_tools as init_to
+import sampling_tools as samp_to
+
 #--------------------------------------------------------------------------------------------------------------
 archiveOK = False
 NO_FILE_TO_WRITE = -1
@@ -125,7 +127,7 @@ def runTcheby():
             #get all the indice of neighbors of a function in a certain distance of f and include f in
             f_neighbors, current_neighbourhing_size = gt.getNeighborsInclusive(f, neighboring_size, nb_functions, delta_neighbourhood)
             #generate a new valide offspring
-            mix_ter = sampling(f, f_neighbors, sampling_param)
+            mix_ter = samp_to.sampling(f, f_neighbors, sampling_param)
             #evaluation of the newly made solution
             mix_scores, nb_evals = eval_to.eval(start_fct, mix_ter, problem_size)
             #MAJ min of f1
