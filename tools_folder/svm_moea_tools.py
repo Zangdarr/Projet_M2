@@ -79,8 +79,6 @@ def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_fun
     return result
 
 
-#-------------------------------------------------------------------------------
-#MAIN ALGORITHMS
 
 def runTcheby():
     global param, nb_evals, approx_pareto_front, archiveOK, nb_evals, NO_FILE_TO_WRITE
@@ -137,6 +135,7 @@ def runTcheby():
     #get the first training part of the item we will learn on
     model_directions = train_to.getDirectionsTrainingMatrix(directions)
 
+    #if the data shall be write in a file
     writeOK = False
     if(file_to_write != NO_FILE_TO_WRITE):
         writeOK = True
@@ -179,7 +178,7 @@ def runTcheby():
             #boolean that is True if the offspring has been add to the archive
             added_to_S = False
 
-            #count how many best decisions has been changed with the newly offspring
+            #count how many best decisions has been changed by the newly offspring
             cmpt_best_maj = 0
 
             #random course through the neighbors list
@@ -187,6 +186,7 @@ def runTcheby():
 
             #course through the neighbors list
             for j in f_neighbors:
+
                 #stop if already max number of remplacement reach
                 if(cmpt_best_maj >= max_decisions_maj):
                     break
