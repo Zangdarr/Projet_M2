@@ -11,6 +11,7 @@ import space_tools as sp
 import numpy as np
 import random
 import copy
+import evaluation_tools as eval_to
 
 from sklearn.svm import SVR
 
@@ -266,7 +267,7 @@ def runTcheby():
     #giving global visibility to the best_decisions to get the result at the end
     approx_pareto_front = best_decisions
     #initial best decisions scores
-    best_decisions_scores = [eval(start_fct, best_decisions[i], problem_size) for i in range(nb_functions)]
+    best_decisions_scores = [eval_to.free_eval(start_fct, best_decisions[i], problem_size) for i in range(nb_functions)]
 
     nb_evals = 0
 
@@ -277,7 +278,7 @@ def runTcheby():
     z_opt_scores = [min_f1, min_f2]
 
     #initial best g_tcheby scores
-    best_g_tcheby = [g_tcheby((directions[0][i], directions[1][i]), best_decisions_scores[i], z_opt_scores) for i in range(nb_functions)]
+    best_g_tcheby = [eval_to.g_tcheby((directions[0][i], directions[1][i]), best_decisions_scores[i], z_opt_scores) for i in range(nb_functions)]
 
 
     #get the first training part of the item we will learn on
@@ -306,7 +307,7 @@ def runTcheby():
             best_candidate = model_based_filtring(clf, f_neighbors, list_offspring, model_directions)
 
             #evaluation of the newly made solution
-            mix_scores = eval(start_fct, best_candidate, problem_size)
+            mix_scores, nb_evals = eval_to.eval(start_fct, best_candidate, problem_size)
             #MAJ min of f1
             if(mix_scores[0] < min_f1):
                 min_f1 = mix_scores[0]
@@ -327,8 +328,8 @@ def runTcheby():
                     break
                 #if the g_tcheby of the new solution is less distant from the z_optimal solution than the current best solution of the function j
                 wj = (directions[0][j],directions[1][j])
-                g_mix = g_tcheby(wj, mix_scores, z_opt_scores)
-                g_best = g_tcheby(wj, best_decisions_scores[j], z_opt_scores)
+                g_mix = eval_to.g_tcheby(wj, mix_scores, z_opt_scores)
+                g_best = eval_to.g_tcheby(wj, best_decisions_scores[j], z_opt_scores)
                 #if(g_mix < best_g_tcheby[j]):
                 if(g_mix < g_best):
                     cmpt_best_maj += 1
