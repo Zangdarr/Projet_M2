@@ -1,6 +1,6 @@
 import sys
 sys.path.insert(0,"../prediction_folder/")
-import svr_tools as svrt
+import training_tools as train_to
 sys.path.insert(0,"../tools_folder/")
 import animated_graph_tools as gph
 import generics_tools as gt
@@ -268,7 +268,7 @@ def runTcheby():
 
 
     #get the first training part of the item we will learn on
-    model_directions = svrt.getDirectionsTrainingMatrix(directions)
+    model_directions = train_to.getDirectionsTrainingMatrix(directions)
 
 
     ############################################################################
@@ -281,7 +281,7 @@ def runTcheby():
     #iterations loop
     for itera in range(nb_iterations):
         #Update model
-        training_input, training_output = svrt.getTrainingSet(model_directions, best_decisions, best_decisions_scores ,z_opt_scores, strategy, nb_functions, training_neighborhood_size)
+        training_input, training_output = train_to.getTrainingSet(model_directions, best_decisions, best_decisions_scores ,z_opt_scores, strategy, nb_functions, training_neighborhood_size)
         clf.fit(training_input, training_output)
         #functions loop
         for f in range(nb_functions):
