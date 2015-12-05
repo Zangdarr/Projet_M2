@@ -159,7 +159,10 @@ def runTcheby():
             list_offspring = samp_to.extended_sampling(f, f_neighbors, sampling_param, nb_samples)
 
             #apply a filter on the offspring list and select the best one
-            best_candidate = filt_to.model_based_filtring(clf, f_neighbors, list_offspring, model_directions)
+            filter_strat = "average"
+            free_eval = False
+            filter_param = [clf, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_opt_scores]
+            best_candidate = filt_to.model_based_filtring(filter_strat, free_eval, filter_param)
 
             #evaluation of the newly made solution
             mix_scores, nb_evals = eval_to.eval(start_fct, best_candidate, problem_size)
