@@ -8,13 +8,13 @@ import decomposition_tools as dec
 sys.path.insert(0, "../functions_folder/")
 import math
 import space_tools as sp
-import numpy as np
 import random
 import copy
 import evaluation_tools as eval_to
 import archive_tools as arch_to
 import initialisation_tools as init_to
 import sampling_tools as samp_to
+import filtring_tools as filt_to
 
 from sklearn.svm import SVR
 
@@ -203,7 +203,7 @@ def runTcheby():
 
             list_offspring = samp_to.extended_sampling(f, f_neighbors, sampling_param, nb_samples)
 
-            best_candidate = model_based_filtring(clf, f_neighbors, list_offspring, model_directions)
+            best_candidate = filt_to.model_based_filtring(clf, f_neighbors, list_offspring, model_directions)
 
             #evaluation of the newly made solution
             mix_scores, nb_evals = eval_to.eval(start_fct, best_candidate, problem_size)
