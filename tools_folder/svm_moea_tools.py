@@ -14,6 +14,7 @@ import copy
 import evaluation_tools as eval_to
 import archive_tools as arch_to
 import initialisation_tools as init_to
+import sampling_tools as samp_to
 
 from sklearn.svm import SVR
 
@@ -223,7 +224,7 @@ def runTcheby():
             #get all the indice of neighbors of a function in a certain distance of f and include f in
             f_neighbors, current_neighbourhing_size = gt.getNeighborsInclusive(f, neighboring_size, nb_functions, delta_neighbourhood)
 
-            list_offspring = extended_sampling(f, f_neighbors, sampling_param, nb_samples)
+            list_offspring = samp_to.extended_sampling(f, f_neighbors, sampling_param, nb_samples)
 
             best_candidate = model_based_filtring(clf, f_neighbors, list_offspring, model_directions)
 
