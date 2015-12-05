@@ -1,8 +1,9 @@
 import numpy as np
 import sys
 sys.path.insert(0,"../tools_folder/")
-import svm_moea_tools as moea
 import generics_tools as gen
+import evaluation_tools as eval_to
+
 
 def getTrainingNeighborsInclusive(pos, neighboring_size, size_l):
     t = [i for i in range(size_l)]
@@ -57,7 +58,7 @@ def getTrainingSetNeighbors(training_directions, training_individuals, individua
             training_input.extend(current_dir)
             training_input.extend(individual)
 
-            training_output = moea.g_tcheby(current_dir, individuals_objectives[individual_id], z_star)
+            training_output = eval_to.g_tcheby(current_dir, individuals_objectives[individual_id], z_star)
 
             training_inputs.append(training_input)
             training_outputs.append(training_output)
@@ -78,7 +79,7 @@ def getTrainingSetSingle(training_directions, training_individuals, individuals_
         training_input.extend(current_dir)
         training_input.extend(individual)
 
-        training_output = moea.g_tcheby(current_dir, individuals_objectives[individual_id], z_star)
+        training_output = eval_to.g_tcheby(current_dir, individuals_objectives[individual_id], z_star)
 
         training_inputs.append(training_input)
         training_outputs.append(training_output)
@@ -100,7 +101,7 @@ def getTrainingSetAll(training_directions, training_individuals, individuals_obj
             training_input.extend(current_dir)
             training_input.extend(individual)
 
-            training_output = moea.g_tcheby(current_dir, individuals_objectives[individual_id], z_star)
+            training_output = eval_to.g_tcheby(current_dir, individuals_objectives[individual_id], z_star)
 
             training_inputs.append(training_input)
             training_outputs.append(training_output)
