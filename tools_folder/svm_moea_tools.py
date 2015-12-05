@@ -13,6 +13,7 @@ import random
 import copy
 import evaluation_tools as eval_to
 import archive_tools as arch_to
+import initialisation_tools as init_to
 
 from sklearn.svm import SVR
 
@@ -126,7 +127,7 @@ def getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation
     if(manage_archive):
         archiveOK = True
     #random initialisation
-    init_decisions = initRandom(generation_fct, nb_functions, problem_size, search_space)
+    init_decisions = init_to.initRandom(generation_fct, nb_functions, problem_size, search_space)
     #algorithm parameters
     param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, -1]
     #function that will be called by runAnimatedGraph before it's end
@@ -147,7 +148,7 @@ def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_fun
     if(manage_archive):
         archiveOK = True
     #random initialisation
-    init_decisions = initRandom(generation_fct, nb_functions, problem_size, search_space)
+    init_decisions = init_to.initRandom(generation_fct, nb_functions, problem_size, search_space)
     #algorithm parameters
     param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, file_to_write]
     #function that will be called by runAnimatedGraph before it's end
