@@ -12,6 +12,7 @@ import numpy as np
 import random
 import copy
 import evaluation_tools as eval_to
+import archive_tools as arch_to
 
 from sklearn.svm import SVR
 
@@ -38,9 +39,9 @@ def maintain_archive():
 approx_pareto_front = None
 
 def getResult():
-    global archive_sol, approx_pareto_front, archiveOK
+    global approx_pareto_front, archiveOK
     if(archiveOK):
-        tmp = approx_pareto_front, archive_sol
+        tmp = approx_pareto_front, arch_to.getArchive()
     else:
         tmp = approx_pareto_front
     return tmp
@@ -217,7 +218,7 @@ def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_fun
 
 
 def runTcheby():
-    global param, nb_evals, archive_score, approx_pareto_front, archiveOK, nb_evals, NO_FILE_TO_WRITE
+    global param, nb_evals, approx_pareto_front, archiveOK, nb_evals, NO_FILE_TO_WRITE
 
     ############################################################################
     # PARAMETER
@@ -324,19 +325,19 @@ def runTcheby():
                     best_g_tcheby[j] = g_mix
                     #if we manga the archive and the solution have not been add already
                     if(archiveOK and not(added_to_S)):
-                       archivePut(best_candidate, mix_scores)
+                       arch_to.archivePut(best_candidate, mix_scores)
                        added_to_S = True
 
         #print("Update", itera, "done.")
         #if manage archive
         if(archiveOK):
-           maintain_archive()
+           arch_to.maintain_archive()
         #graphic update
         if(writeOK):
             printObjectives(file_to_write, nb_evals, itera+1, best_decisions_scores, problem_size)
             continue
 
-        yield archive_score, best_decisions_scores, itera+1, nb_evals, min_f1, min_f2, pop_size, isReals
+        yield arch_to.getArchiveScore(), best_decisions_scores, itera+1, nb_evals, min_f1, min_f2, pop_size, isReals
 
     return 1
 
