@@ -35,9 +35,8 @@ def getResult():
         tmp = approx_pareto_front
     return tmp
 
-
 #-------------------------------------------------------------------------------
-#MAIN ALGORITHMS
+#ACCESSIBLE FUNCTIONS
 
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
 param = None
@@ -81,6 +80,7 @@ def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_fun
 
 
 #-------------------------------------------------------------------------------
+#MAIN ALGORITHMS
 
 def runTcheby():
     global param, nb_evals, approx_pareto_front, archiveOK, nb_evals, NO_FILE_TO_WRITE
@@ -118,12 +118,14 @@ def runTcheby():
 
     #giving global visibility to the best_decisions to get the result at the end
     approx_pareto_front = best_decisions
+
     #initial best decisions scores
     best_decisions_scores = [eval_to.free_eval(start_fct, best_decisions[i], problem_size) for i in range(nb_functions)]
 
     nb_evals = 0
 
     pop_size = nb_functions
+
     #current optimal scores for both axes
     min_f1 = min(best_decisions_scores[0])
     min_f2 = min(best_decisions_scores[1])
@@ -132,76 +134,90 @@ def runTcheby():
     #initial best g_tcheby scores
     best_g_tcheby = [eval_to.g_tcheby((directions[0][i], directions[1][i]), best_decisions_scores[i], z_opt_scores) for i in range(nb_functions)]
 
-
     #get the first training part of the item we will learn on
     model_directions = train_to.getDirectionsTrainingMatrix(directions)
 
-
-    ############################################################################
-    # MAIN ALGORITHM
     writeOK = False
     if(file_to_write != NO_FILE_TO_WRITE):
         writeOK = True
+
+    ############################################################################
+    # MAIN ALGORITHM
+
     if(writeOK):
         printObjectives(file_to_write, nb_evals, 0,best_decisions_scores, problem_size)
+
     #iterations loop
     for itera in range(nb_iterations):
         #Update model
         training_input, training_output = train_to.getTrainingSet(model_directions, best_decisions, best_decisions_scores ,z_opt_scores, strategy, nb_functions, training_neighborhood_size)
         clf.fit(training_input, training_output)
+
         #functions loop
         for f in range(nb_functions):
+
             #get all the indice of neighbors of a function in a certain distance of f and include f in
             f_neighbors, current_neighbourhing_size = gt.getNeighborsInclusive(f, neighboring_size, nb_functions, delta_neighbourhood)
 
+            #get a list of offspring from the neighbors
             list_offspring = samp_to.extended_sampling(f, f_neighbors, sampling_param, nb_samples)
 
+            #apply a filter on the offspring list and select the best one
             best_candidate = filt_to.model_based_filtring(clf, f_neighbors, list_offspring, model_directions)
 
             #evaluation of the newly made solution
             mix_scores, nb_evals = eval_to.eval(start_fct, best_candidate, problem_size)
-            #MAJ min of f1
+
+            #MAJ of the z_star point
             if(mix_scores[0] < min_f1):
                 min_f1 = mix_scores[0]
                 z_opt_scores[0] = min_f1
-            #MAJ min of f2
             if(mix_scores[1] < min_f2):
                 min_f2 = mix_scores[1]
                 z_opt_scores[1] = min_f2
-            #loop on all the neighbors + f
+
+            #boolean that is True if the offspring has been add to the archive
             added_to_S = False
-            #count how many best decisions has been changed
+
+            #count how many best decisions has been changed with the newly offspring
             cmpt_best_maj = 0
-            #archive not yet
+
+            #random course through the neighbors list
             random.SystemRandom().shuffle(f_neighbors)
+
+            #course through the neighbors list
             for j in f_neighbors:
-                #stop maj best if maj limit reach
+                #stop if already max number of remplacement reach
                 if(cmpt_best_maj >= max_decisions_maj):
                     break
-                #if the g_tcheby of the new solution is less distant from the z_optimal solution than the current best solution of the function j
+
+                #compute g_tcheby
                 wj = (directions[0][j],directions[1][j])
                 g_mix = eval_to.g_tcheby(wj, mix_scores, z_opt_scores)
                 g_best = eval_to.g_tcheby(wj, best_decisions_scores[j], z_opt_scores)
-                #if(g_mix < best_g_tcheby[j]):
+
+                #if the g_tcheby of the new solution is less distant from the z_optimal solution than the current best solution of the function j
                 if(g_mix < g_best):
                     cmpt_best_maj += 1
                     best_decisions[j] = best_candidate
                     best_decisions_scores[j] = mix_scores
                     best_g_tcheby[j] = g_mix
-                    #if we manga the archive and the solution have not been add already
+                    #if we manage the archive and the solution have not been add already
                     if(archiveOK and not(added_to_S)):
                        arch_to.archivePut(best_candidate, mix_scores)
                        added_to_S = True
-
         #print("Update", itera, "done.")
+
         #if manage archive
         if(archiveOK):
            arch_to.maintain_archive()
-        #graphic update
+
+        #if write the result in a file
         if(writeOK):
             printObjectives(file_to_write, nb_evals, itera+1, best_decisions_scores, problem_size)
             continue
 
+        #graphic update
         yield arch_to.getArchiveScore(), best_decisions_scores, itera+1, nb_evals, min_f1, min_f2, pop_size, isReals
 
     return 1
