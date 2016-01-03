@@ -2,6 +2,8 @@ import numpy as np
 
 import evaluation_tools as eval_to
 
+MAX_INTEGER = 2**30
+
 #--------------------------------------------------------------------------------------------------------------
 # MODEL-BASED-FILTRING
 
