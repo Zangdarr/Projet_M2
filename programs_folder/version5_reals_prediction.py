@@ -42,7 +42,7 @@ distrib_index_n = 20
 #size of the neighborhood that will be used for the model training
 training_neighborhood_size = 5
 #strategy used for the training step "single" / "all" / "neighbors"
-strategy = 'neighbors'
+#strategy = 'neighbors'
 
 #search_space = fct.getSearchSpace(problem_size)
 
