@@ -150,7 +150,7 @@ def runTcheby():
         #Update model
         training_input, training_output = train_to.getTrainingSet(model_directions, best_decisions, best_decisions_scores ,z_opt_scores, strategy, nb_functions, training_neighborhood_size)
         clf.fit(training_input, training_output)
-
+        print(itera, clf.score(training_input, training_output))
         #functions loop
         for f in range(nb_functions):
 
