@@ -9,17 +9,19 @@ MAX_INTEGER = 2**30
 
 def model_based_filtring(filter_strat, free_eval,  param):
 
-    model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
-
     if(filter_strat == 'average'):
-        return average_model_based(model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, free_eval)
+        return average_model_based(free_eval, param)
     elif(filter_strat == 'min'):
-        return min_model_based(model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, free_eval)
+        return min_model_based(free_eval, param)
     elif(filter_strat == 'maxdiff'):
-        return maxdiff_model_based(model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, free_eval, population_scores)
+        return maxdiff_model_based(free_eval, param)
 
 #moyenne des écart
-def maxdiff_model_based(model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, free_eval, population_scores):
+def maxdiff_model_based(free_eval, param):
+
+    model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+
+
     id_offspring = -1
     index_best = -1
     score_best = 0
@@ -59,8 +61,11 @@ def maxdiff_model_based(model, f_neighbors, list_offspring, model_directions, st
     return list_offspring[index_best]
 
 
-def min_model_based(model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, free_eval):
+def min_model_based(free_eval, param):
     global MAX_INTEGER
+
+    model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+
 
     id_offspring = -1
     index_best = -1
@@ -98,7 +103,11 @@ def min_model_based(model, f_neighbors, list_offspring, model_directions, start_
     return list_offspring[index_best]
 
 
-def average_model_based(model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, free_eval):
+def average_model_based(free_eval, param):
+
+    model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+
+
     id_offspring = -1
     index_best = -1
     score_best = 0
