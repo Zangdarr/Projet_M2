@@ -86,7 +86,8 @@ def runTcheby():
     ############################################################################
     # PARAMETER
 
-    clf = SVR(C=1.0, epsilon=0.2, kernel="rbf")
+    clf = SVR(C=1.0, epsilon=0.1, kernel="rbf")
+
 
     isReals = True
     start_fct, nb_functions                = param[0:2]
