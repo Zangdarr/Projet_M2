@@ -19,7 +19,7 @@ def model_based_filtring(filter_strat, free_eval,  param):
 #moyenne des écart
 def maxdiff_model_based(free_eval, param):
 
-    model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+    model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
 
 
     id_offspring = -1
@@ -64,7 +64,7 @@ def maxdiff_model_based(free_eval, param):
 def min_model_based(free_eval, param):
     global MAX_INTEGER
 
-    model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+    model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
 
 
     id_offspring = -1
@@ -105,7 +105,7 @@ def min_model_based(free_eval, param):
 
 def average_model_based(free_eval, param):
 
-    model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+    model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
 
 
     id_offspring = -1
