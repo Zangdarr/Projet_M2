@@ -13,6 +13,89 @@ def model_based_filtring(filter_strat, free_eval,  param):
 
     if(filter_strat == 'average'):
         return average_model_based(model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, free_eval)
+    elif(filter_strat == 'min'):
+        return min_model_based(model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, free_eval)
+    elif(filter_strat == 'maxdiff'):
+        return maxdiff_model_based(model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, free_eval, population_scores)
+
+#moyenne des écart
+def maxdiff_model_based(model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, free_eval, population_scores):
+    id_offspring = -1
+    index_best = -1
+    score_best = 0
+
+    for offspring in list_offspring:
+        id_offspring += 1
+        diff_score = 0
+
+        f_input_data = getInputData(f_neighbors, model_directions, offspring)
+        if(not free_eval):
+           f_input_data = np.matrix(f_input_data)
+
+        f = 0
+        for data in f_input_data:
+            if(free_eval):
+                w = data[0:2]
+                offs = data[2:]
+                score_eval = eval_to.free_eval(start_fct, offs, problem_size)
+                tmp = eval_to.g_tcheby(w, score_eval, z_star)
+                current_gtcheby = eval_to.g_tcheby(w , population_scores[f], z_star)
+            else:
+                tmp = model.predict(data)
+                current_gtcheby = eval_to.g_tcheby(model_directions[f].tolist()[0], population_scores[f], z_star)
+
+            diff_score += current_gtcheby - tmp
+            f +=1
+
+        if(index_best == -1):
+            index_best = id_offspring
+            score_best = diff_score
+        elif(diff_score > score_best):
+            index_best = id_offspring
+            score_best = diff_score
+        else :
+            pass
+
+    return list_offspring[index_best]
+
+
+def min_model_based(model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, free_eval):
+    global MAX_INTEGER
+
+    id_offspring = -1
+    index_best = -1
+    score_best = 0
+    for offspring in list_offspring:
+        id_offspring += 1
+        min_score = MAX_INTEGER
+
+        f_input_data = getInputData(f_neighbors, model_directions, offspring)
+        if(not free_eval):
+           f_input_data = np.matrix(f_input_data)
+
+
+        for data in f_input_data:
+            if(free_eval):
+                w = data[0:2]
+                offs = data[2:]
+                score_eval = eval_to.free_eval(start_fct, offs, problem_size)
+                tmp = eval_to.g_tcheby(w, score_eval, z_star)
+            else:
+                tmp = model.predict(data)
+
+            min_score = min(tmp, min_score)
+
+
+        if(index_best == -1):
+            index_best = id_offspring
+            score_best = min_score
+        elif(min_score < score_best):
+            index_best = id_offspring
+            score_best = min_score
+        else :
+            pass
+
+    return list_offspring[index_best]
 
 
 def average_model_based(model, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, free_eval):
