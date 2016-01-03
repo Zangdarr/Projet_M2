@@ -29,12 +29,12 @@ for run in range(k):
                     for training_neighborhood_size in training_neighborhood_sizes:
                         filename = "UF4_MOEAD_ML_PS-" + str(problem_size) + "_S-" + strategy + "_L-" + str(nb_samples) + "_TS-"+ str(training_neighborhood_size)+ "_R-"+ str(run) +".txt"
                         file_to_write = open(filename, 'a')
-                        v5.experimentWith(file_to_write ,problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy)
+                        v5.experimentWith(file_to_write ,problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat, free_eval)
                         file_to_write.close()
                         print(filename, "done.")
                  else:
                         filename = "UF4_MOEAD_ML_PS-" + str(problem_size) + "_S-" + strategy + "_L-" + str(nb_samples) + "_TS--1_R-"+ str(run) +".txt"
                         file_to_write = open(filename, 'a')
-                        v5.experimentWith(file_to_write, problem_size, nb_samples, nb_iterations, -1, strategy)
+                        v5.experimentWith(file_to_write, problem_size, nb_samples, nb_iterations, -1, strategy, filter_strat, free_eval)
                         file_to_write.close()
                         print(filename, "done.")
