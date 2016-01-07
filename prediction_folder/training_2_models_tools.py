@@ -68,7 +68,8 @@ def get2ModelsTrainingSetNeighbors(training_directions, training_individuals, in
 def get2ModelsTrainingSetSingle(training_directions, training_individuals, individuals_objectives, z_star):
     individual_id    = -1
     training_inputs  = []
-    training_outputs = []
+    first_training_outputs = []
+    second_training_outputs = []
 
     for individual in training_individuals:
         individual_id += 1
@@ -76,15 +77,17 @@ def get2ModelsTrainingSetSingle(training_directions, training_individuals, indiv
         direction = training_directions[individual_id]
         current_dir = direction.tolist()[0]
         training_input = []
-        training_input.extend(current_dir)
+        #training_input.extend(current_dir)
         training_input.extend(individual)
 
-        training_output = eval_to.g_tcheby(current_dir, individuals_objectives[individual_id], z_star)
+        first_training_output = individuals_objectives[individual_id][0]
+        second_training_output = individuals_objectives[individual_id][1]
 
         training_inputs.append(training_input)
-        training_outputs.append(training_output)
+        first_training_outputs.append(first_training_output)
+        second_training_outputs.append(second_training_output)
 
-    return training_inputs, training_outputs
+    return training_inputs, first_training_outputs, second_training_outputs
 
 
 def get2ModelsTrainingSetAll(training_directions, training_individuals, individuals_objectives, z_star):
