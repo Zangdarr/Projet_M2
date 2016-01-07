@@ -3,16 +3,16 @@ import sys
 
 
 #problem_size=[5,10, 30]
-problem_sizes               = [10]
+problem_sizes               = [10, 30]
 k = 20
 training_neighborhood_sizes = [21]
 
 #problem_sizes = [5,10, 30]
 #k = 30
-nb_sampless                 = [16]
-strategies                  = ['all']
+nb_sampless                 = [2, 4, 8, 16]
+strategies                  = ['single']
 filter_strat = "average"
-free_eval = True
+free_eval = [False, True]
 
 UF_name = "UF1"
 
