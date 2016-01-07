@@ -35,14 +35,14 @@ def getDirectionsTrainingMatrix(directions):
 
 def get2ModelsTrainingSet(training_directions, training_individuals, individuals_objectives ,z_star, strategy, population_size, training_neighborhood_size):
     if(strategy == 'all'):
-        return getTrainingSetAll(training_directions, training_individuals, individuals_objectives, z_star)
+        return get2ModelsTrainingSetAll(training_directions, training_individuals, individuals_objectives, z_star)
     elif(strategy == 'single'):
-        return getTrainingSetSingle(training_directions, training_individuals, individuals_objectives, z_star)
+        return get2ModelsTrainingSetSingle(training_directions, training_individuals, individuals_objectives, z_star)
     elif(strategy == 'neighbors'):
-        return getTrainingSetNeighbors(training_directions, training_individuals, individuals_objectives, z_star, population_size, training_neighborhood_size)
+        return get2ModelsTrainingSetNeighbors(training_directions, training_individuals, individuals_objectives, z_star, population_size, training_neighborhood_size)
 
 
-def getTrainingSetNeighbors(training_directions, training_individuals, individuals_objectives, z_star, population_size, training_neighborhood_size):
+def get2ModelsTrainingSetNeighbors(training_directions, training_individuals, individuals_objectives, z_star, population_size, training_neighborhood_size):
     individual_id    = -1
     training_inputs  = []
     training_outputs = []
@@ -50,7 +50,7 @@ def getTrainingSetNeighbors(training_directions, training_individuals, individua
     for individual in training_individuals:
         individual_id += 1
 
-        neighbors_directions = getTrainingNeighborsInclusive(individual_id, training_neighborhood_size, population_size)
+        neighbors_directions = get2ModelsTrainingNeighborsInclusive(individual_id, training_neighborhood_size, population_size)
 
         for direction in neighbors_directions:
             current_dir = training_directions[direction].tolist()[0]
@@ -65,7 +65,7 @@ def getTrainingSetNeighbors(training_directions, training_individuals, individua
     return training_inputs, training_outputs
 
 
-def getTrainingSetSingle(training_directions, training_individuals, individuals_objectives, z_star):
+def get2ModelsTrainingSetSingle(training_directions, training_individuals, individuals_objectives, z_star):
     individual_id    = -1
     training_inputs  = []
     training_outputs = []
@@ -87,7 +87,7 @@ def getTrainingSetSingle(training_directions, training_individuals, individuals_
     return training_inputs, training_outputs
 
 
-def getTrainingSetAll(training_directions, training_individuals, individuals_objectives, z_star):
+def get2ModelsTrainingSetAll(training_directions, training_individuals, individuals_objectives, z_star):
     individual_id    = -1
     training_inputs  = []
     training_outputs = []
