@@ -16,6 +16,7 @@ free_eval = [False, True]
 
 UF_name = "UF1"
 
+param_print_every = 1
 
 #TODO sauvegarder les R² à chaques générations
 #TODO faire un autre programme avec 2 modèles, 1 pour f1 et l'autre pour f2. Les données utilisées pour l'apprentissage sont la population courante.S Une version plus avancée serait de prendre pour chaque direction les k dernières solutions qui ont minimisé la directions.
@@ -36,12 +37,12 @@ for run in range(k):
                     for training_neighborhood_size in training_neighborhood_sizes:
                         filename = UF_name + "_MOEAD_ML_PS-" + str(problem_size) + "_S-" + strategy + "_L-" + str(nb_samples) + "_TS-"+ str(training_neighborhood_size) + "_FS-" + filter_strat + "_FE-" + str(fe) + "_R-"+ str(run) +".txt"
                         file_to_write = open(filename, 'a')
-                        v5.experimentWith(file_to_write ,problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat, fe)
+                        v5.experimentWith(file_to_write ,problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat, fe, param_print_every)
                         file_to_write.close()
                         print(filename, "done.")
                  else:
                         filename = UF_name + "_MOEAD_ML_PS-" + str(problem_size) + "_S-" + strategy + "_L-" + str(nb_samples) + "_TS--1" + "_FS-" + filter_strat + "_FE-" + str(fe) +"_R-"+ str(run) +".txt"
                         file_to_write = open(filename, 'a')
-                        v5.experimentWith(file_to_write, problem_size, nb_samples, nb_iterations, -1, strategy, filter_strat, fe)
+                        v5.experimentWith(file_to_write, problem_size, nb_samples, nb_iterations, -1, strategy, filter_strat, fe, param_print_every)
                         file_to_write.close()
                         print(filename, "done.")

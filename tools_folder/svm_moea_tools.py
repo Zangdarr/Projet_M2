@@ -61,7 +61,7 @@ def getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation
 
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
 def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_functions,
-               nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, sleeptime=10):
+               nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every, sleeptime=10):
     global param, archiveOK
 
     if(manage_archive):
@@ -69,7 +69,7 @@ def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_fun
     #random initialisation
     init_decisions = init_to.initRandom(generation_fct, nb_functions, problem_size, search_space)
     #algorithm parameters
-    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval]
+    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every]
     #function that will be called by runAnimatedGraph before it's end
     end_function = getResult
     #launch the graphic view and the algorithm
@@ -101,6 +101,7 @@ def runTcheby():
     nb_samples, training_neighborhood_size = param[14:16]
     strategy, file_to_write                = param[16:18]
     filter_strat, free_eval                = param[18:20]
+    param_print_every                      = param[20]
 
 
     #get separatly offspring operator fct
@@ -215,7 +216,7 @@ def runTcheby():
 
         #if write the result in a file
         if(writeOK):
-            printObjectives(file_to_write, nb_evals, itera+1, best_decisions_scores, problem_size)
+            printObjectives(file_to_write, nb_evals, itera+1, best_decisions_scores, problem_size, print_every=param_print_every)
             continue
 
         #graphic update
@@ -224,8 +225,11 @@ def runTcheby():
     return 1
 
 
-def printObjectives(file_to_write, eval_number,iteration_number,  objectives_table, problem_size):
-    if(iteration_number % problem_size == 0):
+def printObjectives(file_to_write, eval_number,iteration_number,  objectives_table, problem_size, print_every=-1):
+    modulo = problem_size
+    if(print_every != -1):
+        modulo = print_every
+    if(iteration_number % modulo == 0):
         tab = [''," ", '', " ", '', " ", '', "\n"]
         for objectives in objectives_table:
             tab[0] = str(iteration_number)

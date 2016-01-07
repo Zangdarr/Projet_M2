@@ -61,8 +61,8 @@ def runOneTime(problem_size, nb_samples, nb_iterations, training_neighborhood_si
        svr.getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation_fct, pareto_front_fct, nb_functions, nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, filter_strat, free_eval, sleeptime)
 
 
-def experimentWith(file_to_write, problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat, free_eval):
+def experimentWith(file_to_write, problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat, free_eval, param_print_every):
        global start_fct, operator_fct, generation_fct, nb_functions, neighboring_size, max_decisions_maj, delta_neighbourhood, CR, F, distrib_index_n, manage_archive, sleeptime
        pm = 1 / problem_size
        search_space = fct.getSearchSpace(problem_size)
-       svr.getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_functions, nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval,sleeptime)
+       svr.getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_functions, nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every, sleeptime)
