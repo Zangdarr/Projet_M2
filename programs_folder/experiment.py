@@ -9,8 +9,8 @@ training_neighborhood_sizes = [21]
 
 #problem_sizes = [5,10, 30]
 #k = 30
-nb_sampless                 = [2,4, 8, 16]
-strategies                  = ['single', 'all', 'neighbors']
+nb_sampless                 = [16]
+strategies                  = ['all']
 
 
 #TODO sauvegarder les R² à chaques générations
