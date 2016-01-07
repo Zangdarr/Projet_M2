@@ -116,7 +116,7 @@ def average_model_based(free_eval, param):
         average_score = 0
 
         f_input_data = getInputData(f_neighbors, model_directions, offspring)
-        if(not free_eval):
+        if(not free_eval and not two_models_bool):
            f_input_data = np.matrix(f_input_data)
 
         count = 0
@@ -129,11 +129,15 @@ def average_model_based(free_eval, param):
             elif(not two_models_bool):
                 tmp = model.predict(data)
             else:#2 models
-                w = data[0:2]
+            
                 offs = data[2:]
-                e1 = model.predict(data)
-                e2 = model2.predict(data)
-                tmp = eval_to.g_tcheby(w, [e1, e2], z_star)
+
+                e1 = model.predict(np.array(offs).reshape(1,-1)).tolist()
+                e2 = model2.predict(np.array(offs).reshape(1,-1)).tolist()
+
+                scores = [e1[0], e2[0]]
+                w = data[0:2]
+                tmp = eval_to.g_tcheby(w, scores, z_star)
 
             average_score += tmp
             count +=1
