@@ -126,8 +126,15 @@ def average_model_based(free_eval, param):
                 offs = data[2:]
                 score_eval = eval_to.free_eval(start_fct, offs, problem_size)
                 tmp = eval_to.g_tcheby(w, score_eval, z_star)
-            else:
+            elif(not two_models_bool):
                 tmp = model.predict(data)
+            else:#2 models
+                w = data[0:2]
+                offs = data[2:]
+                e1 = model.predict(data)
+                e2 = model2.predict(data)
+                tmp = eval_to.g_tcheby(w, [e1, e2], z_star)
+
             average_score += tmp
             count +=1
 
