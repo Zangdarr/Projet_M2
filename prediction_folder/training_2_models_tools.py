@@ -33,7 +33,7 @@ def getDirectionsTrainingMatrix(directions):
 
     return result
 
-def getTrainingSet(training_directions, training_individuals, individuals_objectives ,z_star, strategy, population_size, training_neighborhood_size):
+def get2ModelsTrainingSet(training_directions, training_individuals, individuals_objectives ,z_star, strategy, population_size, training_neighborhood_size):
     if(strategy == 'all'):
         return getTrainingSetAll(training_directions, training_individuals, individuals_objectives, z_star)
     elif(strategy == 'single'):
