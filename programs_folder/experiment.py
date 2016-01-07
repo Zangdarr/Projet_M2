@@ -11,6 +11,10 @@ training_neighborhood_sizes = [21]
 #k = 30
 nb_sampless                 = [16]
 strategies                  = ['all']
+filter_strat = "average"
+free_eval = True
+
+UF_name = "UF1"
 
 
 #TODO sauvegarder les R² à chaques générations
