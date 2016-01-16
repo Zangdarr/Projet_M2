@@ -46,7 +46,7 @@ def maxdiff_model_based(free_eval, param):
                 tmp = model.predict(data)
                 current_gtcheby = eval_to.g_tcheby(model_directions[f].tolist()[0], population_scores[f], z_star)
 
-            diff_score += current_gtcheby - tmp
+            diff_score += max(0, current_gtcheby - tmp)
             f +=1
 
         if(index_best == -1):
