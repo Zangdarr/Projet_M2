@@ -90,7 +90,8 @@ def runTcheby():
     ############################################################################
     # PARAMETER
 
-    clf = SVR(C=1.0, epsilon=0.1, kernel="rbf")
+    #clf = SVR(C=1.0, epsilon=0.1, kernel="rbf")
+    clf = NuSVR()
     clf2 = -1
     two_models_bool = False
 
