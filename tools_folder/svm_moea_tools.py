@@ -48,7 +48,7 @@ def getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation
     #random initialisation
     init_decisions = init_to.initRandom(generation_fct, nb_functions, problem_size, search_space)
     #algorithm parameters
-    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, -1, filter_strat, free_eval]
+    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, -1, filter_strat, free_eval, -1, -1]
     #function that will be called by runAnimatedGraph before it's end
     end_function = getResult
     #launch the graphic view and the algorithm
@@ -61,7 +61,7 @@ def getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation
 
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
 def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_functions,
-               nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every, sleeptime=10):
+               nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every, file_to_writeR2, sleeptime=10):
     global param, archiveOK
 
     if(manage_archive):
@@ -69,7 +69,7 @@ def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_fun
     #random initialisation
     init_decisions = init_to.initRandom(generation_fct, nb_functions, problem_size, search_space)
     #algorithm parameters
-    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every]
+    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every, file_to_writeR2]
     #function that will be called by runAnimatedGraph before it's end
     end_function = getResult
     #launch the graphic view and the algorithm
@@ -101,7 +101,7 @@ def runTcheby():
     nb_samples, training_neighborhood_size = param[14:16]
     strategy, file_to_write                = param[16:18]
     filter_strat, free_eval                = param[18:20]
-    param_print_every                      = param[20]
+    param_print_every, file_to_writeR2     = param[20:22]
 
 
     #get separatly offspring operator fct
@@ -141,6 +141,10 @@ def runTcheby():
     if(file_to_write != NO_FILE_TO_WRITE):
         writeOK = True
 
+    writeR2OK = False
+    if(file_to_writeR2 != NO_FILE_TO_WRITE):
+        writeR2OK = True
+
     ############################################################################
     # MAIN ALGORITHM
 
@@ -151,8 +155,18 @@ def runTcheby():
     for itera in range(nb_iterations):
         #Update model
         training_input, training_output = train_to.getTrainingSet(model_directions, best_decisions, best_decisions_scores ,z_opt_scores, strategy, nb_functions, training_neighborhood_size)
+
         clf.fit(training_input, training_output)
-        print(itera, clf.score(training_input, training_output))
+        if(writeR2OK):
+            #print(itera, clf.score(training_input, training_output))
+            kf = cross_validation.KFold(n=100, n_folds=10, shuffle=True,
+                                           random_state=None)
+
+            scores_cv = cross_validation.cross_val_score(clf, training_input, training_output, cv=kf, scoring="r2")
+            R2 = clf.score(training_input, training_output)
+            #print(R2)
+            printR2(file_to_writeR2, nb_evals, itera,  R2, scores_cv.mean(), problem_size, print_every=1)
+
         #functions loop
         for f in range(nb_functions):
 
@@ -240,3 +254,16 @@ def printObjectives(file_to_write, eval_number,iteration_number,  objectives_tab
 
             file_to_write.write(''.join(tab))
             #print(iteration_number, eval_number, objectives[0], objectives[1])
+
+def printR2(file_to_write, eval_number, iteration_number,  R2, scores_cv, problem_size, print_every=-1):
+    modulo = problem_size
+    if(print_every != -1):
+        modulo = print_every
+    if(iteration_number % modulo == 0):
+            tab = [''," ", '', " ", '', " ", '', "\n"]
+            tab[0] = str(iteration_number)
+            tab[2] = str(eval_number)
+            tab[4] = str(round(R2,5))
+            tab[6] = str(round(scores_cv, 5))
+
+            file_to_write.write(''.join(tab))
