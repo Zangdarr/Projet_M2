@@ -35,14 +35,21 @@ for run in range(k):
             for strategy in strategies:
                  if(strategy == 'neighbors'):
                     for training_neighborhood_size in training_neighborhood_sizes:
-                        filename = UF_name + "_MOEAD_ML_PS-" + str(problem_size) + "_S-" + strategy + "_L-" + str(nb_samples) + "_TS-"+ str(training_neighborhood_size) + "_FS-" + filter_strat + "_FE-" + str(fe) + "_R-"+ str(run) +".txt"
+                        filename = UF_name + algo_name +"_PS-" + str(problem_size) + "_S-" + strategy + "_L-" + str(nb_samples) + "_TS-"+ str(training_neighborhood_size) + "_FS-" + filter_strat + "_FE-" + str(fe) + "_R-"+ str(run) +".txt"
+                        filenameR2 = "R2_" + filename
                         file_to_write = open(filename, 'a')
-                        v5.experimentWith(file_to_write ,problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat, fe, param_print_every)
+                        file_to_writeR2 = open(filenameR2, 'a')
+                        v5.experimentWith(file_to_write ,problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat, fe, param_print_every, file_to_writeR2)
                         file_to_write.close()
+                        file_to_writeR2.close()
                         print(filename, "done.")
                  else:
-                        filename = UF_name + "_MOEAD_ML_PS-" + str(problem_size) + "_S-" + strategy + "_L-" + str(nb_samples) + "_TS--1" + "_FS-" + filter_strat + "_FE-" + str(fe) +"_R-"+ str(run) +".txt"
+                        filename = UF_name + algo_name +"_PS-" + str(problem_size) + "_S-" + strategy + "_L-" + str(nb_samples) + "_TS--1" + "_FS-" + filter_strat + "_FE-" + str(fe) +"_R-"+ str(run) +".txt"
+                        filenameR2 = "R2_" + filename
                         file_to_write = open(filename, 'a')
-                        v5.experimentWith(file_to_write, problem_size, nb_samples, nb_iterations, -1, strategy, filter_strat, fe, param_print_every)
+                        file_to_writeR2 = open(filenameR2, 'a')
+
+                        v5.experimentWith(file_to_write, problem_size, nb_samples, nb_iterations, -1, strategy, filter_strat, fe, param_print_every, file_to_writeR2)
                         file_to_write.close()
+                        file_to_writeR2.close()
                         print(filename, "done.")
