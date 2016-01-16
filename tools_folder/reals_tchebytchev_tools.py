@@ -52,14 +52,14 @@ def getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation
 
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
 def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_functions,
-               nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, file_to_write, sleeptime=10):
+               nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, file_to_write, param_print_every, sleeptime=10):
     global param, archiveOK
     if(manage_archive):
         archiveOK = True
     #random initialisation
     init_decisions = init_to.initRandom(generation_fct, nb_functions, problem_size, search_space)
     #algorithm parameters
-    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, file_to_write]
+    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, file_to_write, param_print_every]
     #launch the algorithm
     result = runTcheby()
     #return the approximation of the pareto front and the archive if managed
@@ -80,7 +80,7 @@ def runTcheby():
     CR, search_space                       = param[8:10]
     F, distrib_index_n                     = param[10:12]
     pm, operator_fct                       = param[12:14]
-    file_to_write                          = param[14]
+    file_to_write, param_print_every       = param[14:16]
 
 
     #get separatly offspring operator fct
