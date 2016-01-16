@@ -186,7 +186,7 @@ def runTcheby():
             best_candidate = filt_to.model_based_filtring(filter_strat, free_eval, filter_param)
 
             #evaluation of the newly made solution
-            mix_scores, nb_evals = eval_to.eval(start_fct, best_candidate, problem_size)
+            mix_scores = eval_to.eval(start_fct, best_candidate, problem_size)
 
             #MAJ of the z_star point
             if(mix_scores[0] < min_f1):
