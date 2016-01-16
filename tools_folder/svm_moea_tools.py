@@ -19,6 +19,10 @@ import space_tools as sp
 import training_tools as train_to
 
 from sklearn.svm import SVR
+from sklearn.svm import NuSVR
+from sklearn import grid_search
+from sklearn import cross_validation
+
 
 #-------------------------------------------------------------------------------
 archiveOK = False
