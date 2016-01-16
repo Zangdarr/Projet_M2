@@ -22,6 +22,6 @@ for problem_size in problem_sizes:
 
         filename = "UF4_MOEAD_PS-" + str(problem_size) + "_R-"+ str(run) +".txt"
         file_to_write = open(filename, 'a')
-        v4.experimentWith(file_to_write ,problem_size, nb_iterations)
+        v4.experimentWith(file_to_write ,problem_size, nb_iterations, 1)
         file_to_write.close()
         print(filename, "done.")
