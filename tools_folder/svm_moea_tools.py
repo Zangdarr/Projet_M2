@@ -85,7 +85,7 @@ def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_fun
 
 
 def runTcheby():
-    global param, nb_evals, approx_pareto_front, archiveOK, nb_evals, NO_FILE_TO_WRITE
+    global param, nb_evals, approx_pareto_front, archiveOK, NO_FILE_TO_WRITE
 
     ############################################################################
     # PARAMETER
