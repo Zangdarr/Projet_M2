@@ -16,7 +16,7 @@ def model_based_filtring(filter_strat, free_eval,  param):
     elif(filter_strat == 'maxdiff'):
         return maxdiff_model_based(free_eval, param)
 
-#moyenne des écart
+#average scalar improvement
 def maxdiff_model_based(free_eval, param):
 
     model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
@@ -60,7 +60,7 @@ def maxdiff_model_based(free_eval, param):
 
     return list_offspring[index_best]
 
-
+#best scalar value
 def min_model_based(free_eval, param):
     global MAX_INTEGER
 
