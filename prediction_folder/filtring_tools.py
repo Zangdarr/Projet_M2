@@ -184,7 +184,7 @@ def average_model_based(free_eval, param):
             elif(not two_models_bool):
                 tmp = model.predict(data)
             else:#2 models
-            
+
                 offs = data[2:]
 
                 e1 = model.predict(np.array(offs).reshape(1,-1)).tolist()
