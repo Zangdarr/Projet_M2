@@ -27,16 +27,18 @@ def by_direction(free_eval, param):
     index_best = -1
     score_best = 0
 
+    current_f_w = model_directions[current_f].tolist()[0]
+    
     for offspring in list_offspring:
         id_offspring += 1
         diff_score = 0
 
         f_input_data = []
 
-        f_input_data.extend(model_directions[current_f].tolist()[0])
+        f_input_data.extend(current_f_w)
 
         f_input_data.extend(offspring)
-        
+
         if(not free_eval):
            f_input_data = np.matrix(f_input_data)
 
