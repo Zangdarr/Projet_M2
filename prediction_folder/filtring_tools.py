@@ -31,7 +31,12 @@ def by_direction(free_eval, param):
         id_offspring += 1
         diff_score = 0
 
-        f_input_data = getInputData(f_neighbors, model_directions, offspring)
+        f_input_data = []
+
+        f_input_data.extend(model_directions[current_f].tolist()[0])
+
+        f_input_data.extend(offspring)
+        
         if(not free_eval):
            f_input_data = np.matrix(f_input_data)
 
