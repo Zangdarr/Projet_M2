@@ -34,4 +34,4 @@ def genRatio_fctbase2(nb_functions, check=False):
     ratio_tab_f2 = ratio_tab_f1.copy()
     ratio_tab_f2.reverse()
 
-    return ratio_tab_f1, ratio_tab_f2
+    return [ratio_tab_f1, ratio_tab_f2]
