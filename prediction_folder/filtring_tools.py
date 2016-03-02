@@ -28,7 +28,7 @@ def by_direction(free_eval, param):
     score_best = 0
 
     current_f_w = model_directions[current_f].tolist()[0]
-    
+
     for offspring in list_offspring:
         id_offspring += 1
         diff_score = 0
@@ -41,33 +41,22 @@ def by_direction(free_eval, param):
 
         if(not free_eval):
            f_input_data = np.matrix(f_input_data)
+           tmp = model.predict(f_input_data)
 
-        f = 0
-        for data in f_input_data:
-            if(free_eval):
-                w = data[0:2]
-                offs = data[2:]
-                score_eval = eval_to.free_eval(start_fct, offs, problem_size)
-                tmp = eval_to.g_tcheby(w, score_eval, z_star)
-                current_gtcheby = eval_to.g_tcheby(w , population_scores[f], z_star)
-            else:
-                tmp = model.predict(data)
-                current_gtcheby = eval_to.g_tcheby(model_directions[f].tolist()[0], population_scores[f], z_star)
+        if(free_eval):
+            score_eval = eval_to.free_eval(start_fct, offspring, problem_size)
+            tmp = eval_to.g_tcheby(current_f_w, score_eval, z_star)
 
-            diff_score = max(0, current_gtcheby - tmp)
-            f +=1
-
-
-            if(index_best == -1):
-                index_best = id_offspring
-                score_best = diff_score
-            elif(diff_score > score_best):
-                index_best = id_offspring
-                score_best = diff_score
-            else :
-                pass
+        if(index_best == -1):
+            index_best = id_offspring
+            score_best = tmp
+        elif(tmp < score_best):
+            index_best = id_offspring
+            score_best = tmp
+        else :
+            pass
     return list_offspring[index_best]
-    
+
 
 def best_scalar_improvment(free_eval, param):
 
