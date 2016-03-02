@@ -15,6 +15,7 @@ filter_strat = "average"
 free_eval = [False, True]
 
 UF_name = "UF1"
+algo_name = "_MOEAD_ML_NuSVR"
 
 param_print_every = 1
 
