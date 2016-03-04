@@ -9,8 +9,6 @@ strategy                   = 'all'
 filter_strat               = 'average'
 free_eval                  = False
 
-#TODO sauvegarder les R² à chaques générations
-#TODO faire un autre programme avec 2 modèles, 1 pour f1 et l'autre pour f2. Les données utilisées pour l'apprentissage sont la population courante.S Une version plus avancée serait de prendre pour chaque direction les k dernières solutions qui ont minimisé la directions.
 
 
 #nb_iterations = problem_size*50
