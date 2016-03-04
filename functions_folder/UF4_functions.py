@@ -24,7 +24,7 @@ def getSearchSpace(problem_size):
     search_space = [[1,(0,1)], [problem_size-1, (-2,2)]]
     return search_space
 
-#FAIRE ATTENTION A PAIRE ET IMPAIRE : il y a un décalage
+#FAIRE ATTENTION A PAIRE ET IMPAIRE : il y a un decalage
 def f1(x_vector, vector_size):
    #score =  x_1 + factor * sum_y_pow2
    decalage = 1
