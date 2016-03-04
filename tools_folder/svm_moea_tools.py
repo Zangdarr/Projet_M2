@@ -241,7 +241,7 @@ def runTcheby():
         #graphic update
         yield arch_to.getArchiveScore(), best_decisions_scores, itera+1, nb_evals, min_f1, min_f2, pop_size, isReals
 
-    return 1
+    return
 
 
 def printObjectives(file_to_write, eval_number,iteration_number,  objectives_table, problem_size, print_every=-1):
