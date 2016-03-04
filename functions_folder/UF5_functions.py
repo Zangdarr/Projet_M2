@@ -47,7 +47,7 @@ def f1(x_vector, vector_size):
 
     sum_h = 0
     for odd in range(1 + decalage, vector_size, 2):
-        sum_h += h_function(y_function(x_1, x_vector[odd], odd ,vector_size - decalage))
+        sum_h += h_function(y_function(x_1, x_vector[odd], odd ,vector_size))
 
 
     return x_1 + tmp1 + tmp2 * sum_h
@@ -72,6 +72,6 @@ def f2(x_vector, vector_size):
 
     sum_h = 0
     for even in range(0+decalage, vector_size, 2):
-        sum_h += h_function(y_function(x_1, x_vector[even], even ,vector_size - decalage))
+        sum_h += h_function(y_function(x_1, x_vector[even], even ,vector_size))
 
     return 1 - x_1 + tmp1 + tmp2 * sum_h
