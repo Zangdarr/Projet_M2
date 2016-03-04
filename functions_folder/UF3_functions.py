@@ -37,7 +37,7 @@ def f1(x_vector, vector_size):
 
 
    #-----------------------------
-   # compute sum on j of yj²
+   # compute sum on j of yj^2
    sum_y_pow2 = 0
 
    y_tab = [0,0]

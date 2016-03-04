@@ -54,7 +54,7 @@ def f1(x_vector, vector_size):
 
 
 
-   # compute sum on j of yj²
+   # compute sum on j of yj^2
    #-----------------------------
    sum_h_yj = 0
 
