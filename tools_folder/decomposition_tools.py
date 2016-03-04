@@ -1,3 +1,5 @@
+import copy
+
 #-----------------------------------------------------------------------------------------------------------------------------------------------#
 """
 #generate the ratio that will be used on both base functions for the N "new" functions, return a table [2][N + 2]
@@ -31,7 +33,7 @@ def genRatio_fctbase2(nb_functions, check=False):
         ratio_tab_f1.append(i / divide_value)
 
     #ratio for the second starting function
-    ratio_tab_f2 = ratio_tab_f1.copy()
+    ratio_tab_f2 = copy.copy(ratio_tab_f1)
     ratio_tab_f2.reverse()
 
     return [ratio_tab_f1, ratio_tab_f2]
