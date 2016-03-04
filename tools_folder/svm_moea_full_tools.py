@@ -113,7 +113,7 @@ def runTcheby():
     #get separatly offspring operator fct
     crossover_fct, mutation_fct, repair_fct = operator_fct
 
-    best_decisions = init_decisions.copy()
+    best_decisions = copy.deepcopy(init_decisions)
 
     sampling_param = [crossover_fct, mutation_fct, repair_fct, best_decisions, F, problem_size, CR, search_space, distrib_index_n, pm]
 
