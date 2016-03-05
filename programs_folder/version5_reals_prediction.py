@@ -9,6 +9,7 @@ import svm_moea_tools as svr
 
 #-----PARAM-----------------
 start_fct    = fct.getObjectives()
+number_of_functions = 100
 operator_fct = [op.DE_Operator, op.polynomial_mutation, op.repair_offspring]
 generation_fct = op.genVector
 start_fct_len = len(start_fct)
@@ -23,7 +24,7 @@ problem_size = 10 #######################################
 #size of the neighbourhood, include the current pos
 neighboring_size = 21
 #number of new funtions to be generated
-N_new_fct = 98 #population size -2
+N_new_fct = number_of_functions - start_fct_len #population size - nb objective function
 #slow down process parameter
 sleeptime = 0
 #number max of replacement for each offspring
