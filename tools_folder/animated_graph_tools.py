@@ -20,8 +20,9 @@ def update(data):
     plt.xlim([0,1.2])
     plt.ylim([0,1.2])
     #recuparation data separetly
-    datax1y1, datax2y2, tic, evals, max_f1, max_f2, pop_size, isReals = data
+    datax1y1, datax2y2, tic, evals, z_star, pop_size, isReals = data
 
+    max_f1, max_f2 = z_star
     #front pareto position in objective space
     x,y = datax1y1
     plt.scatter(x, y,  color='blue', label="archive", marker="x")
