@@ -6,6 +6,9 @@ import numpy
 # Objective functions
 ########################################################################
 
+def getObjectives():
+    return [f1, f2]
+
 def getFrontPareto():
     tf1 = []
     tf2 = []

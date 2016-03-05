@@ -8,7 +8,7 @@ sys.path.insert(0,"../tools_folder/")
 import reals_tchebytchev_tools as tcheby
 
 #-----PARAM-----------------
-start_fct    = [fct.f1, fct.f2]
+start_fct    = fct.getObjectives()
 operator_fct = [op.DE_Operator, op.polynomial_mutation, op.repair_offspring]
 generation_fct = op.genVector
 start_fct_len = len(start_fct)
