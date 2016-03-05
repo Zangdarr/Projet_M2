@@ -18,6 +18,7 @@ import initialisation_tools as init_to
 import sampling_tools as samp_to
 import space_tools as sp
 import training_tools as train_to
+import io_tools as iot
 
 from sklearn.svm import SVR
 from sklearn.svm import NuSVR
@@ -155,7 +156,7 @@ def runTcheby():
     # MAIN ALGORITHM
 
     if(writeOK):
-        printObjectives(file_to_write, nb_evals, 0,best_decisions_scores, problem_size)
+        iot.printObjectives(file_to_write, nb_evals, 0,best_decisions_scores, problem_size)
 
 
     #set of the newest the solution evaluated
@@ -184,7 +185,7 @@ def runTcheby():
             scores_cv = cross_validation.cross_val_score(clf, training_input, training_output, cv=kf, scoring="r2")
             R2 = clf.score(training_input, training_output)
             #print(R2)
-            printR2(file_to_writeR2, nb_evals, itera,  R2, scores_cv.mean(), problem_size, print_every=1)
+            iot.printR2(file_to_writeR2, nb_evals, itera,  R2, scores_cv.mean(), problem_size, print_every=1)
 
         #functions loop
         for f in range(nb_functions):
@@ -260,39 +261,9 @@ def runTcheby():
 
         #if write the result in a file
         if(writeOK):
-            printObjectives(file_to_write, nb_evals, itera+1, best_decisions_scores, problem_size, print_every=param_print_every)
+            iot.printObjectives(file_to_write, nb_evals, itera+1, best_decisions_scores, problem_size, print_every=param_print_every)
             continue
         #graphic update
         yield arch_to.getArchiveScore(), best_decisions_scores, itera+1, nb_evals, min_f1, min_f2, pop_size, isReals
 
     return
-
-
-def printObjectives(file_to_write, eval_number,iteration_number,  objectives_table, problem_size, print_every=-1):
-    modulo = problem_size
-    if(print_every != -1):
-        modulo = print_every
-    if(iteration_number % modulo == 0):
-        tab = [''," ", '', " ", '', " ", '', "\n"]
-        for objectives in objectives_table:
-            tab[0] = str(iteration_number)
-            tab[2] = str(eval_number)
-            tab[4] = str(objectives[0])
-            tab[6] = str(objectives[1])
-
-
-            file_to_write.write(''.join(tab))
-            #print(iteration_number, eval_number, objectives[0], objectives[1])
-
-def printR2(file_to_write, eval_number, iteration_number,  R2, scores_cv, problem_size, print_every=-1):
-    modulo = problem_size
-    if(print_every != -1):
-        modulo = print_every
-    if(iteration_number % modulo == 0):
-            tab = [''," ", '', " ", '', " ", '', "\n"]
-            tab[0] = str(iteration_number)
-            tab[2] = str(eval_number)
-            tab[4] = str(round(R2,5))
-            tab[6] = str(round(scores_cv, 5))
-
-            file_to_write.write(''.join(tab))

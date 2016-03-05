@@ -14,6 +14,7 @@ import generics_tools as gt
 import initialisation_tools as init_to
 import sampling_tools as samp_to
 import space_tools as sp
+import io_tools as iot
 
 #--------------------------------------------------------------------------------------------------------------
 archiveOK = False
@@ -120,7 +121,7 @@ def runTcheby():
     # MAIN ALGORITHM
 
     if(writeOK):
-        printObjectives(file_to_write, nb_evals, 0, best_decisions_scores, problem_size)
+        iot.printObjectives(file_to_write, nb_evals, 0, best_decisions_scores, problem_size)
 
     #iterations loop
     for itera in range(nb_iterations):
@@ -182,26 +183,10 @@ def runTcheby():
 
         #if write the result in a file
         if(writeOK):
-            printObjectives(file_to_write, nb_evals, itera+1, best_decisions_scores, problem_size, print_every=param_print_every)
+            iot.printObjectives(file_to_write, nb_evals, itera+1, best_decisions_scores, problem_size, print_every=param_print_every)
             continue
 
         #graphic update
         yield arch_to.getArchiveScore(), best_decisions_scores, itera, nb_evals, min_f1, min_f2, pop_size, isReals
 
     return
-
-def printObjectives(file_to_write, eval_number,iteration_number,  objectives_table, problem_size, print_every=-1):
-    modulo = problem_size
-    if(print_every != -1):
-        modulo = print_every
-    if(iteration_number % modulo == 0):
-        tab = [''," ", '', " ", '', " ", '', "\n"]
-        for objectives in objectives_table:
-            tab[0] = str(iteration_number)
-            tab[2] = str(eval_number)
-            tab[4] = str(objectives[0])
-            tab[6] = str(objectives[1])
-
-
-            file_to_write.write(''.join(tab))
-            #print(iteration_number, eval_number, objectives[0], objectives[1])
