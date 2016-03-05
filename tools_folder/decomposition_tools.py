@@ -21,6 +21,17 @@ def genRatio_fctbase2(N, check=False):
     return (numerateur_f1, numerateur_f2, denominateur)
 """
 
+def getDirections(nb_functions, nb_objectives):
+    if(nb_objectives == 2):
+        return genRatio_fctbase2(nb_functions)
+    elif(nb_objectives == 3):
+        print("Decomposition for 3 objectives not yet implemented")
+        exit()
+    else:
+        print("Not 2 or 3 objectives : ERROR")
+        exit()
+
+
 #generate the ratio that will be used on the N functions, return 2 table  N size
 def genRatio_fctbase2(nb_functions, check=False):
 

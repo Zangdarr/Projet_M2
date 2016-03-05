@@ -124,7 +124,7 @@ def runTcheby():
     # INITIALISATION
 
     #get the directions weight for both starting functions
-    directions = dec.genRatio_fctbase2(nb_functions)
+    directions = dec.getDirections(nb_functions, nb_objectives)
 
     #giving global visibility to the best_decisions to get the result at the end
     approx_pareto_front = best_decisions
