@@ -73,7 +73,7 @@ def getTrainingSetSingle(training_directions, training_individuals, individuals_
     for individual in training_individuals:
         individual_id += 1
 
-        direction = training_directions[individual_id]
+        direction = training_directions[individual_id%100]
         current_dir = direction.tolist()[0]
         training_input = []
         training_input.extend(current_dir)
