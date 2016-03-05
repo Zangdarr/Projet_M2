@@ -4,7 +4,7 @@ import numpy as np
 
 def getMinTabOf(best_decisions_scores):
     array = np.array(best_decisions_scores)
-    return np.amax(array.T, axis=1)
+    return np.amax(array.T, axis=1).tolist()
 
 
 #return randomly n indice in range n
