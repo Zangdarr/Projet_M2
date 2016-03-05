@@ -10,7 +10,7 @@ axe_x_name = "Default x axe"
 axe_y_name = "Default y axe"
 
 def update(data):
-    global tf1, tf2
+    global tf
     #clean graph
     plt.clf()
     #globals informations
@@ -39,7 +39,8 @@ def update(data):
        max_f1 = int(max_f1)+1
        max_f2 = int(max_f2)+1
        mm = max(max_f1, max_f2)+ 1
-       plt.scatter(tf1, tf2, s=0.5, color="purple", alpha=0.5, label="front pareto")
+       if(len(tf) == 2):
+           plt.scatter(tf[0], tf[1], s=0.5, color="purple", alpha=0.5, label="front pareto")
        text_pos_x = 1
        text_pos_y = 1
     else:
@@ -75,12 +76,11 @@ def update(data):
     plt.legend()
     return 1
 
-tf1 = []
-tf2 = []
+tf = []
 def runAnimatedGraph(fct, end_fct, pareto_front_fct, titre, name_x, name_y, sleep=10):
-    global title, axe_x_name, axe_y_name, tf1, tf2
+    global title, axe_x_name, axe_y_name, tf
     if(pareto_front_fct != -1):
-        tf1, tf2 = pareto_front_fct()
+        tf = pareto_front_fct()
     title = titre
     axe_x_name = name_x
     axe_y_name = name_y
