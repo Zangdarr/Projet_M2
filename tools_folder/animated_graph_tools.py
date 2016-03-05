@@ -52,18 +52,6 @@ def update(data):
     plt.plot(array,zeros, color='green')
     plt.plot(zeros, array, color = 'green')
 
-    """
-    ratio = genRatio_fctbase2(nb_functions - 2)# -2 a cause des deux fonctions de base
-    ratio_num_x = ratio[0]
-    ratio_num_y = ratio[1]
-    ratio_denum = ratio[2]
-
-    for i in range(len(ratio_num_x)):
-       line_x = np.dot(array[0:mm*2//len(ratio_num_x)], ratio_num_x[i])
-       line_y = np.dot(array[0:mm*2//len(ratio_num_x)], ratio_num_y[i])
-       plt.plot(line_x, line_y, color='green')
-    """
-
     #informative text
     txt = []
     txt.append("population size ")
