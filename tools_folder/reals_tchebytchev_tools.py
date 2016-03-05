@@ -109,7 +109,6 @@ def runTcheby():
 
     #current optimal scores for both axes
     z_opt_scores = gt.getMinTabOf(best_decisions_scores)
-    min_f1, min_f2 = z_opt_scores
 
     #if the data shall be write in a file
     writeOK = False
@@ -138,12 +137,10 @@ def runTcheby():
             mix_scores = eval_to.eval(start_fct, mix_ter, problem_size)
 
             #MAJ of the z_star point
-            if(mix_scores[0] < min_f1):
-                min_f1 = mix_scores[0]
-                z_opt_scores[0] = min_f1
-            if(mix_scores[1] < min_f2):
-                min_f2 = mix_scores[1]
-                z_opt_scores[1] = min_f2
+            if(mix_scores[0] < z_opt_scores[0]):
+                z_opt_scores[0] = mix_scores[0]
+            if(mix_scores[1] < z_opt_scores[1]):
+                z_opt_scores[1] = mix_scores[1]
 
             #boolean that is True if the offspring has been add to the archive
             added_to_S = False
