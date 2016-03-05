@@ -23,7 +23,7 @@ def update(data):
     datax1y1, datax2y2, tic, evals, z_star, pop_size, isReals = data
 
     max_f1, max_f2 = z_star
-    #front pareto position in objective space
+    #archive
     x,y = datax1y1
     plt.scatter(x, y,  color='blue', label="archive", marker="x")
     #best decision representation in objective space of the n functions
