@@ -156,7 +156,7 @@ def runTcheby():
     # MAIN ALGORITHM
 
     if(writeOK):
-        iot.printObjectives(file_to_write, nb_evals, 0,best_decisions_scores, problem_size)
+        iot.printObjectives(file_to_write, nb_evals, 0,best_decisions_scores, nb_objectives, problem_size)
 
 
     #set of the newest the solution evaluated
@@ -256,7 +256,7 @@ def runTcheby():
 
         #if write the result in a file
         if(writeOK):
-            iot.printObjectives(file_to_write, nb_evals, itera+1, best_decisions_scores, problem_size, print_every=param_print_every)
+            iot.printObjectives(file_to_write, nb_evals, itera+1, best_decisions_scores, problem_size, nb_objectives, print_every=param_print_every)
             continue
         #graphic update
         yield arch_to.getArchiveScore(), best_decisions_scores, itera+1, nb_evals, z_opt_scores, pop_size, isReals
