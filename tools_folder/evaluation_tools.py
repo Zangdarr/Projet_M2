@@ -1,6 +1,13 @@
 #--------------------------------------------------------------------------------------------------------------
 #EVALUATION
 
+def min_update_Z_star(z_star, new_scores, nb_objectives):
+    new_z_star = []
+    for i in range(nb_objectives):
+        new_z_star.append(min(z_star[i], new_scores[i]))
+
+    return new_z_star
+
 #evaluate the distance of a solution from the z-optimal solution
 def g_tcheby(dir, score, opt_scores):
     return max(dir[0]*abs(score[0]-opt_scores[0]),dir[1]*abs(score[1]-opt_scores[1]))

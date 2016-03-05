@@ -110,6 +110,8 @@ def runTcheby():
     param_print_every, file_to_writeR2     = param[20:22]
 
 
+    nb_objectives = len(start_fct)
+
     #get separatly offspring operator fct
     crossover_fct, mutation_fct, repair_fct = operator_fct
 
@@ -188,10 +190,7 @@ def runTcheby():
             mix_scores = eval_to.eval(start_fct, best_candidate, problem_size)
 
             #MAJ of the z_star point
-            if(mix_scores[0] < z_opt_scores[0]):
-                z_opt_scores[0] = mix_scores[0]
-            if(mix_scores[1] < z_opt_scores[1]):
-                z_opt_scores[1] = mix_scores[1]
+            z_opt_scores = eval_to.min_update_Z_star(z_opt_scores, mix_scores, nb_objectives)
 
             #boolean that is True if the offspring has been add to the archive
             added_to_S = False
