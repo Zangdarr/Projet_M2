@@ -108,9 +108,8 @@ def runTcheby():
     pop_size = nb_functions
 
     #current optimal scores for both axes
-    min_f1 = min(best_decisions_scores[0])
-    min_f2 = min(best_decisions_scores[1])
-    z_opt_scores = [min_f1, min_f2]
+    z_opt_scores = gt.getMinTabOf(best_decisions_scores)
+    min_f1, min_f2 = z_opt_scores
 
     #if the data shall be write in a file
     writeOK = False

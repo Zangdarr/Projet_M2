@@ -1,6 +1,12 @@
 import random
 import numpy as np
 
+
+def getMinTabOf(best_decisions_scores):
+    array = np.array(best_decisions_scores)
+    return np.amax(array.T, axis=1)
+
+
 #return randomly n indice in range n
 def get_n_indices_of(n, size_l):
     indices = []
