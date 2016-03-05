@@ -136,9 +136,8 @@ def runTcheby():
     pop_size = nb_functions
 
     #current optimal scores for both axes
-    min_f1 = min(best_decisions_scores[0])
-    min_f2 = min(best_decisions_scores[1])
-    z_opt_scores = [min_f1, min_f2]
+    z_opt_scores = gt.getMinTabOf(best_decisions_scores)
+    min_f1, min_f2 = z_opt_scores
 
     #get the first training part of the item we will learn on
     model_directions = train_to.getDirectionsTrainingMatrix(directions)
