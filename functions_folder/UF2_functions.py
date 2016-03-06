@@ -36,7 +36,7 @@ def f1(x_vector, vector_size):
    #-----------------------------
    x_1 = x_vector[0]
 
-   factor = 2 / nb_odd
+   factor = 2.0 / nb_odd
 
    sum_y_pow2 = 0
    #-----------------------------
@@ -68,7 +68,7 @@ def f2(x_vector, vector_size):
     tmp_1 = 1 - math.sqrt(x_1)
 
     nb_even = (vector_size-1) // 2 + ((vector_size-1)%2)
-    tmp_2 = 2 / nb_even
+    tmp_2 = 2.0 / nb_even
 
     sum_y_pow2 = 0
     cst1 = 24 * math.pi * x_1
