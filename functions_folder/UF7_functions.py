@@ -8,7 +8,7 @@ import numpy
 ########################################################################
 def getObjectives():
     return [f1, f2]
-    
+
 def getFrontPareto():
     tf1 = []
     tf2 = []
@@ -41,7 +41,7 @@ def f1(x_vector, vector_size):
 
     tmp1 = math.pow(x_1, 1.0/ 5.0)
 
-    tmp2 = 2 / abs(nb_odd)
+    tmp2 = 2.0 / abs(nb_odd)
 
     sum_y = 0
     for odd in range(1 + decalage, vector_size, 2):
@@ -55,7 +55,7 @@ def f1(x_vector, vector_size):
 
 
 def y_function(x_1, x_j, j, n):
-    return x_j - math.sin(6 * math.pi * x_1 + ((j * math.pi) / n))
+    return x_j - math.sin(6 * math.pi * x_1 + ((j * math.pi) / float(n)))
 
 
 
@@ -70,7 +70,7 @@ def f2(x_vector, vector_size):
 
     tmp1 = math.pow(x_1, 1.0/ 5.0)
 
-    tmp2 = 2 / abs(nb_even)
+    tmp2 = 2.0 / abs(nb_even)
 
     sum_y = 0
     for even in range(0 + decalage, vector_size, 2):
