@@ -35,7 +35,7 @@ def f1(x_vector, vector_size):
    #-----------------------------
    x_1 = x_vector[0]
 
-   factor = 2 / nb_odd
+   factor = 2.0 / nb_odd
 
    #-----------------------------
 
@@ -65,7 +65,7 @@ def f1(x_vector, vector_size):
 
        h_part_2 = 1 + math.exp(2 * h_part_1)
 
-       sum_h_yj += h_part_1 / h_part_2
+       sum_h_yj += float(h_part_1) / h_part_2
 
 
 
@@ -79,7 +79,7 @@ def f2(x_vector, vector_size):
     tmp_1 = 1 - x_1**2
 
     nb_even = (vector_size-1) // 2 + ((vector_size-1)%2)
-    factor = 2 / nb_even
+    factor = 2.0 / nb_even
 
 
     pi_n = math.pi / vector_size
@@ -107,7 +107,7 @@ def f2(x_vector, vector_size):
 
        h_part_2 = 1 + math.exp(2 * h_part_1)
 
-       sum_h_yj += h_part_1 / h_part_2
+       sum_h_yj += float(h_part_1) / h_part_2
 
 
     return tmp_1 + factor * sum_h_yj
