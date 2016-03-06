@@ -38,7 +38,7 @@ def genRatio_fctbase2(nb_functions, check=False):
     #ratio for the first starting function
     ratio_tab_f1 = []
 
-    divide_value = nb_functions -1
+    divide_value = float(nb_functions -1)
     ratio_tab_f1.append(0.0)
     for i in range(1, nb_functions):
         ratio_tab_f1.append(i / divide_value)
