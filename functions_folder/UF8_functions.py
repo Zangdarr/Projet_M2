@@ -54,7 +54,7 @@ def getSearchSpace(problem_size):
 
 
 def isMutipleOfThree1(value):
-    tmp = value / float(3)
+    tmp = value / 3.0
     return true if tmp - int(tmp) == 0.0 else false
 
 
@@ -97,7 +97,7 @@ def f1(x_vector, vector_size):
 
     sum_j = 0
     for j in range(3, vector_size, 3):
-        sum_j += (x_vector[j] - 2 * x_2 * math.sin(2 * math.pi * x_1 + ((j * math.pi)/ vector_size)))**2
+        sum_j += (x_vector[j] - 2 * x_2 * math.sin(2 * math.pi * x_1 + ((j * math.pi)/ float(vector_size))))**2
 
 
     return tmp1 * tmp2 + tmp3 * sum_j
@@ -117,7 +117,7 @@ def f2(x_vector, vector_size):
 
     sum_j = 0
     for j in range(4, vector_size, 3):
-        sum_j += (x_vector[j] - 2 * x_2 * math.sin(2 * math.pi * x_1 + ((j * math.pi)/ vector_size)))**2
+        sum_j += (x_vector[j] - 2 * x_2 * math.sin(2 * math.pi * x_1 + ((j * math.pi)/ float(vector_size))))**2
 
 
     return tmp1 * tmp2 + tmp3 * sum_j
@@ -139,7 +139,7 @@ def f3(x_vector, vector_size):
 
     sum_j = 0
     for j in range(4, vector_size, 3):
-        sum_j += (x_vector[j] - 2 * x_2 * math.sin(2 * math.pi * x_1 + ((j * math.pi)/ vector_size)))**2
+        sum_j += (x_vector[j] - 2 * x_2 * math.sin(2 * math.pi * x_1 + ((j * math.pi)/ float(vector_size))))**2
 
 
     return tmp1 + tmp2 * sum_j
