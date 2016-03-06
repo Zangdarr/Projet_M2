@@ -35,7 +35,7 @@ def f1(x_vector, vector_size):
    #-----------------------------
    x_1 = x_vector[0]
 
-   factor = 2 / nb_odd
+   factor = 2.0 / nb_odd
 
 
    #-----------------------------
@@ -68,7 +68,7 @@ def f1(x_vector, vector_size):
 
 
 
-       product_cos *= math.cos(cos_part_1 / cos_part_2)
+       product_cos *= math.cos(float(cos_part_1) / cos_part_2)
 
 
 
@@ -82,7 +82,7 @@ def f2(x_vector, vector_size):
     tmp_1 = 1 - math.sqrt(x_1)
 
     nb_even = (vector_size-1) // 2 + ((vector_size-1)%2)
-    factor = 2 / nb_even
+    factor = 2.0 / nb_even
 
     sum_y_pow2 = 0
     y_tab = [0]
@@ -90,7 +90,7 @@ def f2(x_vector, vector_size):
     for even in range(1,vector_size, 2):
        y_part1 = x_vector[even]
 
-       y_tmp_1 = (3 * (even+decalage - 2)) / (vector_size - 2)
+       y_tmp_1 = (3 * (even+decalage - 2)) / float(vector_size - 2)
        y_tmp  = 0.5 * (1.0 + y_tmp_1)
 
        y_part2 = x_1**(y_tmp)
@@ -109,6 +109,6 @@ def f2(x_vector, vector_size):
         cos_part_1 = 20 * y_tab[even] * math.pi
         cos_part_2 = math.sqrt(even+decalage)
 
-        product_cos *= math.cos(cos_part_1 / cos_part_2)
+        product_cos *= math.cos(float(cos_part_1) / cos_part_2)
 
     return tmp_1 + factor * (4 * sum_y_pow2 - 2 * product_cos + 2)
