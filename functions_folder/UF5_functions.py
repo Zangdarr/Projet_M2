@@ -22,7 +22,7 @@ def getFrontPareto():
     tf2 = []
 
     for i in range((2 * N) + 1):
-        tf1.append(i / (2 * N))
+        tf1.append(i / float(2 * N))
         tf2.append(1 - tf1[i])
 
     return tf1, tf2
@@ -43,8 +43,8 @@ def f1(x_vector, vector_size):
     nb_odd = (vector_size-1) // 2
 
     x_1 = x_vector[1 - decalage]
-    tmp1 = ((1 / (2 * N)) + epsilon) * abs(math.sin(2 * N * math.pi * x_1))
-    tmp2 = 2 / abs(nb_odd)
+    tmp1 = ((1.0 / (2 * N)) + epsilon) * abs(math.sin(2 * N * math.pi * x_1))
+    tmp2 = 2.0 / abs(nb_odd)
 
     sum_h = 0
     for odd in range(1 + decalage, vector_size, 2):
@@ -54,7 +54,7 @@ def f1(x_vector, vector_size):
     return x_1 + tmp1 + tmp2 * sum_h
 
 def y_function(x_1, x_j, j, n):
-    return x_j - math.sin(6 * math.pi * x_1 + ((j * math.pi) / n))
+    return x_j - math.sin(6 * math.pi * x_1 + ((j * math.pi) / float(n)))
 
 def h_function(t):
     return 2 * t**2 - math.cos(4 * math.pi * t) + 1
@@ -68,8 +68,8 @@ def f2(x_vector, vector_size):
     nb_even = (vector_size-1) // 2 + ((vector_size-1)%2)
 
     x_1 = x_vector[1 - decalage]
-    tmp1 = ((1 / (2 * N)) + epsilon) * abs(math.sin(2 * N * math.pi * x_1))
-    tmp2 = 2 / abs(nb_even)
+    tmp1 = ((1.0 / (2 * N)) + epsilon) * abs(math.sin(2 * N * math.pi * x_1))
+    tmp2 = 2.0 / abs(nb_even)
 
     sum_h = 0
     for even in range(0+decalage, vector_size, 2):
