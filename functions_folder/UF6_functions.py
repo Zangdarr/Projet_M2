@@ -13,7 +13,7 @@ epsilon = 0.1
 ########################################################################
 def getObjectives():
     return [f1, f2]
-    
+
 def getFrontPareto():
     global N
 
@@ -22,9 +22,9 @@ def getFrontPareto():
     tf1 = [0]
     tf2 = [1]
     for i in range(1,N+1):
-        range_min = (2*i -1)/ (2*N)
-        range_max = (2*i)/ (2*N)
-        range_step = (range_max - range_min) / point_by_part
+        range_min = (2*i -1)/ float(2*N)
+        range_max = (2*i)/ float(2*N)
+        range_step = (range_max - range_min) / float(point_by_part)
         tmp = range_min
         for j in range(0, point_by_part):
             tf1.append(tmp)
@@ -52,14 +52,14 @@ def f1(x_vector, vector_size):
 
     x_1 = x_vector[1 - decalage]
 
-    tmp1 = 2 * ((1/ (2 * N)) + epsilon) * math.sin(2 * N * math.pi * x_1)
-    tmp2 = 2 / abs(nb_odd)
+    tmp1 = 2 * ((1.0 / (2 * N)) + epsilon) * math.sin(2 * N * math.pi * x_1)
+    tmp2 = 2.0 / abs(nb_odd)
 
     sum_y = 0
     product_y = 1
     for odd in range(1 + decalage, vector_size, 2):
         sum_y     += y_function(x_1, x_vector[odd], odd ,vector_size)**2
-        product_y *= math.cos((20 * y_function(x_1, x_vector[odd], odd ,vector_size) * math.pi) / math.sqrt(odd))
+        product_y *= math.cos((20 * y_function(x_1, x_vector[odd], odd ,vector_size) * math.pi) / float(math.sqrt(odd)))
     tmp3 = 4 * sum_y - 2 * product_y + 2
 
     return x_1 + max(0, tmp1) + tmp2 * tmp3
@@ -70,7 +70,7 @@ def f1(x_vector, vector_size):
 
 
 def y_function(x_1, x_j, j, n):
-    return x_j - math.sin(6 * math.pi * x_1 + ((j * math.pi) / n))
+    return x_j - math.sin(6 * math.pi * x_1 + ((j * math.pi) / float(n)))
 
 
 
@@ -83,14 +83,14 @@ def f2(x_vector, vector_size):
 
     x_1 = x_vector[1 - decalage]
 
-    tmp1 = 2 * ((1/ (2 * N)) + epsilon) * math.sin(2 * N * math.pi * x_1)
-    tmp2 = 2 / abs(nb_even)
+    tmp1 = 2 * ((1.0 / (2 * N)) + epsilon) * math.sin(2 * N * math.pi * x_1)
+    tmp2 = 2.0 / abs(nb_even)
 
     sum_y = 0
     product_y = 1
     for even in range(0 + decalage, vector_size, 2):
         sum_y     += y_function(x_1, x_vector[even], even ,vector_size)**2
-        product_y *= math.cos((20 * y_function(x_1, x_vector[even], even ,vector_size) * math.pi) / math.sqrt(even))
+        product_y *= math.cos((20 * y_function(x_1, x_vector[even], even ,vector_size) * math.pi) / float(math.sqrt(even)))
     tmp3 = 4 * sum_y - 2 * product_y + 2
 
     return 1 - x_1 + max(0, tmp1) + tmp2 * tmp3
