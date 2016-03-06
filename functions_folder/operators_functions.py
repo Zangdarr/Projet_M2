@@ -71,9 +71,9 @@ def sigmak(distrib_index_n):
     rand = random.SystemRandom().random()
 
     if(rand < 0.5):
-       tmp = (2*rand)**(1/(distrib_index_n+1)) -1
+       tmp = (2*rand)**(1.0/(distrib_index_n+1)) -1
     else:
-       tmp = 1 - (2-2*rand)**(1/(distrib_index_n+1))
+       tmp = 1 - (2-2*rand)**(1.0/(distrib_index_n+1))
 
     return tmp
 
