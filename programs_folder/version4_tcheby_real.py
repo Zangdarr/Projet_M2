@@ -52,13 +52,13 @@ nb_functions = start_fct_len + N_new_fct
 
 def runOneTime(problem_size, nb_iterations):
        global problem_title, start_fct, operator_fct, generation_fct, pareto_front_fct, nb_functions, neighboring_size, max_decisions_maj, delta_neighbourhood, CR, F, distrib_index_n, pm, manage_archive, sleeptime
-       pm = 1 / problem_size
+       pm = 1.0 / problem_size
        search_space = fct.getSearchSpace(problem_size)
        tcheby.getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation_fct, pareto_front_fct, nb_functions, nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, -1, sleeptime)
 
 
 def experimentWith(file_to_write, problem_size,  nb_iterations, param_print_every):
        global start_fct, operator_fct, generation_fct, nb_functions, neighboring_size, max_decisions_maj, delta_neighbourhood, CR, F, distrib_index_n, pm, manage_archive, sleeptime
-       pm = 1 / problem_size
+       pm = 1.0 / problem_size
        search_space = fct.getSearchSpace(problem_size)
        tcheby.getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_functions, nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, file_to_write, param_print_every, sleeptime)
