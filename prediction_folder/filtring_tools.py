@@ -228,7 +228,7 @@ def average_model_based(free_eval, param):
             average_score += tmp
             count +=1
 
-        average_score /= count
+        average_score /= float(count)
         if(index_best == -1):
             index_best = id_offspring
             score_best = average_score
