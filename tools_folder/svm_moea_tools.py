@@ -155,7 +155,7 @@ def runTcheby():
     # MAIN ALGORITHM
 
     if(writeOK):
-        iot.printObjectives(file_to_write, nb_evals, 0,best_decisions_scores, nb_objectives, problem_size)
+        iot.printObjectives(file_to_write, nb_evals, 0,best_decisions_scores, problem_size, nb_objectives)
 
     #iterations loop
     for itera in range(nb_iterations):

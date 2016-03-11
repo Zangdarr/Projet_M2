@@ -156,7 +156,7 @@ def runTcheby():
     # MAIN ALGORITHM
 
     if(writeOK):
-        iot.printObjectives(file_to_write, nb_evals, 0,best_decisions_scores, nb_objectives, problem_size)
+        iot.printObjectives(file_to_write, nb_evals, 0,best_decisions_scores, problem_size, nb_objectives)
 
     #set of all the solution evaluated
     all_decisions        = copy.deepcopy(best_decisions)
