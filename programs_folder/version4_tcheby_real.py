@@ -18,7 +18,7 @@ generation_fct = op.genVector
 #Shall it maintain an archive and return it in the result ?
 manage_archive = False
 #stop critera : number of iterations
-nb_iterations = 100
+#nb_iterations = 100
 #data parameter : size of the input
 #problem_size = 10
 #size of the neighbourhood, include the current pos
