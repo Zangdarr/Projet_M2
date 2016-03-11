@@ -8,10 +8,11 @@ nb_samples                 = 10
 strategy                   = 'all'
 filter_strat               = 'average'
 free_eval                  = False
+problem = "UF1"
 
 
 
 #nb_iterations = problem_size*50
 nb_iterations = 40
 
-v5.runOneTime(problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat, free_eval)
+v5.runOneTime(problem, problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat, free_eval)
