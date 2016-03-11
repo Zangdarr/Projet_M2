@@ -68,7 +68,7 @@ def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_fun
 
 
 def runTcheby():
-    global param, nb_evals, approx_pareto_front, archiveOK, nb_evals, NO_FILE_TO_WRITE
+    global param, approx_pareto_front, archiveOK, NO_FILE_TO_WRITE
 
     ############################################################################
     # PARAMETER
@@ -105,8 +105,6 @@ def runTcheby():
     #initial best decisions scores
     best_decisions_scores = [eval_to.free_eval(start_fct, best_decisions[i], problem_size) for i in range(nb_functions)]
 
-    nb_evals = 0
-
     pop_size = nb_functions
 
     #current optimal scores for both axes
@@ -121,7 +119,7 @@ def runTcheby():
     # MAIN ALGORITHM
 
     if(writeOK):
-        iot.printObjectives(file_to_write, nb_evals, 0, best_decisions_scores, problem_size, nb_objectives)
+        iot.printObjectives(file_to_write, eval_to.getNbEvals(), 0, best_decisions_scores, problem_size, nb_objectives)
 
     #iterations loop
     for itera in range(nb_iterations):
@@ -178,7 +176,7 @@ def runTcheby():
 
         #if write the result in a file
         if(writeOK):
-            iot.printObjectives(file_to_write, nb_evals, itera+1, best_decisions_scores, problem_size, nb_objectives, print_every=param_print_every)
+            iot.printObjectives(file_to_write, eval_to.getNbEvals(), itera+1, best_decisions_scores, problem_size, nb_objectives, print_every=param_print_every)
             continue
 
         #graphic update
