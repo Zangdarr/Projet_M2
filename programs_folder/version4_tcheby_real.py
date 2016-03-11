@@ -54,7 +54,6 @@ def problemFactory(problem, problem_size):
     if(problem == "UF1"):
         import UF1_functions as fct
     elif(problem == "UF2"):
-        print("UF2")
         import UF2_functions as fct
     elif(problem == "UF3"):
         import UF3_functions as fct
