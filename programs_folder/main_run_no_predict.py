@@ -11,4 +11,6 @@ problem_size               = 30
 
 nb_iterations = problem_size*50
 nb_iterations = 40
-v4.runOneTime(problem_size, nb_iterations)
+problem = "UF1"
+
+v4.runOneTime(problem, problem_size, nb_iterations)
