@@ -24,20 +24,22 @@ param_print_every = 1
 
 nb_iterations = 40
 
-for run in range(k):
 
-    for problem in problems:
+for problem in problems:
 
-        for filter_strat in filter_strats:
+    for filter_strat in filter_strats:
 
-            for problem_size in problem_sizes:
-                #nb_iterations = problem_size*50
+        for problem_size in problem_sizes:
+            #nb_iterations = problem_size*50
 
-                for nb_samples in nb_sampless:
+            for nb_samples in nb_sampless:
 
-                  for fe in free_eval:
+              for fe in free_eval:
 
-                    for strategy in strategies:
+                for strategy in strategies:
+
+                    for run in range(k):
+
                          if(strategy == 'neighbors'):
                             for training_neighborhood_size in training_neighborhood_sizes:
                                 filename = problem + algo_name +"_PS-" + str(problem_size) + "_S-" + strategy + "_L-" + str(nb_samples) + "_TS-"+ str(training_neighborhood_size) + "_FS-" + filter_strat + "_FE-" + str(fe) + "_R-"+ str(run) +".txt"
