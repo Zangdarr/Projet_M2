@@ -23,3 +23,7 @@ def eval(start_fct, problem, problem_size):
 def free_eval(start_fct, problem, problem_size):
     problem_scores = [start_fct[f](problem, problem_size) for f in range(len(start_fct))]
     return problem_scores
+
+def getNbEvals():
+    global nb_evals
+    return nb_evals
