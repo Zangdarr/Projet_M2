@@ -7,12 +7,11 @@ training_neighborhood_size = 21
 nb_samples                 = 10
 strategy                   = 'all'
 filter_strat               = 'average'
-free_eval                  = False
 problem = "UF1"
-algo_name = "NuSVR_pop"
+algo_name = "NuSVR_freeeval"
 
 
 #nb_iterations = problem_size*50
 nb_iterations = 40
 
-v5.runOneTime(algo_name, problem, problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat, free_eval)
+v5.runOneTime(algo_name, problem, problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat)

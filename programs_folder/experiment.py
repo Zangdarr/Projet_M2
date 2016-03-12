@@ -14,7 +14,6 @@ training_neighborhood_sizes = [21]
 nb_sampless                 = [2, 4, 8, 16]
 strategies                  = ['single']
 filter_strats = ["average", "maxdiff"]
-free_eval = [False, True]
 
 #UF_name = "UF1"
 algo_name = "NuSVR_pop"
@@ -34,8 +33,6 @@ for problem in problems:
 
             for nb_samples in nb_sampless:
 
-              for fe in free_eval:
-
                 for strategy in strategies:
 
                     for run in range(k):
@@ -46,7 +43,7 @@ for problem in problems:
                                 filenameR2 = "R2_" + filename
                                 file_to_write = open(filename, 'a')
                                 file_to_writeR2 = open(filenameR2, 'a')
-                                v5.experimentWith(algo_name, problem, file_to_write ,problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat, fe, param_print_every, file_to_writeR2)
+                                v5.experimentWith(algo_name, problem, file_to_write ,problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat, param_print_every, file_to_writeR2)
                                 file_to_write.close()
                                 file_to_writeR2.close()
                                 print(filename, "done.")
@@ -56,7 +53,7 @@ for problem in problems:
                                 file_to_write = open(filename, 'a')
                                 file_to_writeR2 = open(filenameR2, 'a')
 
-                                v5.experimentWith(algo_name, problem, file_to_write, problem_size, nb_samples, nb_iterations, -1, strategy, filter_strat, fe, param_print_every, file_to_writeR2)
+                                v5.experimentWith(algo_name, problem, file_to_write, problem_size, nb_samples, nb_iterations, -1, strategy, filter_strat, param_print_every, file_to_writeR2)
                                 file_to_write.close()
                                 file_to_writeR2.close()
                                 print(filename, "done.")
