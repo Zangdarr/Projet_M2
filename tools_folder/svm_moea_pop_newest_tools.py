@@ -257,6 +257,6 @@ def runTcheby():
             iot.printObjectives(file_to_write, eval_to.getNbEvals(), itera+1, best_decisions_scores, problem_size, nb_objectives, print_every=param_print_every)
             continue
         #graphic update
-        yield arch_to.getArchiveScore(), best_decisions_scores, itera+1, nb_evals, z_opt_scores, pop_size, isReals
+        yield arch_to.getArchiveScore(), best_decisions_scores, itera+1, eval_to.getNbEvals(), z_opt_scores, pop_size, isReals
 
     return

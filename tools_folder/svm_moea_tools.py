@@ -233,6 +233,6 @@ def runTcheby():
             continue
 
         #graphic update
-        yield arch_to.getArchiveScore(), best_decisions_scores, itera+1, nb_evals, z_opt_scores, pop_size, isReals
+        yield arch_to.getArchiveScore(), best_decisions_scores, itera+1, eval_to.getNbEvals(), z_opt_scores, pop_size, isReals
 
     return
