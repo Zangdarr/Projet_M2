@@ -169,7 +169,7 @@ def runTcheby():
             scores_cv = cross_validation.cross_val_score(clf, training_input, training_output, cv=kf, scoring="r2")
             R2 = clf.score(training_input, training_output)
             #print(R2)
-            iot.printR2(file_to_writeR2, nb_evals, itera,  R2, scores_cv.mean(), problem_size, print_every=1)
+            iot.printR2(file_to_writeR2, eval_to.getNbEvals(), itera,  R2, scores_cv.mean(), problem_size, print_every=1)
 
         #functions loop
         for f in range(nb_functions):
