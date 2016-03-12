@@ -5,7 +5,7 @@ sys.path.insert(0, "../functions_folder/")
 #import UF1_functions as fct
 import operators_functions as op
 sys.path.insert(0,"../tools_folder/")
-import svm_moea_tools as svr
+#import svm_moea_tools as svr
 
 #-----PARAM-----------------
 #start_fct    = fct.getObjectives()
@@ -80,22 +80,38 @@ def problemFactory(problem, problem_size):
     return fct.getObjectives(), fct.getFrontPareto, fct.getProblemTitle(), fct.getSearchSpace(problem_size)
 
 
+def algorithmsFactory(algo_name):
+    if(algo_name == "NuSVR_pop"):
+        import svm_moea_tools as algo
+    elif(algo_name == "NuSVR_popnewest"):
+        import svm_moea_pop_newest_tools as algo
+    elif(algo_name == "NuSVR_newest"):
+        import svm_moea_newest_tools as algo
+    elif(algo_name == "NuSVR_fulleval"):
+        import svm_moea_full_tools as algo
 
-def runOneTime(problem, problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat, free_eval):
+    return algo.getFrontParetoWithGraphic, algo.getFrontParetoWithoutGraphic
+
+
+def runOneTime(algo_name, problem, problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat, free_eval):
        global number_of_functions, operator_fct, generation_fct, neighboring_size, max_decisions_maj, delta_neighbourhood, CR, F, distrib_index_n, manage_archive, sleeptime
 
        start_fct, pareto_front_fct, problem_title, search_space = problemFactory(problem, problem_size)
        N_new_fct = number_of_functions - len(start_fct)
        pm = 1 / problem_size
 
-       svr.getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation_fct, pareto_front_fct, number_of_functions, nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, filter_strat, free_eval, sleeptime)
+       getFrontParetoWithGraphic, _ = algorithmsFactory(algo_name)
+
+       getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation_fct, pareto_front_fct, number_of_functions, nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, filter_strat, free_eval, sleeptime)
 
 
-def experimentWith(problem, file_to_write, problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat, free_eval, param_print_every, file_to_writeR2):
+def experimentWith(algo_name, problem, file_to_write, problem_size, nb_samples, nb_iterations, training_neighborhood_size, strategy, filter_strat, free_eval, param_print_every, file_to_writeR2):
        global number_of_functions, operator_fct, generation_fct, neighboring_size, max_decisions_maj, delta_neighbourhood, CR, F, distrib_index_n, manage_archive, sleeptime
 
        start_fct, pareto_front_fct, problem_title, search_space = problemFactory(problem, problem_size)
        N_new_fct = number_of_functions - len(start_fct)
        pm = 1 / problem_size
 
-       svr.getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, number_of_functions, nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every, file_to_writeR2, sleeptime)
+       _, getFrontParetoWithoutGraphic = algorithmsFactory(algo_name)
+
+       getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, number_of_functions, nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every, file_to_writeR2, sleeptime)
