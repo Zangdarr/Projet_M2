@@ -81,16 +81,16 @@ def problemFactory(problem, problem_size):
 
 
 def algorithmsFactory(algo_name):
-    if(algo_name == "NuSVR_pop"):
+    if(algo_name == "NuSVR-pop"):
         import svm_moea_tools as algo
-    elif(algo_name == "NuSVR_popnewest"):
+    elif(algo_name == "NuSVR-popnewest"):
         import svm_moea_pop_newest_tools as algo
-    elif(algo_name == "NuSVR_newest"):
+    elif(algo_name == "NuSVR-newest"):
         import svm_moea_newest_tools as algo
-    elif(algo_name == "NuSVR_fulleval"):
+    elif(algo_name == "NuSVR-fulleval"):
         import svm_moea_full_tools as algo
-    elif(algo_name == "NuSVR_freeeval"):
-            import svm_moea_tools as algo
+    elif(algo_name == "NuSVR-freeeval"):
+        import svm_moea_tools as algo
 
     return algo.getFrontParetoWithGraphic, algo.getFrontParetoWithoutGraphic
 
