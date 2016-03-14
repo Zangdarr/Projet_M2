@@ -39,7 +39,7 @@ for problem in problems:
 
                          if(strategy == 'neighbors'):
                             for training_neighborhood_size in training_neighborhood_sizes:
-                                filename = problem + algo_name +"_PS-" + str(problem_size) + "_S-" + strategy + "_L-" + str(nb_samples) + "_TS-"+ str(training_neighborhood_size) + "_FS-" + filter_strat + "_FE-" + str(fe) + "_R-"+ str(run) +".txt"
+                                filename = problem + algo_name +"_PS-" + str(problem_size) + "_S-" + strategy + "_L-" + str(nb_samples) + "_TS-"+ str(training_neighborhood_size) + "_FS-" + filter_strat + "_R-"+ str(run) +".txt"
                                 filenameR2 = "R2_" + filename
                                 file_to_write = open(filename, 'a')
                                 file_to_writeR2 = open(filenameR2, 'a')
@@ -48,7 +48,7 @@ for problem in problems:
                                 file_to_writeR2.close()
                                 print(filename, "done.")
                          else:
-                                filename = problem + algo_name +"_PS-" + str(problem_size) + "_S-" + strategy + "_L-" + str(nb_samples) + "_TS--1" + "_FS-" + filter_strat + "_FE-" + str(fe) +"_R-"+ str(run) +".txt"
+                                filename = problem + algo_name +"_PS-" + str(problem_size) + "_S-" + strategy + "_L-" + str(nb_samples) + "_TS--1" + "_FS-" + filter_strat + "_R-"+ str(run) +".txt"
                                 filenameR2 = "R2_" + filename
                                 file_to_write = open(filename, 'a')
                                 file_to_writeR2 = open(filenameR2, 'a')
