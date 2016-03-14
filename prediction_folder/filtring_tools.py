@@ -1,5 +1,5 @@
 import numpy as np
-
+import random
 import evaluation_tools as eval_to
 
 MAX_INTEGER = 2**30
@@ -19,6 +19,50 @@ def model_based_filtring(filter_strat, free_eval,  param):
         return bestdiff_score(free_eval, param)
     elif(filter_strat == 'by_direction'):
         return by_direction_score(free_eval, param)
+    elif(filter_strat == 'numberdir'):
+        return numberdir_score(free_eval, param)
+
+
+#Return a candidat randomly selected within those that improve the maximum of direction within the current direction neighborhood
+def numberdir_score(free_eval, param):
+
+    current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+
+
+    id_offspring = -1
+    offspring_result = []
+
+    for offspring in list_offspring:
+        id_offspring += 1
+        numberdir_score = 0
+
+        f_input_data = getInputData(f_neighbors, model_directions, offspring)
+        if(not free_eval):
+           f_input_data = np.matrix(f_input_data)
+
+        f = 0
+        for data in f_input_data:
+            if(free_eval):
+                w = data[0:2]
+                offs = data[2:]
+                score_eval = eval_to.free_eval(start_fct, offs, problem_size)
+                tmp = eval_to.g_tcheby(w, score_eval, z_star)
+                current_gtcheby = eval_to.g_tcheby(w , population_scores[f], z_star)
+            else:
+                tmp = model.predict(data)
+                current_gtcheby = eval_to.g_tcheby(model_directions[f].tolist()[0], population_scores[f], z_star)
+
+            if(current_gtcheby > tmp):
+                numberdir_score += 1
+            f +=1
+
+        offspring_result.append(numberdir_score)
+
+    score_best = max(offspring_result)
+    best_indexes = [i for i, j in enumerate(offspring_result) if j == score_best]
+    choice = random.SystemRandom().choice(best_indexes)
+
+    return list_offspring[choice]
 
 
 #Return the candidat the minimizes the score only for the current direction
