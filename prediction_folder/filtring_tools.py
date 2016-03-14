@@ -189,8 +189,9 @@ def best_score(free_eval, param):
     return list_offspring[index_best]
 
 
-#Return the candidate that minimizes the average score over the neighborhood of the current direction. 
+#Return the candidate that minimizes the average score over the neighborhood of the current direction.
 def average_score(free_eval, param):
+    global MAX_INTEGER
 
     current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
 
