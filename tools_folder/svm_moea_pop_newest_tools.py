@@ -171,7 +171,7 @@ def runTcheby():
         newest_decisions_scores.extend(best_decisions_scores)
         newest_len += 100
         #Update model
-        training_input, training_output = train_to.getTrainingSet(model_directions, newest_decisions, newest_decisions_scores ,z_opt_scores, strategy, nb_functions, training_neighborhood_size)
+        training_input, training_output, discard_cmpt = train_to.getTrainingSet(model_directions, newest_decisions, newest_decisions_scores ,z_opt_scores, strategy, nb_functions, training_neighborhood_size)
         newest_decisions = []
         newest_decisions_scores = []
         newest_len = 0
@@ -179,7 +179,7 @@ def runTcheby():
         clf.fit(training_input, training_output)
         if(writeR2OK):
             #print(itera, clf.score(training_input, training_output))
-            kf = cross_validation.KFold(n=100, n_folds=10, shuffle=True,
+            kf = cross_validation.KFold(n=pop_size*2-discard_cmpt, n_folds=10, shuffle=True,
                                            random_state=None)
 
             scores_cv = cross_validation.cross_val_score(clf, training_input, training_output, cv=kf, scoring="r2")
