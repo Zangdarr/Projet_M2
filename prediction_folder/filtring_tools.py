@@ -10,7 +10,7 @@ MAX_INTEGER = 2**30
 def model_based_filtring(filter_strat, free_eval,  param):
 
     if(filter_strat == 'average'):
-        return average_model_based(free_eval, param)
+        return average_score(free_eval, param)
     elif(filter_strat == 'min'):
         return min_model_based(free_eval, param)
     elif(filter_strat == 'maxdiff'):
@@ -189,7 +189,7 @@ def min_model_based(free_eval, param):
     return list_offspring[index_best]
 
 
-def average_model_based(free_eval, param):
+def average_score(free_eval, param):
 
     current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
 
