@@ -50,6 +50,9 @@ def getTrainingSetNeighbors(training_directions, training_individuals, individua
     for individual in training_individuals:
         individual_id += 1
 
+        if(individual in training_individuals[0:individual_id]):
+            continue
+
         neighbors_directions = getTrainingNeighborsInclusive(individual_id, training_neighborhood_size, population_size)
 
         for direction in neighbors_directions:
@@ -73,6 +76,9 @@ def getTrainingSetSingle(training_directions, training_individuals, individuals_
     for individual in training_individuals:
         individual_id += 1
 
+        if(individual in training_individuals[0:individual_id]):
+            continue
+
         direction = training_directions[individual_id%100]
         current_dir = direction.tolist()[0]
         training_input = []
@@ -94,6 +100,9 @@ def getTrainingSetAll(training_directions, training_individuals, individuals_obj
 
     for individual in training_individuals:
         individual_id += 1
+
+        if(individual in training_individuals[0:individual_id]):
+            continue
 
         for direction in training_directions:
             current_dir = direction.tolist()[0]
