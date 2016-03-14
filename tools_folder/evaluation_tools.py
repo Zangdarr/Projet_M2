@@ -27,3 +27,7 @@ def free_eval(start_fct, problem, problem_size):
 def getNbEvals():
     global nb_evals
     return nb_evals
+
+def resetEval():
+    global nb_evals
+    nb_evals = 0

@@ -123,6 +123,8 @@ def runTcheby():
     ############################################################################
     # INITIALISATION
 
+    eval_to.resetEval()
+
     #get the directions weight for both starting functions
     directions = dec.getDirections(nb_functions, nb_objectives)
 
