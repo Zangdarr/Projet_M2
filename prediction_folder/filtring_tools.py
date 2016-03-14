@@ -146,7 +146,7 @@ def maxdiff_score(free_eval, param):
 
     return list_offspring[index_best]
 
-#best scalar value
+#Return the candidat that minimizes the score among the direction within the neighborhood of the current direction
 def best_score(free_eval, param):
     global MAX_INTEGER
 
@@ -155,7 +155,7 @@ def best_score(free_eval, param):
 
     id_offspring = -1
     index_best = -1
-    score_best = 0
+    score_best = MAX_INTEGER
     for offspring in list_offspring:
         id_offspring += 1
         min_score = MAX_INTEGER
