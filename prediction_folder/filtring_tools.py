@@ -11,7 +11,7 @@ def model_based_filtring(filter_strat, free_eval,  param):
 
     if(filter_strat == 'average'):
         return average_score(free_eval, param)
-    elif(filter_strat == 'min'):
+    elif(filter_strat == 'best'):
         return best_score(free_eval, param)
     elif(filter_strat == 'maxdiff'):
         return maxdiff_score(free_eval, param)
