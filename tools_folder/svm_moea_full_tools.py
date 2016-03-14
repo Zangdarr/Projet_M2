@@ -175,10 +175,12 @@ def runTcheby():
             kf = cross_validation.KFold(n=pop_size*(itera+1)-discard_cmpt, n_folds=10, shuffle=True,
                                            random_state=None)
 
-            scores_cv = cross_validation.cross_val_score(clf, training_input, training_output, cv=kf, scoring="r2")
+            R2_cv = cross_validation.cross_val_score(clf, training_input, training_output, cv=kf, scoring="r2")
+            MSE_cv = cross_validation.cross_val_score(clf, training_input, training_output, cv=kf, scoring="mean_squared_error")
+            MAE_cv = cross_validation.cross_val_score(clf, training_input, training_output, cv=kf, scoring="mean_absolute_error")
             R2 = clf.score(training_input, training_output)
             #print(R2)
-            iot.printR2(file_to_writeR2, eval_to.getNbEvals(), itera,  R2, scores_cv.mean(), problem_size, print_every=1)
+            iot.printR2(file_to_writeR2, eval_to.getNbEvals(), itera,  R2, R2_cv.mean(), MSE_cv.mean(), MAE_cv.mean(), problem_size, print_every=1)
 
         #functions loop
         for f in range(nb_functions):
