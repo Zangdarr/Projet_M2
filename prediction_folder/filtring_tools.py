@@ -21,6 +21,7 @@ def model_based_filtring(filter_strat, free_eval,  param):
         return by_direction_score(free_eval, param)
 
 
+#Return the candidat the minimizes the score only for the current direction
 def by_direction_score(free_eval, param):
 
     current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
