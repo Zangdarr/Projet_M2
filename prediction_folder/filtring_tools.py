@@ -16,7 +16,7 @@ def model_based_filtring(filter_strat, free_eval,  param):
     elif(filter_strat == 'maxdiff'):
         return maxdiff_score(free_eval, param)
     elif(filter_strat == 'bestdiff'):
-        return best_scalar_improvment(free_eval, param)
+        return bestdiff_score(free_eval, param)
     elif(filter_strat == 'by_direction'):
         return by_direction(free_eval, param)
 
@@ -58,7 +58,7 @@ def by_direction(free_eval, param):
     return list_offspring[index_best]
 
 
-def best_scalar_improvment(free_eval, param):
+def bestdiff_score(free_eval, param):
 
     current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
 
