@@ -59,6 +59,7 @@ def by_direction_score(free_eval, param):
     return list_offspring[index_best]
 
 
+#Return the candidate that maximise the improvement among the direction of the current direction neighborhood
 def bestdiff_score(free_eval, param):
 
     current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
