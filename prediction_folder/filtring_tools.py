@@ -47,10 +47,10 @@ def numberdir_score(free_eval, param):
                 offs = data[2:]
                 score_eval = eval_to.free_eval(start_fct, offs, problem_size)
                 tmp = eval_to.g_tcheby(w, score_eval, z_star)
-                current_gtcheby = eval_to.g_tcheby(w , population_scores[f], z_star)
+                current_gtcheby = eval_to.g_tcheby(w , population_scores[f_neighbors[f]], z_star)
             else:
                 tmp = model.predict(data)
-                current_gtcheby = eval_to.g_tcheby(model_directions[f].tolist()[0], population_scores[f], z_star)
+                current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
 
             if(current_gtcheby > tmp):
                 numberdir_score += 1
@@ -129,10 +129,10 @@ def bestdiff_score(free_eval, param):
                 offs = data[2:]
                 score_eval = eval_to.free_eval(start_fct, offs, problem_size)
                 tmp = eval_to.g_tcheby(w, score_eval, z_star)
-                current_gtcheby = eval_to.g_tcheby(w , population_scores[f], z_star)
+                current_gtcheby = eval_to.g_tcheby(w , population_scores[f_neighbors[f]], z_star)
             else:
                 tmp = model.predict(data)
-                current_gtcheby = eval_to.g_tcheby(model_directions[f].tolist()[0], population_scores[f], z_star)
+                current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
 
             diff_score = max(0, current_gtcheby - tmp)
             f +=1
@@ -175,11 +175,10 @@ def maxdiff_score(free_eval, param):
                 offs = data[2:]
                 score_eval = eval_to.free_eval(start_fct, offs, problem_size)
                 tmp = eval_to.g_tcheby(w, score_eval, z_star)
-                current_gtcheby = eval_to.g_tcheby(w , population_scores[f], z_star)
+                current_gtcheby = eval_to.g_tcheby(w , population_scores[f_neighbors[f]], z_star)
             else:
                 tmp = model.predict(data)
-                current_gtcheby = eval_to.g_tcheby(model_directions[f].tolist()[0], population_scores[f], z_star)
-
+                current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
             diff_score += max(0, current_gtcheby - tmp)
             f +=1
 
