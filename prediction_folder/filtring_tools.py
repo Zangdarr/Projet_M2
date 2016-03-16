@@ -249,7 +249,7 @@ def best_score(free_eval, param):
 def average_score(free_eval, param):
     global MAX_INTEGER
 
-    current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+    current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
 
 
     id_offspring = -1
@@ -260,31 +260,24 @@ def average_score(free_eval, param):
         average_score = 0
 
         f_input_data = getInputData(f_neighbors, model_directions, offspring)
-        if(not free_eval and not two_models_bool):
-           f_input_data = np.matrix(f_input_data)
-
         count = 0
-        for data in f_input_data:
-            if(free_eval):
+        if(not free_eval):
+           f_input_data_pred = np.matrix(f_input_data)
+           f = 0
+           for data in f_input_data_pred:
+               tmp = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
+               average_score += tmp
+               count +=1
+               f +=1
+
+        else:
+            for data in f_input_data:
                 w = data[0:2]
                 offs = data[2:]
                 score_eval = eval_to.free_eval(start_fct, offs, problem_size)
                 tmp = eval_to.g_tcheby(w, score_eval, z_star)
-            elif(not two_models_bool):
-                tmp = model.predict(data)
-            else:#2 models
-
-                offs = data[2:]
-
-                e1 = model.predict(np.array(offs).reshape(1,-1)).tolist()
-                e2 = model2.predict(np.array(offs).reshape(1,-1)).tolist()
-
-                scores = [e1[0], e2[0]]
-                w = data[0:2]
-                tmp = eval_to.g_tcheby(w, scores, z_star)
-
-            average_score += tmp
-            count +=1
+                average_score += tmp
+                count +=1
 
         average_score /= float(count)
         if(index_best == -1):
