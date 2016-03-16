@@ -206,7 +206,7 @@ def maxdiff_score(free_eval, param):
 def best_score(free_eval, param):
     global MAX_INTEGER
 
-    current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+    current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
 
 
     id_offspring = -1
@@ -218,20 +218,20 @@ def best_score(free_eval, param):
 
         f_input_data = getInputData(f_neighbors, model_directions, offspring)
         if(not free_eval):
-           f_input_data = np.matrix(f_input_data)
+           f_input_data_pred = np.matrix(f_input_data)
+           f = 0
+           for data in f_input_data_pred:
+               tmp = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
+               min_score = min(tmp, min_score)
+               f +=1
 
-
-        for data in f_input_data:
-            if(free_eval):
+        else:
+            for data in f_input_data:
                 w = data[0:2]
                 offs = data[2:]
                 score_eval = eval_to.free_eval(start_fct, offs, problem_size)
                 tmp = eval_to.g_tcheby(w, score_eval, z_star)
-            else:
-                tmp = model.predict(data)
-
-            min_score = min(tmp, min_score)
-
+                min_score = min(tmp, min_score)
 
         if(index_best == -1):
             index_best = id_offspring
