@@ -72,7 +72,7 @@ def numberdir_score(free_eval, param):
 #Return the candidat the minimizes the score only for the current direction
 def by_direction_score(free_eval, param):
 
-    current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+    current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
     id_offspring = -1
     index_best = -1
     score_best = 0
@@ -90,8 +90,9 @@ def by_direction_score(free_eval, param):
         f_input_data.extend(offspring)
 
         if(not free_eval):
-           f_input_data = np.matrix(f_input_data)
-           tmp = model.predict(f_input_data)
+           f_input_data_pred = np.matrix(f_input_data)
+           tmp = predict_and_quality(model, f_input_data, f_input_data_pred, start_fct, problem_size, current_g, current_f)
+
 
         if(free_eval):
             score_eval = eval_to.free_eval(start_fct, offspring, problem_size)
