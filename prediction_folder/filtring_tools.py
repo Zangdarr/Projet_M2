@@ -51,10 +51,7 @@ def numberdir_score(free_eval, param):
         else:
             f = 0
             for data in f_input_data:
-                w = data[0:2]
-                offs = data[2:]
-                score_eval = eval_to.free_eval(start_fct, offs, problem_size)
-                tmp = eval_to.g_tcheby(w, score_eval, z_star)
+                tmp = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
                 current_gtcheby = eval_to.g_tcheby(w , population_scores[f_neighbors[f]], z_star)
                 if(current_gtcheby > tmp):
                     numberdir_score += 1
@@ -135,10 +132,7 @@ def bestdiff_score(free_eval, param):
         else:
             f = 0
             for data in f_input_data:
-                w = data[0:2]
-                offs = data[2:]
-                score_eval = eval_to.free_eval(start_fct, offs, problem_size)
-                tmp = eval_to.g_tcheby(w, score_eval, z_star)
+                tmp = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
                 current_gtcheby = eval_to.g_tcheby(w , population_scores[f_neighbors[f]], z_star)
                 diff_score = max(diff_score, current_gtcheby - tmp)
                 f +=1
@@ -182,10 +176,7 @@ def maxdiff_score(free_eval, param):
         else:
             f = 0
             for data in f_input_data:
-                w = data[0:2]
-                offs = data[2:]
-                score_eval = eval_to.free_eval(start_fct, offs, problem_size)
-                tmp = eval_to.g_tcheby(w, score_eval, z_star)
+                tmp = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
                 current_gtcheby = eval_to.g_tcheby(w , population_scores[f_neighbors[f]], z_star)
                 diff_score += max(0, current_gtcheby - tmp)
                 f +=1
@@ -227,10 +218,7 @@ def best_score(free_eval, param):
 
         else:
             for data in f_input_data:
-                w = data[0:2]
-                offs = data[2:]
-                score_eval = eval_to.free_eval(start_fct, offs, problem_size)
-                tmp = eval_to.g_tcheby(w, score_eval, z_star)
+                tmp = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
                 min_score = min(tmp, min_score)
 
         if(index_best == -1):
@@ -272,10 +260,7 @@ def average_score(free_eval, param):
 
         else:
             for data in f_input_data:
-                w = data[0:2]
-                offs = data[2:]
-                score_eval = eval_to.free_eval(start_fct, offs, problem_size)
-                tmp = eval_to.g_tcheby(w, score_eval, z_star)
+                tmp = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
                 average_score += tmp
                 count +=1
 
@@ -305,6 +290,12 @@ def getInputData(f_neighbors, model_directions, offspring):
 
     return l
 
+
+def computeTchebyFreeEval(data, start_fct, problem_size, z_star):
+    w = data[0:2]
+    offs = data[2:]
+    score_eval = eval_to.free_eval(start_fct, offs, problem_size)
+    return eval_to.g_tcheby(w, score_eval, z_star)
 
 def predict_and_quality(model, data_free, data_pred, start_fct, problem_size, g, d):
     w = data_free[0:2]
