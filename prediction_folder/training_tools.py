@@ -5,6 +5,9 @@ import generics_tools as gen
 import evaluation_tools as eval_to
 
 
+training_zstar = [0.0,0.0]
+
+
 def getTrainingNeighborsInclusive(pos, neighboring_size, size_l):
     t = [i for i in range(size_l)]
     reverse_parite = (neighboring_size+1) %2
@@ -33,7 +36,14 @@ def getDirectionsTrainingMatrix(directions):
 
     return result
 
+def getTrainingZstar():
+    global training_zstar
+    return training_zstar
+
 def getTrainingSet(training_directions, training_individuals, individuals_objectives ,z_star, strategy, population_size, training_neighborhood_size):
+    global training_zstar
+    training_zstar = z_star
+    print(training_zstar)
     if(strategy == 'all'):
         return getTrainingSetAll(training_directions, training_individuals, individuals_objectives, z_star)
     elif(strategy == 'single'):
