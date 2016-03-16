@@ -19,6 +19,7 @@ import sampling_tools as samp_to
 import space_tools as sp
 import training_tools as train_to
 import io_tools as iot
+import model_quality_tools as qual_tools
 
 from sklearn.svm import SVR
 from sklearn.svm import NuSVR
@@ -54,7 +55,7 @@ def getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation
     #random initialisation
     init_decisions = init_to.initRandom(generation_fct, nb_functions, problem_size, search_space)
     #algorithm parameters
-    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, -1, filter_strat, free_eval, -1, -1]
+    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, -1, filter_strat, free_eval, -1, -1, -1]
     #function that will be called by runAnimatedGraph before it's end
     end_function = getResult
     #launch the graphic view and the algorithm
@@ -67,7 +68,7 @@ def getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation
 
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
 def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_functions,
-               nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every, file_to_writeR2, sleeptime=10):
+               nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every, file_to_writeR2, filenameDIR, sleeptime=10):
     global param, archiveOK
 
     if(manage_archive):
@@ -75,7 +76,7 @@ def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_fun
     #random initialisation
     init_decisions = init_to.initRandom(generation_fct, nb_functions, problem_size, search_space)
     #algorithm parameters
-    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every, file_to_writeR2]
+    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every, file_to_writeR2, filenameDIR]
     #function that will be called by runAnimatedGraph before it's end
     end_function = getResult
     #launch the graphic view and the algorithm
@@ -109,6 +110,7 @@ def runTcheby():
     strategy, file_to_write                = param[16:18]
     filter_strat, free_eval                = param[18:20]
     param_print_every, file_to_writeR2     = param[20:22]
+    filenameDIR                            = param[22]
 
 
     nb_objectives = len(start_fct)
@@ -123,6 +125,8 @@ def runTcheby():
 
     ############################################################################
     # INITIALISATION
+
+    qual_tools.resetGlobalVariables(filenameDIR, nb_iterations, nb_functions)
 
     eval_to.resetEval()
 
@@ -196,7 +200,7 @@ def runTcheby():
             list_offspring = samp_to.extended_sampling(f, f_neighbors, sampling_param, nb_samples)
 
             #apply a filter on the offspring list and select the best one
-            filter_param = [f, clf, clf2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_opt_scores, best_decisions_scores]
+            filter_param = [itera, f, clf, clf2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_opt_scores, best_decisions_scores]
             best_candidate = filt_to.model_based_filtring(filter_strat, free_eval, filter_param)
 
             #evaluation of the newly made solution
@@ -258,5 +262,6 @@ def runTcheby():
             continue
         #graphic update
         #yield arch_to.getArchiveScore(), best_decisions_scores, itera+1, eval_to.getNbEvals(), z_opt_scores, pop_size, isReals
-
+    if(not free_eval and writeOK):
+        qual_tools.computeQualityEvaluation()
     return
