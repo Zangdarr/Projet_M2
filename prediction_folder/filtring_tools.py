@@ -304,3 +304,13 @@ def getInputData(f_neighbors, model_directions, offspring):
         l[id_l].extend(offspring)
 
     return l
+
+
+def predict_and_quality(model, data_free, data_pred, start_fct, problem_size, g, d):
+    w = data_free[0:2]
+    offs = data_free[2:]
+    score_freeeval = eval_to.free_eval(start_fct, offs, problem_size)
+    tcheby_freeeval = eval_to.g_tcheby(w, score_freeeval, train_to.getTrainingZstar())
+    tcheby_predict  = model.predict(data_pred)
+    qual_to.add(g, d, tcheby_predict[0], tcheby_freeeval)
+    return tcheby_predict[0]
