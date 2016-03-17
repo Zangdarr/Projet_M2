@@ -182,9 +182,18 @@ def runTcheby():
             R2_cv = cross_validation.cross_val_score(clf, training_input, training_output, cv=kf, scoring="r2")
             MSE_cv = cross_validation.cross_val_score(clf, training_input, training_output, cv=kf, scoring="mean_squared_error")
             MAE_cv = cross_validation.cross_val_score(clf, training_input, training_output, cv=kf, scoring="mean_absolute_error")
+            MDAE_cv = cross_validation.cross_val_score(clf, training_input, training_output, cv=kf, scoring="median_absolute_error")
+
             R2 = clf.score(training_input, training_output)
             #print(R2)
-            iot.printR2(file_to_writeR2, eval_to.getNbEvals(), itera,  R2, R2_cv.mean(), MSE_cv.mean(), MAE_cv.mean(), problem_size, print_every=1)
+            MSE_cv_mean = abs(MSE_cv.mean()) #can't be negative but it is because the sign is flipped - scikit implementation feature
+            RMSE_cv_mean = math.sqrt(MSE_cv_mean)
+            MAE_cv_mean = abs(MAE_cv.mean()) #can't be negative but it is because the sign is flipped - scikit implementation feature
+            MDAE_cv_mean = abs(MDAE_cv.mean()) #can't be negative but it is because the sign is flipped - scikit implementation feature
+            ###############################################################################################################################################
+            R2_cv_mean = R2_cv.mean() * -1 #can be negative but the sign is flipped - scikit implementation feature - be careful if they change this feature
+            ###############################################################################################################################################
+            iot.printR2(file_to_writeR2, eval_to.getNbEvals(), itera,  R2, R2_cv_mean, MSE_cv_mean , MAE_cv_mean, MDAE_cv_mean, RMSE_cv_mean, problem_size, print_every=1)
 
         #functions loop
         for f in range(nb_functions):
