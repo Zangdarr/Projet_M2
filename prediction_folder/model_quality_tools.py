@@ -69,6 +69,27 @@ def resetGlobalVariables(filenameD, filenameS , nb_g, nb_d):
             predictions[g].append([])
             true_scores[g].append([])
 
+def generateDiffPredFreeFile():
+    global filenameSCORE, score_towrite_tab
+    fd = open(filenameSCORE, 'a')
+    fd.write(''.join(score_towrite_tab))
+    fd.close()
+
+def addToScoreTab(current_g, current_f, score_best_pred, save_best_pred_free_score, index_best_pred, score_best_free, save_best_free_pred_score,  index_best_free):
+    score_towrite_tab.append(str(current_g))
+    score_towrite_tab.append(' ')
+    score_towrite_tab.append(str(current_f))
+    score_towrite_tab.append(' ')
+    score_towrite_tab.append(str(score_best_pred))
+    score_towrite_tab.append(' ')
+    score_towrite_tab.append(str(save_best_pred_free_score))
+    score_towrite_tab.append(' ')
+    score_towrite_tab.append(str(save_best_free_pred_score))
+    score_towrite_tab.append(' ')
+    score_towrite_tab.append(str(score_best_free))
+    score_towrite_tab.append(' ')
+    score_towrite_tab.append('1' if index_best_pred == index_best_free else '0')
+    score_towrite_tab.append('\n')
 
 def add(generation, direction, predict_score, true_score_oldzstar):
     predictions[generation][direction].append(predict_score)
