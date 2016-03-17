@@ -254,6 +254,9 @@ def maxdiff_score(free_eval, param):
                diff_score_pred += max(0, current_gtcheby - tmp_pred)
                diff_score_free += max(0, current_gtcheby - tmp_free)
                f +=1
+
+           diff_score_pred /= float(f)
+           diff_score_free /= float(f)
            if(index_best_pred == -1):
                  index_best_pred = id_offspring
                  score_best_pred = diff_score_pred
@@ -271,6 +274,7 @@ def maxdiff_score(free_eval, param):
                 current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0] , population_scores[f_neighbors[f]], z_star)
                 diff_score_free += max(0, current_gtcheby - tmp_free)
                 f +=1
+            diff_score_free /= float(f)
 
         if(index_best_free == -1):
             index_best_free = id_offspring
