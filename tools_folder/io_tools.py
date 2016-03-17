@@ -10,7 +10,7 @@ def printObjectives(file_to_write, eval_number,iteration_number,  objectives_tab
             tab[0] = str(iteration_number)
             tab[2] = str(eval_number)
             for o in range(nb_objectives):
-                tab[4+2*o] = str(objectives[0])
+                tab[4+2*o] = str(objectives[o])
 
 
             file_to_write.write(''.join(tab))
