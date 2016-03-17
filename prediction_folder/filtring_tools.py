@@ -368,11 +368,16 @@ def average_score(free_eval, param):
 
 
     id_offspring = -1
-    index_best = -1
-    score_best = MAX_INTEGER
+    index_best_pred = -1
+    score_best_pred = MAX_INTEGER
+    save_best_pred_free_score = -1
+    index_best_free = -1
+    score_best_free = MAX_INTEGER
+    save_best_free_pred_score = -1
     for offspring in list_offspring:
         id_offspring += 1
-        average_score = 0
+        average_score_pred = 0
+        average_score_free = 0
 
         f_input_data = getInputData(f_neighbors, model_directions, offspring)
         count = 0
@@ -380,26 +385,51 @@ def average_score(free_eval, param):
            f_input_data_pred = np.matrix(f_input_data)
            f = 0
            for data in f_input_data_pred:
-               tmp = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
-               average_score += tmp
+               tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
+               tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star)
+               average_score_pred += tmp_pred
+               average_score_free += tmp_free
                count +=1
                f +=1
 
+           average_score_pred /= float(count)
+           average_score_free /= float(count)
+           if(index_best_pred == -1):
+                index_best_pred = id_offspring
+                score_best_pred = average_score_pred
+                save_best_pred_free_score = average_score_free
+           elif(average_score_pred < score_best_pred):
+                index_best_pred = id_offspring
+                score_best_pred = average_score_pred
+                save_best_pred_free_score = average_score_free
+           else :
+                pass
+
         else:
             for data in f_input_data:
-                tmp = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
-                average_score += tmp
+                tmp_free = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
+                average_score_free += tmp_free
                 count +=1
+            average_score_free /= float(count)
 
-        average_score /= float(count)
-        if(index_best == -1):
-            index_best = id_offspring
-            score_best = average_score
-        elif(average_score < score_best):
-            index_best = id_offspring
-            score_best = average_score
+        if(index_best_free == -1):
+            index_best_free = id_offspring
+            score_best_free = average_score_free
+            save_best_free_pred_score = average_score_pred
+        elif(average_score_free < score_best_free):
+            index_best_free = id_offspring
+            score_best_free = average_score_free
+            save_best_free_pred_score = average_score_pred
         else :
             pass
+
+    index_best = -1
+    if(free_eval):
+         index_best = index_best_free
+    else:
+         diffFreePredict(current_g, current_f, score_best_pred, save_best_pred_free_score, index_best_pred, score_best_free, save_best_free_pred_score,  index_best_free)
+
+         index_best = index_best_pred
 
     return list_offspring[index_best]
 
