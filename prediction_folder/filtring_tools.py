@@ -301,34 +301,61 @@ def best_score(free_eval, param):
 
 
     id_offspring = -1
-    index_best = -1
-    score_best = MAX_INTEGER
+    index_best_pred = -1
+    score_best_pred = MAX_INTEGER
+    save_best_pred_free_score = -1
+    index_best_free = -1
+    score_best_free = MAX_INTEGER
+    save_best_free_pred_score = -1
     for offspring in list_offspring:
         id_offspring += 1
-        min_score = MAX_INTEGER
-
+        min_score_pred = MAX_INTEGER
+        min_score_free = MAX_INTEGER
         f_input_data = getInputData(f_neighbors, model_directions, offspring)
         if(not free_eval):
            f_input_data_pred = np.matrix(f_input_data)
            f = 0
            for data in f_input_data_pred:
-               tmp = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
-               min_score = min(tmp, min_score)
+               tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
+               tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star)
+               min_score_pred = min(tmp_pred, min_score_pred)
+               min_score_free = min(tmp_free, min_score_free)
+
                f +=1
+           if(index_best_pred == -1):
+                index_best_pred = id_offspring
+                score_best_pred = min_score_pred
+                save_best_pred_free_score = min_score_free
+           elif(min_score_pred < score_best_pred):
+                index_best_pred = id_offspring
+                score_best_pred = min_score_pred
+                save_best_pred_free_score = min_score_free
+           else :
+                pass
 
         else:
             for data in f_input_data:
-                tmp = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
-                min_score = min(tmp, min_score)
+                tmp_free = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
+                min_score_free = min(tmp_free, min_score_free)
 
-        if(index_best == -1):
-            index_best = id_offspring
-            score_best = min_score
-        elif(min_score < score_best):
-            index_best = id_offspring
-            score_best = min_score
+        if(index_best_free == -1):
+            index_best_free = id_offspring
+            score_best_free = min_score_free
+            save_best_free_pred_score = min_score_pred
+        elif(min_score_free < score_best_free):
+            index_best_free = id_offspring
+            score_best_free = min_score_free
+            save_best_free_pred_score = min_score_pred
         else :
             pass
+
+    index_best = -1
+    if(free_eval):
+         index_best = index_best_free
+    else:
+         diffFreePredict(current_g, current_f, score_best_pred, save_best_pred_free_score, index_best_pred, score_best_free, save_best_free_pred_score,  index_best_free)
+
+         index_best = index_best_pred
 
     return list_offspring[index_best]
 
