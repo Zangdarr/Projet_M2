@@ -32,36 +32,55 @@ def numberdir_score(free_eval, param):
 
 
     id_offspring = -1
-    offspring_result = []
+    offspring_result_pred = []
+    offspring_result_free = []
 
     for offspring in list_offspring:
         id_offspring += 1
-        numberdir_score = 0
+        numberdir_score_pred = 0
+        numberdir_score_free = 0
 
         f_input_data = getInputData(f_neighbors, model_directions, offspring)
         if(not free_eval):
            f_input_data_pred = np.matrix(f_input_data)
            f = 0
            for data in f_input_data_pred:
-               tmp = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
+               tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
+               tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star)
                current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
-               if(current_gtcheby > tmp):
-                   numberdir_score += 1
+               if(current_gtcheby > tmp_pred):
+                   numberdir_score_pred += 1
+               if(current_gtcheby > tmp_free):
+                   numberdir_score_free += 1
+
                f +=1
+           offspring_result_pred.append(numberdir_score_pred)
         else:
             f = 0
             for data in f_input_data:
-                tmp = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
-                current_gtcheby = eval_to.g_tcheby(w , population_scores[f_neighbors[f]], z_star)
-                if(current_gtcheby > tmp):
-                    numberdir_score += 1
+                tmp_free = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
+                current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0] , population_scores[f_neighbors[f]], z_star)
+                if(current_gtcheby > tmp_free):
+                    numberdir_score_free += 1
                 f +=1
 
-        offspring_result.append(numberdir_score)
+        offspring_result_free.append(numberdir_score_free)
 
-    score_best = max(offspring_result)
-    best_indexes = [i for i, j in enumerate(offspring_result) if j == score_best]
-    choice = random.SystemRandom().choice(best_indexes)
+    score_best_free = max(offspring_result_free)
+    best_indexes_free = [i for i, j in enumerate(offspring_result_free) if j == score_best_free]
+    choice_free = random.SystemRandom().choice(best_indexes_free)
+
+    choice = -1
+    if(free_eval):
+        choice = choice_free
+    else:
+        score_best_pred = max(offspring_result_pred)
+        best_indexes_pred = [i for i, j in enumerate(offspring_result_pred) if j == score_best_pred]
+        choice_pred = random.SystemRandom().choice(best_indexes_pred)
+        save_best_free_pred_score = offspring_result_pred[choice_free]
+        save_best_pred_free_score = offspring_result_free[choice_pred]
+        choice = choice_pred
+        diffFreePredict(current_g, current_f, score_best_pred, save_best_pred_free_score, choice_pred, score_best_free, save_best_free_pred_score,  choice_free)
 
     return list_offspring[choice]
 
