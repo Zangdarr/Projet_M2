@@ -6,6 +6,8 @@ true_scores = []
 nb_of_generations = -1
 nb_of_directions = -1
 filenameDIR = -1
+filenameSCORE = -1
+score_towrite_tab = []
 
 def computeQualityEvaluation():
     global predictions, true_scores, nb_of_generations, nb_of_directions
@@ -51,9 +53,11 @@ def computeQualityEvaluation():
     fd.write(''.join(towrite))
     fd.close()
 
-def resetGlobalVariables(filename, nb_g, nb_d):
-    global predictions, true_scores, filenameDIR, nb_of_generations, nb_of_directions
-    filenameDIR = filename
+def resetGlobalVariables(filenameD, filenameS , nb_g, nb_d):
+    global predictions, true_scores, filenameDIR, nb_of_generations, nb_of_directions, filenameSCORE
+    filenameSCORE = filenameS
+    score_towrite_tab = []
+    filenameDIR = filenameD
     predictions = []
     true_scores = []
     nb_of_directions = nb_d
