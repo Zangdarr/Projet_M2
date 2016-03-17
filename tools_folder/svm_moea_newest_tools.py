@@ -55,7 +55,7 @@ def getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation
     #random initialisation
     init_decisions = init_to.initRandom(generation_fct, nb_functions, problem_size, search_space)
     #algorithm parameters
-    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, -1, filter_strat, free_eval, -1, -1, -1]
+    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, -1, filter_strat, free_eval, -1, -1, -1, -1]
     #function that will be called by runAnimatedGraph before it's end
     end_function = getResult
     #launch the graphic view and the algorithm
@@ -68,7 +68,7 @@ def getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation
 
 #algorithm that show on a animated graph the evolution of a population to get a pareto front
 def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_functions,
-               nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every, file_to_writeR2, filenameDIR, sleeptime=10):
+               nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every, file_to_writeR2, filenameDIR, filenameSCORE, sleeptime=10):
     global param, archiveOK
 
     if(manage_archive):
@@ -76,7 +76,7 @@ def getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, nb_fun
     #random initialisation
     init_decisions = init_to.initRandom(generation_fct, nb_functions, problem_size, search_space)
     #algorithm parameters
-    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every, file_to_writeR2, filenameDIR]
+    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, file_to_write, filter_strat, free_eval, param_print_every, file_to_writeR2, filenameDIR, filenameSCORE]
     #function that will be called by runAnimatedGraph before it's end
     end_function = getResult
     #launch the graphic view and the algorithm
@@ -110,7 +110,7 @@ def runTcheby():
     strategy, file_to_write                = param[16:18]
     filter_strat, free_eval                = param[18:20]
     param_print_every, file_to_writeR2     = param[20:22]
-    filenameDIR                            = param[22]
+    filenameDIR, filenameSCORE             = param[22:24]
 
 
     nb_objectives = len(start_fct)
@@ -126,7 +126,7 @@ def runTcheby():
     ############################################################################
     # INITIALISATION
 
-    qual_tools.resetGlobalVariables(filenameDIR, nb_iterations, nb_functions)
+    qual_tools.resetGlobalVariables(filenameDIR, filenameSCORE, nb_iterations, nb_functions)
 
     eval_to.resetEval()
 
@@ -264,4 +264,5 @@ def runTcheby():
         #yield arch_to.getArchiveScore(), best_decisions_scores, itera+1, eval_to.getNbEvals(), z_opt_scores, pop_size, isReals
     if(not free_eval and writeOK):
         qual_tools.computeQualityEvaluation()
+        qual_tools.generateDiffPredFreeFile()
     return
