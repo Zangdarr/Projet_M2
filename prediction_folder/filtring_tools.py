@@ -462,3 +462,6 @@ def predict_and_quality(model, data_free, data_pred, start_fct, problem_size, g,
     tcheby_predict  = model.predict(data_pred)
     qual_to.add(g, d, tcheby_predict[0], tcheby_freeeval)
     return tcheby_predict[0]
+
+def diffFreePredict(current_g, current_f, score_best_pred, save_best_pred_free_score, index_best_pred, score_best_free, save_best_free_pred_score, index_best_free):
+    qual_to.addToScoreTab(current_g, current_f, score_best_pred, save_best_pred_free_score, index_best_pred, score_best_free, save_best_free_pred_score, index_best_free)
