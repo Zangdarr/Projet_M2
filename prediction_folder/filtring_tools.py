@@ -144,6 +144,7 @@ def by_direction_score(free_eval, param):
         else :
             pass
 
+    index_best = -1
     if(free_eval):
         index_best = index_best_free
     else :
