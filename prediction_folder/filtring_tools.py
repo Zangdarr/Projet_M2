@@ -87,17 +87,24 @@ def numberdir_score(free_eval, param):
 
 #Return the candidat the minimizes the score only for the current direction
 def by_direction_score(free_eval, param):
+    global MAX_INTEGER
 
     current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+
     id_offspring = -1
-    index_best = -1
-    score_best = 0
+    index_best_pred = -1
+    index_best_free = -1
+    score_best_pred = MAX_INTEGER
+    score_best_free = MAX_INTEGER
+    save_best_pred_free_score = MAX_INTEGER
+    save_best_free_pred_score = MAX_INTEGER
 
     current_f_w = model_directions[current_f].tolist()[0]
 
     for offspring in list_offspring:
         id_offspring += 1
-        diff_score = 0
+        tmp_free = -1
+        tmp_pred = -1
 
         f_input_data = []
 
@@ -107,21 +114,43 @@ def by_direction_score(free_eval, param):
 
         if(not free_eval):
            f_input_data_pred = np.matrix(f_input_data)
-           tmp = predict_and_quality(model, f_input_data, f_input_data_pred, start_fct, problem_size, current_g, current_f)
+           tmp_pred = predict_and_quality(model, f_input_data, f_input_data_pred, start_fct, problem_size, current_g, current_f)
+           score_eval = eval_to.free_eval(start_fct, offspring, problem_size)
+           tmp_free = eval_to.g_tcheby(current_f_w, score_eval, z_star)
 
+           if(index_best_pred == -1):
+               index_best_pred = id_offspring
+               score_best_pred = tmp_pred
+               save_best_pred_free_score = tmp_free
+           elif(tmp_pred < score_best_pred):
+               index_best_pred = id_offspring
+               score_best_pred = tmp_pred
+               save_best_pred_free_score = tmp_free
+           else:
+               pass
 
         if(free_eval):
             score_eval = eval_to.free_eval(start_fct, offspring, problem_size)
-            tmp = eval_to.g_tcheby(current_f_w, score_eval, z_star)
+            tmp_free = eval_to.g_tcheby(current_f_w, score_eval, z_star)
 
-        if(index_best == -1):
-            index_best = id_offspring
-            score_best = tmp
-        elif(tmp < score_best):
-            index_best = id_offspring
-            score_best = tmp
+        if(index_best_free == -1):
+            index_best_free = id_offspring
+            score_best_free = tmp_free
+            save_best_free_pred_score = tmp_pred
+        elif(tmp_free < score_best_free):
+            index_best_free = id_offspring
+            score_best_free = tmp_free
+            save_best_free_pred_score = tmp_pred
         else :
             pass
+
+    if(free_eval):
+        index_best = index_best_free
+    else :
+        index_best = index_best_pred
+        diffFreePredict(current_g, current_f, score_best_pred, save_best_pred_free_score, index_best_pred, score_best_free, save_best_free_pred_score,  index_best_free)
+
+
     return list_offspring[index_best]
 
 
