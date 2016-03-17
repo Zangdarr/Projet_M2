@@ -231,38 +231,64 @@ def maxdiff_score(free_eval, param):
 
 
     id_offspring = -1
-    index_best = -1
-    score_best = 0
-
+    index_best_pred = -1
+    score_best_pred = 0
+    save_best_pred_free_score = -1
+    index_best_free = -1
+    score_best_free = 0
+    save_best_free_pred_score = -1
     for offspring in list_offspring:
         id_offspring += 1
-        diff_score = 0
+        diff_score_pred = 0
+        diff_score_free = 0
 
         f_input_data = getInputData(f_neighbors, model_directions, offspring)
         if(not free_eval):
            f_input_data_pred = np.matrix(f_input_data)
            f = 0
            for data in f_input_data_pred:
-               tmp = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
+               tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
+               tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star)
                current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
-               diff_score += max(0, current_gtcheby - tmp)
+               diff_score_pred += max(0, current_gtcheby - tmp_pred)
+               diff_score_free += max(0, current_gtcheby - tmp_free)
                f +=1
+           if(index_best_pred == -1):
+                 index_best_pred = id_offspring
+                 score_best_pred = diff_score_pred
+                 save_best_pred_free_score = diff_score_free
+           elif(diff_score_pred > score_best_pred):
+                 index_best_pred = id_offspring
+                 score_best_pred = diff_score_pred
+                 save_best_pred_free_score = diff_score_free
+           else :
+                 pass
         else:
             f = 0
             for data in f_input_data:
-                tmp = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
-                current_gtcheby = eval_to.g_tcheby(w , population_scores[f_neighbors[f]], z_star)
-                diff_score += max(0, current_gtcheby - tmp)
+                tmp_free = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
+                current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0] , population_scores[f_neighbors[f]], z_star)
+                diff_score_free += max(0, current_gtcheby - tmp_free)
                 f +=1
 
-        if(index_best == -1):
-            index_best = id_offspring
-            score_best = diff_score
-        elif(diff_score > score_best):
-            index_best = id_offspring
-            score_best = diff_score
+        if(index_best_free == -1):
+            index_best_free = id_offspring
+            score_best_free = diff_score_free
+            save_best_free_pred_score = diff_score_pred
+        elif(diff_score_free > score_best_free):
+            index_best_free = id_offspring
+            score_best_free = diff_score_free
+            save_best_free_pred_score = diff_score_pred
         else :
             pass
+
+    index_best = -1
+    if(free_eval):
+         index_best = index_best_free
+    else:
+         diffFreePredict(current_g, current_f, score_best_pred, save_best_pred_free_score, index_best_pred, score_best_free, save_best_free_pred_score,  index_best_free)
+
+         index_best = index_best_pred
 
     return list_offspring[index_best]
 
