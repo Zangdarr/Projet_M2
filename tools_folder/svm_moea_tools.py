@@ -183,7 +183,7 @@ def runTcheby():
             MAE_cv_mean = abs(MAE_cv.mean()) #can't be negative but it is because the sign is flipped - scikit implementation feature
             MDAE_cv_mean = abs(MDAE_cv.mean()) #can't be negative but it is because the sign is flipped - scikit implementation feature
             ###############################################################################################################################################
-            R2_cv_mean = R2_cv.mean() * -1 #can be negative but the sign is flipped - scikit implementation feature - be careful if they change this feature
+            R2_cv_mean = R2_cv.mean() #can be negative
             ###############################################################################################################################################
             iot.printR2(file_to_writeR2, eval_to.getNbEvals(), itera,  R2, R2_cv_mean, MSE_cv_mean , MAE_cv_mean, MDAE_cv_mean, RMSE_cv_mean, problem_size, print_every=1)
 
