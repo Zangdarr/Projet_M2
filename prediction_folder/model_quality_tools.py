@@ -22,7 +22,7 @@ def computeQualityEvaluation():
             sum_mse = 0.0
             sum_mae = 0.0
             nb_off_predict_for_d = len(predictions[g][d])
-            print(g,d, nb_off_predict_for_d)
+            #print(g,d, nb_off_predict_for_d)
             nb_off_predict_star += nb_off_predict_for_d
             for o in range(nb_off_predict_for_d):
                 tmp_mse       = (predictions[g][d][o] - true_scores[g][d][o])**2
