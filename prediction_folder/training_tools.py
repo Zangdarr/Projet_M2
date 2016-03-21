@@ -43,7 +43,7 @@ def getTrainingZstar():
 def getTrainingSet(training_directions, training_individuals, individuals_objectives ,z_star, strategy, population_size, training_neighborhood_size):
     global training_zstar
     training_zstar = z_star
-    print(training_zstar)
+    #print(training_zstar)
     if(strategy == 'all'):
         return getTrainingSetAll(training_directions, training_individuals, individuals_objectives, z_star)
     elif(strategy == 'single'):
