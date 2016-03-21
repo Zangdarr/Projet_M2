@@ -11,13 +11,14 @@ score_towrite_tab = []
 
 def computeQualityEvaluation():
     global predictions, true_scores, nb_of_generations, nb_of_directions
-    nb_off_predict_star = 0
-    sum_mse_star = 0.0
-    sum_mae_star = 0.0
 
     towrite = []
+    towriteSTAR = []
 
     for g in range(nb_of_generations):
+        nb_off_predict_star = 0
+        sum_mse_star = 0.0
+        sum_mae_star = 0.0
         for d in range(nb_of_directions):
             sum_mse = 0.0
             sum_mae = 0.0
@@ -41,16 +42,21 @@ def computeQualityEvaluation():
             towrite.append( ' ' )
             towrite.append( str(sum_mae / nb_off_predict_for_d) )
             towrite.append( '\n' )
-    towrite.append("gggggggggggstar")
-    towrite.append(' ')
-    towrite.append("ddddddddddddstar")
-    towrite.append(' ')
-    towrite.append( str(sum_mse_star / nb_off_predict_star) )
-    towrite.append(' ')
-    towrite.append( str(sum_mae_star / nb_off_predict_star) )
+        towriteSTAR.append(str(g))
+        towriteSTAR.append(' ')
+        towriteSTAR.append("*")
+        towriteSTAR.append(' ')
+        towriteSTAR.append( str(sum_mse_star / nb_off_predict_star) )
+        towriteSTAR.append(' ')
+        towriteSTAR.append( str(sum_mae_star / nb_off_predict_star) )
+        towriteSTAR.append( '\n' )
+
 
     fd = open(filenameDIR, 'a')
     fd.write(''.join(towrite))
+    fd.close()
+    fd = open("DIRSTAR"+filenameDIR[3:], 'a')
+    fd.write(''.join(towriteSTAR))
     fd.close()
 
 def resetGlobalVariables(filenameD, filenameS , nb_g, nb_d):
