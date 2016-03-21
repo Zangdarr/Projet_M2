@@ -9,7 +9,7 @@ if("freeeval" in algo_name):
     filename = result_folder + "/" + problem + "_" + algo_name +"_PS-" + str(problem_size) + "_S-none" + "_L-" + str(nb_samples) + "_TS--1" + "_FS-" + filter_strat +"_R-"+ str(run) +".txt"
     filenameR2 = result_folder + "/" + "R2_" + problem + "_" + algo_name +"_PS-" + str(problem_size) + "_S-none" + "_L-" + str(nb_samples) + "_TS--1" + "_FS-" + filter_strat + "_R-"+ str(run) +".txt"
 else:
-    tmpp = problem + "_" + algo_name +"_PS-" + str(problem_size) + "_S-" + strategy + "_L-" + str(nb_samples) + "_TS--1" + "_FS-" + filter_strat +"_R-"+ str(run) +".txt"    
+    tmpp = problem + "_" + algo_name +"_PS-" + str(problem_size) + "_S-" + strategy + "_L-" + str(nb_samples) + "_TS--1" + "_FS-" + filter_strat +"_R-"+ str(run) +".txt"
     filename      = result_folder + "/" +  tmpp
     filenameR2    = result_folder + "/" + "R2_" + tmpp
     filenameDIR   = result_folder + "/" + "DIR_" + tmpp
