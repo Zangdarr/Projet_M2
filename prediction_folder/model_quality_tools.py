@@ -55,7 +55,8 @@ def computeQualityEvaluation():
     fd = open(filenameDIR, 'a')
     fd.write(''.join(towrite))
     fd.close()
-    fd = open("DIRSTAR"+filenameDIR[3:], 'a')
+    filenameDIRSTAR = filenameDIR.replace("DIR_UF", "DIRSTAR_UF")
+    fd = open(filenameDIRSTAR, 'a')
     fd.write(''.join(towriteSTAR))
     fd.close()
 
