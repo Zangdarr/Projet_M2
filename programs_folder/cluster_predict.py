@@ -8,6 +8,8 @@ _, problem, algo_name, problem_size, strategy, nb_samples, filter_strat, run, nb
 if("freeeval" in algo_name):
     filename = result_folder + "/" + problem + "_" + algo_name +"_PS-" + str(problem_size) + "_S-none" + "_L-" + str(nb_samples) + "_TS--1" + "_FS-" + filter_strat +"_R-"+ str(run) +".txt"
     filenameR2 = result_folder + "/" + "R2_" + problem + "_" + algo_name +"_PS-" + str(problem_size) + "_S-none" + "_L-" + str(nb_samples) + "_TS--1" + "_FS-" + filter_strat + "_R-"+ str(run) +".txt"
+    filenameDIR   = "none"
+    filenameSCORE = "none"
 else:
     tmpp = problem + "_" + algo_name +"_PS-" + str(problem_size) + "_S-" + strategy + "_L-" + str(nb_samples) + "_TS--1" + "_FS-" + filter_strat +"_R-"+ str(run) +".txt"
     filename      = result_folder + "/" +  tmpp
