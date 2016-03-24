@@ -20,6 +20,8 @@ def computeQualityEvaluation():
         sum_mse_star = 0.0
         sum_mae_star = 0.0
         for d in range(nb_of_directions):
+            sum_tcheby_pred = 0.0
+            sum_tcheby_free = 0.0
             sum_mse = 0.0
             sum_mae = 0.0
             nb_off_predict_for_d = len(predictions[g][d])
@@ -34,6 +36,9 @@ def computeQualityEvaluation():
                 sum_mae      += tmp_mae
                 sum_mae_star += tmp_mae
 
+                sum_tcheby_pred = predictions[g][d][o]
+                sum_tcheby_free = true_scores[g][d][o]
+
             towrite.append(str(g))
             towrite.append( ' ' )
             towrite.append(str(d))
@@ -41,6 +46,10 @@ def computeQualityEvaluation():
             towrite.append( str(sum_mse / nb_off_predict_for_d) )
             towrite.append( ' ' )
             towrite.append( str(sum_mae / nb_off_predict_for_d) )
+            towrite.append( ' ' )
+            towrite.append( str(sum_tcheby_pred / nb_off_predict_for_d) )
+            towrite.append( ' ' )
+            towrite.append( str(sum_tcheby_free / nb_off_predict_for_d) )
             towrite.append( '\n' )
         towriteSTAR.append(str(g))
         towriteSTAR.append(' ')
