@@ -166,7 +166,7 @@ def runTcheby():
     #iterations loop
     for itera in range(nb_iterations):
         #Update model
-        training_input, training_output, discard_cmpt = train_to.getTrainingSet(model_directions, best_decisions, best_decisions_scores ,z_opt_scores, strategy, nb_functions, training_neighborhood_size)
+        training_input, training_output, discard_cmpt, training_scores = train_to.getTrainingSet(model_directions, best_decisions, best_decisions_scores ,z_opt_scores, strategy, nb_functions, training_neighborhood_size)
 
         clf.fit(training_input, training_output)
         if(writeR2OK):

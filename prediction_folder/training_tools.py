@@ -56,6 +56,7 @@ def getTrainingSetNeighbors(training_directions, training_individuals, individua
     individual_id    = -1
     training_inputs  = []
     training_outputs = []
+    training_scores  = []
 
     discard_cmpt = 0
     for individual in training_individuals:
@@ -77,13 +78,16 @@ def getTrainingSetNeighbors(training_directions, training_individuals, individua
 
             training_inputs.append(training_input)
             training_outputs.append(training_output)
-    return training_inputs, training_outputs, discard_cmpt
+            training_scores.append(individuals_objectives[individual_id])
+
+    return training_inputs, training_outputs, discard_cmpt, training_scores
 
 
 def getTrainingSetSingle(training_directions, training_individuals, individuals_objectives, z_star):
     individual_id    = -1
     training_inputs  = []
     training_outputs = []
+    training_scores  = []
 
     discard_cmpt = 0
     for individual in training_individuals:
@@ -103,14 +107,16 @@ def getTrainingSetSingle(training_directions, training_individuals, individuals_
 
         training_inputs.append(training_input)
         training_outputs.append(training_output)
+        training_scores.append(individuals_objectives[individual_id])
 
-    return training_inputs, training_outputs, discard_cmpt
+    return training_inputs, training_outputs, discard_cmpt, training_scores
 
 
 def getTrainingSetAll(training_directions, training_individuals, individuals_objectives, z_star):
     individual_id    = -1
     training_inputs  = []
     training_outputs = []
+    training_scores  = []
 
     discard_cmpt = 0
     for individual in training_individuals:
@@ -130,7 +136,9 @@ def getTrainingSetAll(training_directions, training_individuals, individuals_obj
 
             training_inputs.append(training_input)
             training_outputs.append(training_output)
-    return training_inputs, training_outputs, discard_cmpt
+            training_scores.append(individuals_objectives[individual_id])
+
+    return training_inputs, training_outputs, discard_cmpt, training_scores
 
 
 #training_individuals = [[0.30089509527814207, 0.2750430971678284, 0.11123324286837022, -0.3807695490236809], [0.21539370137187852, -0.30021739669398095, 0.6487370145784062, 0.05144409142146977], [0.013626558414417733, 0.7731835891593353, -0.3353098201174083, -0.16848424096831227], [0.4542618766183695, 0.29083190434551365, 0.13043503555443925, 0.7002786006279191], [0.08055754438034246, -0.9336312350209366, 0.44682488645829044, 0.3699833042385907], [0.6077900301708405, 0.058803316649457704, -0.9013354310430177, 0.25651977948424287], [0.43303947778238827, -0.4385169761434644, -0.423142428691333, -0.014377766653171697]]

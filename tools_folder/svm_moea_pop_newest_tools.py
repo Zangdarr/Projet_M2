@@ -178,7 +178,7 @@ def runTcheby():
         newest_decisions_scores.extend(best_decisions_scores)
         newest_len += 100
         #Update model
-        training_input, training_output, discard_cmpt = train_to.getTrainingSet(model_directions, newest_decisions, newest_decisions_scores ,z_opt_scores, strategy, nb_functions, training_neighborhood_size)
+        training_input, training_output, discard_cmpt, training_scores = train_to.getTrainingSet(model_directions, newest_decisions, newest_decisions_scores ,z_opt_scores, strategy, nb_functions, training_neighborhood_size)
         newest_decisions = []
         newest_decisions_scores = []
         newest_len = 0
