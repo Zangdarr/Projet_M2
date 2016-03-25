@@ -3,10 +3,15 @@
 
 def min_update_Z_star(z_star, new_scores, nb_objectives):
     new_z_star = []
+    has_changed_bool = False
     for i in range(nb_objectives):
-        new_z_star.append(min(z_star[i], new_scores[i]))
+        if(z_star[i] > new_scores[i]):
+            new_z_star.append(new_scores[i])
+            has_changed_bool = True
+        else:
+            new_z_star.append(z_star[i])
 
-    return new_z_star
+    return new_z_star, has_changed_bool
 
 #evaluate the distance of a solution from the z-optimal solution
 def g_tcheby(dir, score, opt_scores):

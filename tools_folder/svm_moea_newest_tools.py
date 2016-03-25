@@ -221,7 +221,7 @@ def runTcheby():
             mix_scores = eval_to.eval(start_fct, best_candidate, problem_size)
 
             #MAJ of the z_star point
-            z_opt_scores = eval_to.min_update_Z_star(z_opt_scores, mix_scores, nb_objectives)
+            z_opt_scores, has_changed = eval_to.min_update_Z_star(z_opt_scores, mix_scores, nb_objectives)
 
             #add to training input
             new_input = []
