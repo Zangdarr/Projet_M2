@@ -36,8 +36,8 @@ def computeQualityEvaluation():
                 sum_mae      += tmp_mae
                 sum_mae_star += tmp_mae
 
-                sum_tcheby_pred = predictions[g][d][o]
-                sum_tcheby_free = true_scores[g][d][o]
+                sum_tcheby_pred += predictions[g][d][o]
+                sum_tcheby_free += true_scores[g][d][o]
 
             towrite.append(str(g))
             towrite.append( ' ' )
