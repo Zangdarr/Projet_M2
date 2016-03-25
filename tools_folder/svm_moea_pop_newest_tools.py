@@ -168,6 +168,9 @@ def runTcheby():
     newest_decisions_scores = copy.deepcopy(best_decisions_scores)
     newest_len = nb_functions
 
+    #IDs tab to allow a random course through the directions in the main loop
+    id_directions = [i for i in range(nb_functions)]
+
     #iterations loop
     for itera in range(nb_iterations):
 
@@ -202,9 +205,11 @@ def runTcheby():
             ###############################################################################################################################################
             iot.printR2(file_to_writeR2, eval_to.getNbEvals(), itera,  R2, R2_cv_mean, MSE_cv_mean , MAE_cv_mean, MDAE_cv_mean, RMSE_cv_mean, problem_size, print_every=1)
 
-        #functions loop
-        for f in range(nb_functions):
+        #random course through the directions
+        random.SystemRandom().shuffle(id_directions)
 
+        #functions loop
+        for f in id_directions:
 
             #get all the indice of neighbors of a function in a certain distance of f and include f in
             f_neighbors, current_neighbourhing_size = gt.getNeighborsInclusive(f, neighboring_size, nb_functions, delta_neighbourhood)
