@@ -58,12 +58,10 @@ def getTrainingSetNeighbors(training_directions, training_individuals, individua
     training_outputs = []
     training_scores  = []
 
-    discard_cmpt = 0
     for individual in training_individuals:
         individual_id += 1
 
         if(individual in training_individuals[0:individual_id]):
-            discard_cmpt += 1
             continue
 
         neighbors_directions = getTrainingNeighborsInclusive(individual_id, training_neighborhood_size, population_size)
@@ -80,7 +78,7 @@ def getTrainingSetNeighbors(training_directions, training_individuals, individua
             training_outputs.append(training_output)
             training_scores.append(individuals_objectives[individual_id])
 
-    return training_inputs, training_outputs, discard_cmpt, training_scores
+    return training_inputs, training_outputs, len(training_inputs), training_scores
 
 
 def getTrainingSetSingle(training_directions, training_individuals, individuals_objectives, z_star):
@@ -89,12 +87,10 @@ def getTrainingSetSingle(training_directions, training_individuals, individuals_
     training_outputs = []
     training_scores  = []
 
-    discard_cmpt = 0
     for individual in training_individuals:
         individual_id += 1
 
         if(individual in training_individuals[0:individual_id]):
-            discard_cmpt += 1
             continue
 
         direction = training_directions[individual_id%100]
@@ -109,7 +105,7 @@ def getTrainingSetSingle(training_directions, training_individuals, individuals_
         training_outputs.append(training_output)
         training_scores.append(individuals_objectives[individual_id])
 
-    return training_inputs, training_outputs, discard_cmpt, training_scores
+    return training_inputs, training_outputs, len(training_inputs), training_scores
 
 
 def getTrainingSetAll(training_directions, training_individuals, individuals_objectives, z_star):
@@ -118,12 +114,10 @@ def getTrainingSetAll(training_directions, training_individuals, individuals_obj
     training_outputs = []
     training_scores  = []
 
-    discard_cmpt = 0
     for individual in training_individuals:
         individual_id += 1
 
         if(individual in training_individuals[0:individual_id]):
-            discard_cmpt += 1
             continue
 
         for direction in training_directions:
