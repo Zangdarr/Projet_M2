@@ -225,6 +225,7 @@ def runTcheby():
 
             #retraining of the model with the new z_star
             if(has_changed):
+                train_to.updateTrainingZstar(z_opt_scores)
                 training_outputs = train_to.retrainSet(training_inputs, training_scores, z_opt_scores, training_set_size, nb_objectives)
                 clf.fit(training_inputs, training_outputs)
 

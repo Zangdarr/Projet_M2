@@ -40,6 +40,11 @@ def getTrainingZstar():
     global training_zstar
     return training_zstar
 
+def updateTrainingZstar(new_z_star):
+    global training_zstar
+    training_zstar = new_z_star
+    print("train_to", training_zstar)
+
 def getTrainingSet(training_directions, training_individuals, individuals_objectives ,z_star, strategy, population_size, training_neighborhood_size):
     global training_zstar
     training_zstar = z_star
