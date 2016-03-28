@@ -219,6 +219,11 @@ def runTcheby():
             #MAJ of the z_star point
             z_opt_scores, has_changed = eval_to.min_update_Z_star(z_opt_scores, mix_scores, nb_objectives)
 
+            #retraining of the model with the new z_star
+            if(has_changed):
+                training_outputs = train_to.retrainSet(training_inputs, training_scores, z_opt_scores, training_set_size, nb_objectives)
+                clf.fit(training_inputs, training_outputs)
+
             #add to training input
             new_input = []
             new_input.extend(best_candidate)
