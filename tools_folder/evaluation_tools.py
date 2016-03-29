@@ -1,6 +1,27 @@
 #--------------------------------------------------------------------------------------------------------------
 #EVALUATION
 
+epsilon = 10**(-3)
+z_star = []
+z_star_decal = []
+
+def initZstar(initial_z_star):
+    global z_star, z_star_decal, epsilon
+    z_star = initial_z_star
+    z_star_decal = []
+    for z in z_star:
+        z_star_decal.append( z - epsilon )
+
+
+def getZstar():
+    global z_star
+    return z_star
+
+def getZstar_with_decal():
+    global z_star_decal
+    return z_star_decal
+
+
 def min_update_Z_star(z_star, new_scores, nb_objectives):
     new_z_star = []
     has_changed_bool = False
