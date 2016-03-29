@@ -12,7 +12,7 @@ MAX_INTEGER = 2**30
 def model_based_filtring(filter_strat, free_eval,  param):
 
     if(filter_strat == 'average'):
-        return average_score(free_eval, param)
+        return average_score(free_eval, param, False, False)
     elif(filter_strat == 'best'):
         return best_score(free_eval, param)
     elif(filter_strat == 'maxdiff'):
@@ -366,7 +366,7 @@ def best_score(free_eval, param):
 
 
 #Return the candidate that minimizes the average score over the neighborhood of the current direction.
-def average_score(free_eval, param):
+def average_score(free_eval, param, normalize, withTruescore):
     global MAX_INTEGER
 
     current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
@@ -392,8 +392,16 @@ def average_score(free_eval, param):
            for data in f_input_data_pred:
                tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
                tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star)
-               average_score_pred += tmp_pred
-               average_score_free += tmp_free
+               if(normalize):
+                   if(withTruescore):
+                       average_score_pred += ( tmp_pred / tmp_free )
+                       average_score_free += ( tmp_free / tmp_free )
+                   else:
+                       average_score_pred += ( tmp_pred / tmp_pred )
+                       average_score_free += ( tmp_free / tmp_pred )
+               else:
+                   average_score_pred += tmp_pred
+                   average_score_free += tmp_free
                count +=1
                f +=1
 
