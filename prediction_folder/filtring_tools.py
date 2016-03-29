@@ -13,6 +13,10 @@ def model_based_filtring(filter_strat, free_eval,  param):
 
     if(filter_strat == 'AvScl'):
         return AverageScalar(free_eval, param, False, False)
+    elif(filter_strat == 'AvSclNormG'):
+        return AverageScalar(free_eval, param, True, True)
+    elif(filter_strat == 'AvSclNormP'):
+        return AverageScalar(free_eval, param, True, False)
     elif(filter_strat == 'best'):
         return best_score(free_eval, param)
     elif(filter_strat == 'maxdiff'):
