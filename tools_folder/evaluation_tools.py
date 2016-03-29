@@ -22,7 +22,8 @@ def getZstar_with_decal():
     return z_star_decal
 
 
-def min_update_Z_star(z_star, new_scores, nb_objectives):
+def min_update_Z_star(new_scores, nb_objectives):
+    global z_star
     new_z_star = []
     has_changed_bool = False
     for i in range(nb_objectives):
@@ -32,7 +33,10 @@ def min_update_Z_star(z_star, new_scores, nb_objectives):
         else:
             new_z_star.append(z_star[i])
 
-    return new_z_star, has_changed_bool
+    if(has_changed_bool):
+        initZstar(new_z_star)
+
+    return has_changed_bool
 
 #evaluate the distance of a solution from the z-optimal solution
 def g_tcheby(dir, score, opt_scores):

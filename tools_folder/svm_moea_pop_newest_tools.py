@@ -144,6 +144,8 @@ def runTcheby():
     #current optimal scores for both axes
     z_opt_scores = gt.getMinTabOf(best_decisions_scores)
 
+    eval_to.initZstar(z_opt_scores)
+
     #get the first training part of the item we will learn on
     model_directions = train_to.getDirectionsTrainingMatrix(directions)
 
@@ -178,7 +180,7 @@ def runTcheby():
         newest_decisions_scores.extend(best_decisions_scores)
         newest_len += 100
         #Update model
-        training_inputs, training_outputs, training_set_size, training_scores = train_to.getTrainingSet(model_directions, newest_decisions, newest_decisions_scores ,z_opt_scores, strategy, nb_functions, training_neighborhood_size)
+        training_inputs, training_outputs, training_set_size, training_scores = train_to.getTrainingSet(model_directions, newest_decisions, newest_decisions_scores ,eval_to.getZstar_with_decal(), strategy, nb_functions, training_neighborhood_size)
         newest_decisions = []
         newest_decisions_scores = []
         newest_len = 0
@@ -218,19 +220,19 @@ def runTcheby():
             list_offspring = samp_to.extended_sampling(f, f_neighbors, sampling_param, nb_samples)
 
             #apply a filter on the offspring list and select the best one
-            filter_param = [itera, f, clf, clf2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_opt_scores, best_decisions_scores]
+            filter_param = [itera, f, clf, clf2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, eval_to.getZstar_with_decal(), best_decisions_scores]
             best_candidate = filt_to.model_based_filtring(filter_strat, free_eval, filter_param)
 
             #evaluation of the newly made solution
             mix_scores = eval_to.eval(start_fct, best_candidate, problem_size)
 
             #MAJ of the z_star point
-            z_opt_scores, has_changed = eval_to.min_update_Z_star(z_opt_scores, mix_scores, nb_objectives)
+            has_changed = eval_to.min_update_Z_star(mix_scores, nb_objectives)
 
             #retraining of the model with the new z_star
             if(has_changed):
-                train_to.updateTrainingZstar(z_opt_scores)
-                training_outputs = train_to.retrainSet(training_inputs, training_scores, z_opt_scores, training_set_size, nb_objectives)
+                train_to.updateTrainingZstar(eval_to.getZstar_with_decal())
+                training_outputs = train_to.retrainSet(training_inputs, training_scores, eval_to.getZstar_with_decal(), training_set_size, nb_objectives)
                 clf.fit(training_inputs, training_outputs)
 
             #add to training input
@@ -259,8 +261,8 @@ def runTcheby():
 
                 #compute g_tcheby
                 wj = (directions[0][j],directions[1][j])
-                g_mix = eval_to.g_tcheby(wj, mix_scores, z_opt_scores)
-                g_best = eval_to.g_tcheby(wj, best_decisions_scores[j], z_opt_scores)
+                g_mix = eval_to.g_tcheby(wj, mix_scores, eval_to.getZstar_with_decal())
+                g_best = eval_to.g_tcheby(wj, best_decisions_scores[j], eval_to.getZstar_with_decal())
 
 
                 #if the g_tcheby of the new solution is less distant from the z_optimal solution than the current best solution of the function j
@@ -285,7 +287,7 @@ def runTcheby():
             iot.printObjectives(file_to_write, eval_to.getNbEvals(), itera+1, best_decisions_scores, problem_size, nb_objectives, print_every=param_print_every)
             continue
         #graphic update
-        #yield arch_to.getArchiveScore(), best_decisions_scores, itera+1, eval_to.getNbEvals(), z_opt_scores, pop_size, isReals
+        #yield arch_to.getArchiveScore(), best_decisions_scores, itera+1, eval_to.getNbEvals(), eval_to.getZstar_with_decal(), pop_size, isReals
     if(not free_eval and writeOK):
         qual_tools.computeQualityEvaluation()
         qual_tools.generateDiffPredFreeFile()
