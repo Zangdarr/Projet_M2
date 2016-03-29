@@ -16,36 +16,38 @@ def computeQualityEvaluation():
     towriteSTAR = []
 
     for g in range(nb_of_generations):
-        nb_off_predict_star = 0.0
-        sum_mse_star = 0.0
-        sum_mae_star = 0.0
-        sum_DMAE_star = 0.0
+        nb_off_predict_star  = 0.0
+        sum_mse_star         = 0.0
+        sum_mae_star         = 0.0
+        sum_DMAE_star        = 0.0
         sum_tcheby_pred_star = 0.0
         sum_tcheby_free_star = 0.0
-        ss_tot_star = 0.0
-        ss_reg_star = 0.0
-        ss_res_star = 0.0
+        ss_tot_star          = 0.0
+        ss_reg_star          = 0.0
+        ss_res_star          = 0.0
+
         for d in range(nb_of_directions):
-            sum_tcheby_pred = 0.0
+            sum_mse         = 0.0
+            sum_mae         = 0.0
+            sum_DMAE        = 0.0
             sum_tcheby_free = 0.0
-            sum_mse = 0.0
-            sum_mae = 0.0
-            sum_DMAE = 0.0
-            ss_tot = 0.0
-            ss_reg = 0.0
-            ss_res = 0.0
+            sum_tcheby_pred = 0.0
+            ss_tot          = 0.0
+            ss_reg          = 0.0
+            ss_res          = 0.0
+
             nb_off_predict_for_d = len(predictions[g][d])
             #print(g,d, nb_off_predict_for_d)
             nb_off_predict_star += nb_off_predict_for_d
             for o in range(nb_off_predict_for_d):
-                tmp_mse       = (predictions[g][d][o] - true_scores[g][d][o])**2
-                sum_mse      += tmp_mse
+                tmp_mse          = (predictions[g][d][o] - true_scores[g][d][o])**2
+                sum_mse         += tmp_mse
 
-                tmp_mae       = abs(predictions[g][d][o] - true_scores[g][d][o])
-                sum_mae      += tmp_mae
+                tmp_mae          = abs(predictions[g][d][o] - true_scores[g][d][o])
+                sum_mae         += tmp_mae
 
-                tmp_DMAE       = abs( (predictions[g][d][o] - true_scores[g][d][o]) / true_scores[g][d][o] )
-                sum_DMAE      += tmp_DMAE
+                tmp_DMAE         = abs( (predictions[g][d][o] - true_scores[g][d][o]) / true_scores[g][d][o] )
+                sum_DMAE        += tmp_DMAE
 
                 sum_tcheby_pred += predictions[g][d][o]
                 sum_tcheby_free += true_scores[g][d][o]
@@ -56,28 +58,28 @@ def computeQualityEvaluation():
                 ss_reg += ( predictions[g][d][o] - y_barre )**2
                 ss_res += ( true_scores[g][d][o] - predictions[g][d][o] )
 
-            sum_mse_star += sum_mse
-            sum_mae_star += sum_mae
-            sum_DMAE_star += sum_DMAE
+            sum_mse_star         += sum_mse
+            sum_mae_star         += sum_mae
+            sum_DMAE_star        += sum_DMAE
             sum_tcheby_pred_star += sum_tcheby_pred
             sum_tcheby_free_star += sum_tcheby_free
-            ss_tot_star += ss_tot
-            ss_reg_star += ss_reg
-            ss_res_star += ss_res
+            ss_tot_star          += ss_tot
+            ss_reg_star          += ss_reg
+            ss_res_star          += ss_res
 
-            towrite.append(str(g))
+            towrite.append( str(g) )
             towrite.append( ' ' )
-            towrite.append(str(d))
+            towrite.append( str(d) )
             towrite.append( ' ' )
-            towrite.append( str(sum_mse / nb_off_predict_for_d) )
+            towrite.append( str( sum_mse         / nb_off_predict_for_d) )
             towrite.append( ' ' )
-            towrite.append( str(sum_mae / nb_off_predict_for_d) )
+            towrite.append( str( sum_mae         / nb_off_predict_for_d) )
             towrite.append( ' ' )
-            towrite.append( str(sum_DMAE / nb_off_predict_for_d) )
+            towrite.append( str( sum_DMAE        / nb_off_predict_for_d) )
             towrite.append( ' ' )
-            towrite.append( str(sum_tcheby_pred / nb_off_predict_for_d) )
+            towrite.append( str( sum_tcheby_pred / nb_off_predict_for_d) )
             towrite.append( ' ' )
-            towrite.append( str(sum_tcheby_free / nb_off_predict_for_d) )
+            towrite.append( str( sum_tcheby_free / nb_off_predict_for_d) )
             towrite.append( ' ' )
             towrite.append( str( ss_tot ) )
             towrite.append( ' ' )
@@ -85,19 +87,19 @@ def computeQualityEvaluation():
             towrite.append( ' ' )
             towrite.append( str( ss_res ) )
             towrite.append( '\n' )
-        towriteSTAR.append(str(g))
+        towriteSTAR.append( str( g ) )
         towriteSTAR.append(' ')
         towriteSTAR.append("*")
         towriteSTAR.append(' ')
-        towriteSTAR.append( str(sum_mse_star / nb_off_predict_star) )
+        towriteSTAR.append( str( sum_mse_star         / nb_off_predict_star ) )
         towriteSTAR.append(' ')
-        towriteSTAR.append( str(sum_mae_star / nb_off_predict_star) )
+        towriteSTAR.append( str( sum_mae_star         / nb_off_predict_star ) )
         towriteSTAR.append( ' ' )
-        towriteSTAR.append( str(sum_DMAE_star / nb_off_predict_star) )
+        towriteSTAR.append( str( sum_DMAE_star        / nb_off_predict_star ) )
         towriteSTAR.append( ' ' )
-        towriteSTAR.append( str(sum_tcheby_pred_star / nb_off_predict_star) )
+        towriteSTAR.append( str( sum_tcheby_pred_star / nb_off_predict_star ) )
         towriteSTAR.append( ' ' )
-        towriteSTAR.append( str(sum_tcheby_free_star / nb_off_predict_star) )
+        towriteSTAR.append( str( sum_tcheby_free_star / nb_off_predict_star ) )
         towriteSTAR.append( ' ' )
         towriteSTAR.append( str( ss_tot_star ) )
         towriteSTAR.append( ' ' )
