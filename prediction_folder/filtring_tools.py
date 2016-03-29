@@ -20,7 +20,7 @@ def model_based_filtring(filter_strat, free_eval,  param):
     elif(filter_strat == 'best'):
         return best_score(free_eval, param)
     elif(filter_strat == 'maxdiff'):
-        return maxdiff_score(free_eval, param)
+        return maxdiff_score(free_eval, param, False, False)
     elif(filter_strat == 'bestdiff'):
         return bestdiff_score(free_eval, param)
     elif(filter_strat == 'by_direction'):
@@ -230,7 +230,7 @@ def bestdiff_score(free_eval, param):
 
 
 #Return the candidat with the maximun average scalar improvement over the direction within the current direction neighborhood
-def maxdiff_score(free_eval, param):
+def maxdiff_score(free_eval, param, normalize, withTruescore):
 
     current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
 
@@ -255,8 +255,16 @@ def maxdiff_score(free_eval, param):
                tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
                tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star)
                current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
-               diff_score_pred += max(0, current_gtcheby - tmp_pred)
-               diff_score_free += max(0, current_gtcheby - tmp_free)
+               if(normalize):
+                    if(withTruescore):
+                        diff_score_pred += max(0, (current_gtcheby - tmp_pred) / tmp_free )
+                        diff_score_free += max(0, (current_gtcheby - tmp_free) / tmp_free )
+                    else:
+                        diff_score_pred += max(0, (current_gtcheby - tmp_pred) / tmp_pred )
+                        diff_score_free += max(0, (current_gtcheby - tmp_free) / tmp_pred )
+               else:
+                   diff_score_pred += max(0, current_gtcheby - tmp_pred)
+                   diff_score_free += max(0, current_gtcheby - tmp_free)
                f +=1
 
            diff_score_pred /= float(f)
