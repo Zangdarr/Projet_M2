@@ -34,21 +34,22 @@ def computeQualityEvaluation():
             for o in range(nb_off_predict_for_d):
                 tmp_mse       = (predictions[g][d][o] - true_scores[g][d][o])**2
                 sum_mse      += tmp_mse
-                sum_mse_star += tmp_mse
 
                 tmp_mae       = abs(predictions[g][d][o] - true_scores[g][d][o])
                 sum_mae      += tmp_mae
-                sum_mae_star += tmp_mae
 
                 tmp_DMAE       = abs( (predictions[g][d][o] - true_scores[g][d][o]) / true_scores[g][d][o] )
                 sum_DMAE      += tmp_DMAE
-                sum_DMAE_star += tmp_DMAE
 
                 sum_tcheby_pred += predictions[g][d][o]
                 sum_tcheby_free += true_scores[g][d][o]
 
+            sum_mse_star += sum_mse
+            sum_mae_star += sum_mae
+            sum_DMAE_star += sum_DMAE
             sum_tcheby_pred_star += sum_tcheby_pred
             sum_tcheby_free_star += sum_tcheby_free
+
             towrite.append(str(g))
             towrite.append( ' ' )
             towrite.append(str(d))
