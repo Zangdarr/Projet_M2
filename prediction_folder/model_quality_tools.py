@@ -16,7 +16,7 @@ def computeQualityEvaluation():
     towriteSTAR = []
 
     for g in range(nb_of_generations):
-        nb_off_predict_star = 0
+        nb_off_predict_star = 0.0
         sum_mse_star = 0.0
         sum_mae_star = 0.0
         sum_tcheby_pred_star = 0.0
