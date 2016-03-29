@@ -19,6 +19,7 @@ def computeQualityEvaluation():
         nb_off_predict_star = 0.0
         sum_mse_star = 0.0
         sum_mae_star = 0.0
+        sum_DMAE_star = 0.0
         sum_tcheby_pred_star = 0.0
         sum_tcheby_free_star = 0.0
         for d in range(nb_of_directions):
@@ -26,6 +27,7 @@ def computeQualityEvaluation():
             sum_tcheby_free = 0.0
             sum_mse = 0.0
             sum_mae = 0.0
+            sum_DMAE = 0.0
             nb_off_predict_for_d = len(predictions[g][d])
             #print(g,d, nb_off_predict_for_d)
             nb_off_predict_star += nb_off_predict_for_d
@@ -37,6 +39,10 @@ def computeQualityEvaluation():
                 tmp_mae       = abs(predictions[g][d][o] - true_scores[g][d][o])
                 sum_mae      += tmp_mae
                 sum_mae_star += tmp_mae
+
+                tmp_DMAE       = abs( (predictions[g][d][o] - true_scores[g][d][o]) / true_scores[g][d][o] )
+                sum_DMAE      += tmp_DMAE
+                sum_DMAE_star += tmp_DMAE
 
                 sum_tcheby_pred += predictions[g][d][o]
                 sum_tcheby_free += true_scores[g][d][o]
@@ -51,6 +57,8 @@ def computeQualityEvaluation():
             towrite.append( ' ' )
             towrite.append( str(sum_mae / nb_off_predict_for_d) )
             towrite.append( ' ' )
+            towrite.append( str(sum_DMAE / nb_off_predict_for_d) )
+            towrite.append( ' ' )
             towrite.append( str(sum_tcheby_pred / nb_off_predict_for_d) )
             towrite.append( ' ' )
             towrite.append( str(sum_tcheby_free / nb_off_predict_for_d) )
@@ -62,6 +70,8 @@ def computeQualityEvaluation():
         towriteSTAR.append( str(sum_mse_star / nb_off_predict_star) )
         towriteSTAR.append(' ')
         towriteSTAR.append( str(sum_mae_star / nb_off_predict_star) )
+        towriteSTAR.append( ' ' )
+        towriteSTAR.append( str(sum_DMAE_star / nb_off_predict_star) )
         towriteSTAR.append( ' ' )
         towriteSTAR.append( str(sum_tcheby_pred_star / nb_off_predict_star) )
         towriteSTAR.append( ' ' )
