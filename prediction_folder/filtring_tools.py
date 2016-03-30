@@ -418,11 +418,13 @@ def AverageScalar(free_eval, param, normalize, withTruescore):
                tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star)
                if(normalize):
                    if(withTruescore):
-                       average_score_pred += ( tmp_pred / tmp_free )
-                       average_score_free += ( tmp_free / tmp_free )
+                       current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
+                       average_score_pred += ( tmp_pred / current_gtcheby )
+                       average_score_free += ( tmp_free / current_gtcheby )
                    else:
-                       average_score_pred += ( tmp_pred / tmp_pred )
-                       average_score_free += ( tmp_free / tmp_pred )
+                       current_pred = model.predict([f_input_data[f][0:2] + population_indiv[f_neighbors[f]]])[0]
+                       average_score_pred += ( tmp_pred / current_pred )
+                       average_score_free += ( tmp_free / current_pred )
                else:
                    average_score_pred += tmp_pred
                    average_score_free += tmp_free
