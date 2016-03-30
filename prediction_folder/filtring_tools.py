@@ -19,8 +19,14 @@ def model_based_filtring(filter_strat, free_eval,  param):
         return AverageScalar(free_eval, param, True, False)
     elif(filter_strat == 'best'):
         return best_score(free_eval, param)
-    elif(filter_strat == 'AvImpr'):
+    elif(filter_strat == 'AvImprG'):
+        return AverageImprovement(free_eval, param, False, True)
+    elif(filter_strat == 'AvImprP'):
         return AverageImprovement(free_eval, param, False, False)
+    elif(filter_strat == 'AvImprNormG'):
+        return AverageImprovement(free_eval, param, True, True)
+    elif(filter_strat == 'AvImprNormP'):
+        return AverageImprovement(free_eval, param, True, False)
     elif(filter_strat == 'bestdiff'):
         return bestdiff_score(free_eval, param)
     elif(filter_strat == 'by_direction'):
@@ -230,7 +236,7 @@ def bestdiff_score(free_eval, param):
 
 
 #Return the candidat with the maximun average scalar improvement over the direction within the current direction neighborhood
-def AverageImprovement(free_eval, param, normalize, withTruescore):
+def AverageImprovement  (free_eval, param, normalize, withTruescore):
 
     current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
 
