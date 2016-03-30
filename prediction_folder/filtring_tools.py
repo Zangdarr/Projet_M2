@@ -38,7 +38,7 @@ def model_based_filtring(filter_strat, free_eval,  param):
 #Return a candidat randomly selected within those that improve the maximum of direction within the current direction neighborhood
 def numberdir_score(free_eval, param):
 
-    current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+    current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores, population_indiv = param
 
 
     id_offspring = -1
@@ -99,7 +99,7 @@ def numberdir_score(free_eval, param):
 def by_direction_score(free_eval, param):
     global MAX_INTEGER
 
-    current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+    current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores, population_indiv = param
 
     id_offspring = -1
     index_best_pred = -1
@@ -168,7 +168,7 @@ def by_direction_score(free_eval, param):
 #Return the candidate that maximise the improvement among the direction of the current direction neighborhood
 def bestdiff_score(free_eval, param):
 
-    current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+    current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores, population_indiv = param
 
 
     id_offspring = -1
@@ -238,7 +238,7 @@ def bestdiff_score(free_eval, param):
 #Return the candidat with the maximun average scalar improvement over the direction within the current direction neighborhood
 def AverageImprovement  (free_eval, param, normalize, withTruescore):
 
-    current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+    current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores, population_indiv = param
 
 
     id_offspring = -1
@@ -320,7 +320,7 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
 def best_score(free_eval, param):
     global MAX_INTEGER
 
-    current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+    current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores, population_indiv = param
 
 
     id_offspring = -1
@@ -387,7 +387,7 @@ def best_score(free_eval, param):
 def AverageScalar(free_eval, param, normalize, withTruescore):
     global MAX_INTEGER
 
-    current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores = param
+    current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores, population_indiv = param
 
 
     id_offspring = -1
