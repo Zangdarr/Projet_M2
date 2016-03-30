@@ -261,16 +261,22 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
                tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
                tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star)
                current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
-               if(normalize):
-                    if(withTruescore):
-                        diff_score_pred += max(0, (current_gtcheby - tmp_pred) / tmp_free )
-                        diff_score_free += max(0, (current_gtcheby - tmp_free) / tmp_free )
+               if(withTruescore):
+                    if(normalize):
+                        diff_score_pred += max(0, (current_gtcheby - tmp_pred) / current_gtcheby )
+                        diff_score_free += max(0, (current_gtcheby - tmp_free) / current_gtcheby )
                     else:
-                        diff_score_pred += max(0, (current_gtcheby - tmp_pred) / tmp_pred )
-                        diff_score_free += max(0, (current_gtcheby - tmp_free) / tmp_pred )
+                        diff_score_pred += max(0, current_gtcheby - tmp_pred)
+                        diff_score_free += max(0, current_gtcheby - tmp_free)
                else:
-                   diff_score_pred += max(0, current_gtcheby - tmp_pred)
-                   diff_score_free += max(0, current_gtcheby - tmp_free)
+
+                   current_pred = model.predict([f_input_data[f][0:2] + population_indiv[f_neighbors[f]]])[0]
+                   if(normalize):
+                       diff_score_pred += max(0, (current_pred - tmp_pred) / current_pred )
+                       diff_score_free += max(0, (current_pred - tmp_free) / current_pred )
+                   else:
+                       diff_score_pred += max(0, current_pred - tmp_pred)
+                       diff_score_free += max(0, current_pred - tmp_free)
                f +=1
 
            diff_score_pred /= float(f)
