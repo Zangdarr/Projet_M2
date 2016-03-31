@@ -54,8 +54,8 @@ def computeQualityEvaluation():
 
             y_barre = sum_tcheby_free / nb_off_predict_for_d
             for o in range(nb_off_predict_for_d):
-                ss_tot += ( true_scores[g][d][o] - y_barre )**2
-                ss_reg += ( predictions[g][d][o] - y_barre )**2
+                ss_tot += ( true_scores[g][d][o] - y_barre              )**2
+                ss_reg += ( predictions[g][d][o] - y_barre              )**2
                 ss_res += ( true_scores[g][d][o] - predictions[g][d][o] )**2
 
             sum_mse_star         += sum_mse
