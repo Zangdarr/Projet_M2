@@ -56,7 +56,7 @@ def computeQualityEvaluation():
             for o in range(nb_off_predict_for_d):
                 ss_tot += ( true_scores[g][d][o] - y_barre )**2
                 ss_reg += ( predictions[g][d][o] - y_barre )**2
-                ss_res += ( true_scores[g][d][o] - predictions[g][d][o] )
+                ss_res += ( true_scores[g][d][o] - predictions[g][d][o] )**2
 
             sum_mse_star         += sum_mse
             sum_mae_star         += sum_mae
