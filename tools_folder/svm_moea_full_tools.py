@@ -7,6 +7,7 @@ import copy
 import math
 import random
 import time
+import numpy
 
 import animated_graph_tools as gph
 import archive_tools as arch_to
@@ -24,8 +25,10 @@ import model_quality_tools as qual_tools
 from sklearn.svm import SVR
 from sklearn.svm import NuSVR
 from sklearn import grid_search
-from sklearn import cross_validation
-
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import median_absolute_error
+from sklearn.metrics import r2_score
 
 #-------------------------------------------------------------------------------
 archiveOK = False
@@ -179,24 +182,48 @@ def runTcheby():
         print(len(training_outputs))
         clf.fit(training_inputs, training_outputs)
         if(writeR2OK):
-            #print(itera, clf.score(training_inputs, training_outputs))
-            kf = cross_validation.KFold(n=training_set_size, n_folds=10, shuffle=True,
-                                           random_state=None)
+            training_inputs_tcheby      = eval_to.getManyTcheby(training_inputs, training_scores, eval_to.getZstar_with_decal(), training_set_size)
 
-            R2_cv = cross_validation.cross_val_score(clf, training_inputs, training_outputs, cv=kf, scoring="r2")
-            MSE_cv = cross_validation.cross_val_score(clf, training_inputs, training_outputs, cv=kf, scoring="mean_squared_error")
-            MAE_cv = cross_validation.cross_val_score(clf, training_inputs, training_outputs, cv=kf, scoring="mean_absolute_error")
-            MDAE_cv = cross_validation.cross_val_score(clf, training_inputs, training_outputs, cv=kf, scoring="median_absolute_error")
+            random_index = numpy.arange(0,training_set_size)
+            numpy.random.shuffle(random_index)
+            n_folds = 10
+            folds_sizes = (training_set_size // n_folds) * numpy.ones(n_folds, dtype=numpy.int)
+            folds_sizes[:training_set_size % n_folds] += 1
+
+            training_inputs_array = numpy.array(training_inputs)
+            training_tcheby_array = numpy.array(training_inputs_tcheby)
+
+            R2_cv = []
+            MSE_cv = []
+            MAE_cv = []
+            MDAE_cv = []
+
+            clfCV = NuSVR()
+
+            current = 0
+            for fold_size in folds_sizes:
+                start, stop = current, current + fold_size
+                mask = numpy.ones(training_set_size, dtype=bool)
+                mask[start:stop] = 0
+                current = stop
+
+                clfCV.fit(training_inputs_array[random_index[mask]], training_tcheby_array[random_index[mask]])
+
+                test_fold_tcheby = training_tcheby_array[random_index[start:stop]]
+                test_fold_predict = clfCV.predict(training_inputs_array[random_index[start:stop]])
+
+                R2_cv  .append(r2_score             (test_fold_tcheby, test_fold_predict))
+                MSE_cv .append(mean_squared_error   (test_fold_tcheby, test_fold_predict))
+                MAE_cv .append(mean_absolute_error  (test_fold_tcheby, test_fold_predict))
+                MDAE_cv.append(median_absolute_error(test_fold_tcheby, test_fold_predict))
 
             R2 = clf.score(training_inputs, training_outputs)
-            #print(R2)
-            MSE_cv_mean = abs(MSE_cv.mean()) #can't be negative but it is because the sign is flipped - scikit implementation feature
+            MSE_cv_mean = numpy.mean(MSE_cv)
             RMSE_cv_mean = math.sqrt(MSE_cv_mean)
-            MAE_cv_mean = abs(MAE_cv.mean()) #can't be negative but it is because the sign is flipped - scikit implementation feature
-            MDAE_cv_mean = abs(MDAE_cv.mean()) #can't be negative but it is because the sign is flipped - scikit implementation feature
-            ###############################################################################################################################################
-            R2_cv_mean = R2_cv.mean() #can be negative
-            ###############################################################################################################################################
+            MAE_cv_mean = numpy.mean(MAE_cv)
+            MDAE_cv_mean = numpy.mean(MDAE_cv)
+            R2_cv_mean = numpy.mean(R2_cv)
+
             iot.printR2(file_to_writeR2, eval_to.getNbEvals(), itera,  R2, R2_cv_mean, MSE_cv_mean , MAE_cv_mean, MDAE_cv_mean, RMSE_cv_mean, problem_size, print_every=1)
 
         #random course through the directions
