@@ -42,6 +42,13 @@ def min_update_Z_star(new_scores, nb_objectives):
 def g_tcheby(dir, score, opt_scores):
     return max(dir[0]*abs(score[0]-opt_scores[0]),dir[1]*abs(score[1]-opt_scores[1]))
 
+def getManyTcheby(training_inputs, training_scores, z_star, training_set_size):
+    tab_tcheby = []
+    for i in range(training_set_size):
+        tmp = g_tcheby(training_inputs[i][:3], training_scores[i], z_star )
+        tab_tcheby.append(tmp)
+    return tab_tcheby
+
 #evaluation of an offspring with the 2 base functions
 nb_evals = 0
 def eval(start_fct, problem, problem_size):
