@@ -112,6 +112,8 @@ def runTcheby():
     #current optimal scores for both axes
     z_opt_scores = gt.getMinTabOf(best_decisions_scores)
 
+    eval_to.initZstar(z_opt_scores)
+
     #if the data shall be write in a file
     writeOK = False
     if(file_to_write != NO_FILE_TO_WRITE):
@@ -139,7 +141,7 @@ def runTcheby():
             mix_scores = eval_to.eval(start_fct, mix_ter, problem_size)
 
             #MAJ of the z_star point
-            z_opt_scores = eval_to.min_update_Z_star(z_opt_scores, mix_scores, nb_objectives)
+            has_changed = eval_to.min_update_Z_star(mix_scores, nb_objectives)
 
             #boolean that is True if the offspring has been add to the archive
             added_to_S = False
@@ -159,8 +161,8 @@ def runTcheby():
 
                 #compute g_tcheby
                 wj = (directions[0][j],directions[1][j])
-                g_mix = eval_to.g_tcheby(wj, mix_scores, z_opt_scores)
-                g_best = eval_to.g_tcheby(wj, best_decisions_scores[j], z_opt_scores)
+                g_mix = eval_to.g_tcheby(wj, mix_scores, eval_to.getZstar_with_decal())
+                g_best = eval_to.g_tcheby(wj, best_decisions_scores[j], eval_to.getZstar_with_decal())
                 #if the g_tcheby of the new solution is less distant from the z_optimal solution than the current best solution of the function j
                 if( g_mix < g_best):
                     cmpt_best_maj += 1
@@ -182,6 +184,6 @@ def runTcheby():
             continue
 
         #graphic update
-        #yield arch_to.getArchiveScore(), best_decisions_scores, itera, eval_to.getNbEvals(), z_opt_scores, pop_size, isReals
+        #yield arch_to.getArchiveScore(), best_decisions_scores, itera, eval_to.getNbEvals(), eval_to.getZstar_with_decal(), pop_size, isReals
 
     return
