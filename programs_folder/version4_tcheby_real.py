@@ -79,7 +79,7 @@ def runOneTime(problem, problem_size, nb_iterations):
 
        start_fct, pareto_front_fct, problem_title, search_space = problemFactory(problem, problem_size)
        N_new_fct = number_of_functions - len(start_fct)
-       pm = 1 / problem_size
+       pm = 1.0 / problem_size
 
        tcheby.getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation_fct, pareto_front_fct, number_of_functions, nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, -1, sleeptime)
 
@@ -89,6 +89,6 @@ def experimentWith(problem, file_to_write, problem_size,  nb_iterations, param_p
 
        start_fct, pareto_front_fct, problem_title, search_space = problemFactory(problem, problem_size)
        N_new_fct = number_of_functions - len(start_fct)
-       pm = 1 / problem_size
+       pm = 1.0 / problem_size
 
        tcheby.getFrontParetoWithoutGraphic(start_fct, operator_fct, generation_fct, number_of_functions, nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, file_to_write, param_print_every, sleeptime)

@@ -100,7 +100,7 @@ def runOneTime(algo_name, problem, problem_size, nb_samples, nb_iterations, trai
 
        start_fct, pareto_front_fct, problem_title, search_space = problemFactory(problem, problem_size)
        N_new_fct = number_of_functions - len(start_fct)
-       pm = 1 / problem_size
+       pm = 1.0 / problem_size
 
        free_eval = True if "freeeval" in algo_name else False
 
@@ -114,7 +114,7 @@ def experimentWith(algo_name, problem, file_to_write, problem_size, nb_samples, 
 
        start_fct, pareto_front_fct, problem_title, search_space = problemFactory(problem, problem_size)
        N_new_fct = number_of_functions - len(start_fct)
-       pm = 1 / problem_size
+       pm = 1.0 / problem_size
 
        free_eval = True if "freeeval" in algo_name else False
 
