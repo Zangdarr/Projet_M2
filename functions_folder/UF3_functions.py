@@ -46,7 +46,7 @@ def f1(x_vector, vector_size):
    for odd in range(2,vector_size, 2):
        y_part1 = x_vector[odd]
 
-       y_tmp_1 = (3 * (odd+decalage - 2)) / (vector_size - 2)
+       y_tmp_1 = (3 * (odd+decalage - 2)) / float(vector_size - 2)
        y_tmp  = 0.5 * (1.0 + y_tmp_1)
 
        y_part2 = x_1**(y_tmp)
