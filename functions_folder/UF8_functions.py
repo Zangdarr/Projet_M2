@@ -138,7 +138,7 @@ def f3(x_vector, vector_size):
     tmp2 = 2.0 / abs(j3)
 
     sum_j = 0
-    for j in range(4, vector_size, 3):
+    for j in range(2, vector_size, 3):
         sum_j += (x_vector[j] - 2 * x_2 * math.sin(2 * math.pi * x_1 + ((j * math.pi)/ float(vector_size))))**2
 
 
