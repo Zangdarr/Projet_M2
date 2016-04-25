@@ -58,8 +58,9 @@ def f1(x_vector, vector_size):
     sum_y = 0
     product_y = 1
     for odd in range(1 + decalage, vector_size, 2):
-        sum_y     += y_function(x_1, x_vector[odd], odd ,vector_size)**2
-        product_y *= math.cos((20 * y_function(x_1, x_vector[odd], odd ,vector_size) * math.pi) / float(math.sqrt(odd)))
+        tmp_y_func = y_function(x_1, x_vector[odd], odd ,vector_size)
+        sum_y     += tmp_y_func**2
+        product_y *= math.cos((20 * tmp_y_func * math.pi) / float(math.sqrt(odd)))
     tmp3 = 4 * sum_y - 2 * product_y + 2
 
     return x_1 + max(0, tmp1) + tmp2 * tmp3
@@ -89,8 +90,9 @@ def f2(x_vector, vector_size):
     sum_y = 0
     product_y = 1
     for even in range(0 + decalage, vector_size, 2):
-        sum_y     += y_function(x_1, x_vector[even], even ,vector_size)**2
-        product_y *= math.cos((20 * y_function(x_1, x_vector[even], even ,vector_size) * math.pi) / float(math.sqrt(even)))
+        tmp_y_func = y_function(x_1, x_vector[even], even ,vector_size)
+        sum_y     += tmp_y_func**2
+        product_y *= math.cos((20 * tmp_y_func * math.pi) / float(math.sqrt(even)))
     tmp3 = 4 * sum_y - 2 * product_y + 2
 
     return 1 - x_1 + max(0, tmp1) + tmp2 * tmp3
