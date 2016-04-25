@@ -53,17 +53,6 @@ def getSearchSpace(problem_size):
     return search_space
 
 
-def isMutipleOfThree1(value):
-    tmp = value / 3.0
-    return true if tmp - int(tmp) == 0.0 else false
-
-
-list3 = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60, 63, 66, 69, 72, 75, 78, 81, 84, 87, 90, 93, 96, 99, 102, 105, 108, 111, 114, 117, 120, 123, 126, 129, 132, 135, 138, 141, 144, 147, 150, 153, 156, 159, 162, 165, 168, 171, 174, 177, 180, 183, 186, 189, 192, 195, 198, 201, 204, 207, 210, 213, 216, 219, 222, 225, 228, 231, 234, 237, 240, 243, 246, 249, 252, 255, 258, 261, 264, 267, 270, 273, 276, 279, 282, 285, 288, 291, 294, 297]
-def isMutipleOfThree2(value):
-    global list3
-    return True if value in list3 else False
-
-
 j1 = -1
 j2 = -1
 j3 = -1
@@ -75,11 +64,11 @@ def initJ(vector_size):
     j3 = 0
 
     for j in range(3, vector_size):
-        if(isMutipleOfThree2(j)):
+        if(j % 3 == 0):
             j3 += 1
-        if(isMutipleOfThree2(j-2)):
+        elif(j %  3 == 2)):
             j2 += 1
-        if(isMutipleOfThree2(j-1)):
+        else:
             j1 += 1
 
 def f1(x_vector, vector_size):
