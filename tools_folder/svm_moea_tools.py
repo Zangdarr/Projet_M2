@@ -136,6 +136,9 @@ def runTcheby():
     #get the directions weight for both starting functions
     directions = dec.getDirections(nb_functions, nb_objectives)
 
+    #init the neighboring constant
+    nt.initNeighboringTab(nb_functions, neighboring_size)
+
     #giving global visibility to the best_decisions to get the result at the end
     approx_pareto_front = best_decisions
 
@@ -228,7 +231,7 @@ def runTcheby():
         for f in id_directions:
 
             #get all the indice of neighbors of a function in a certain distance of f and include f in
-            f_neighbors, current_neighbourhing_size = nt.getNeighborsInclusive(f, neighboring_size, nb_functions, delta_neighbourhood)
+            f_neighbors, current_neighbourhing_size = nt.getNeighborsOf(f, delta_neighbourhood)
 
             #get a list of offspring from the neighbors
             list_offspring = samp_to.extended_sampling(f, f_neighbors, sampling_param, nb_samples)
