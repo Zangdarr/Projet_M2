@@ -21,6 +21,8 @@ import space_tools as sp
 import training_tools as train_to
 import io_tools as iot
 import model_quality_tools as qual_tools
+import neighboring_tools as nt
+
 
 from sklearn.svm import SVR
 from sklearn.svm import NuSVR
@@ -237,7 +239,7 @@ def runTcheby():
         for f in id_directions:
 
             #get all the indice of neighbors of a function in a certain distance of f and include f in
-            f_neighbors, current_neighbourhing_size = gt.getNeighborsInclusive(f, neighboring_size, nb_functions, delta_neighbourhood)
+            f_neighbors, current_neighbourhing_size = nt.getNeighborsInclusive(f, neighboring_size, nb_functions, delta_neighbourhood)
 
             #get a list of offspring from the neighbors
             list_offspring = samp_to.extended_sampling(f, f_neighbors, sampling_param, nb_samples)

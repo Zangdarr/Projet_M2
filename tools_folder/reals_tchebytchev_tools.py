@@ -15,6 +15,7 @@ import initialisation_tools as init_to
 import sampling_tools as samp_to
 import space_tools as sp
 import io_tools as iot
+import neighboring_tools as nt
 
 #--------------------------------------------------------------------------------------------------------------
 archiveOK = False
@@ -132,7 +133,7 @@ def runTcheby():
         for f in range(nb_functions):
 
             #get all the indice of neighbors of a function in a certain distance of f and include f in
-            f_neighbors, current_neighbourhing_size = gt.getNeighborsInclusive(f, neighboring_size, nb_functions, delta_neighbourhood)
+            f_neighbors, current_neighbourhing_size = nt.getNeighborsInclusive(f, neighboring_size, nb_functions, delta_neighbourhood)
 
             #generate a new valide offspring
             mix_ter = samp_to.sampling(f, f_neighbors, sampling_param)
