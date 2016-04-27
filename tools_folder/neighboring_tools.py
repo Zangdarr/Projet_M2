@@ -7,16 +7,25 @@ neighboring_size = -1
 directions_nb    = -1
 
 #Initialize the neighboring tables and other glabal variables
-def initNeighboringTab(nb_directions, nghb_size):
+def initNeighboringTab(nb_directions, nghb_size, weights, nb_objectives):
     global neighboring_tab, full_neighbors, neighboring_size, directions_nb
 
     directions_nb    = nb_directions
     neighboring_size = nghb_size
     full_neighbors = [i for i in range(directions_nb)]
 
-    for pos in range(0, nb_directions):
-        neighboring_tab.append(getNeighborsInclusive(pos, neighboring_size))
+    distances_tabs = [[computeDistance(i,j,weights, nb_objectives) for j in range(nb_directions)] for i in range(nb_directions)]
 
+    for i in range(nb_directions):
+        tmp_sorted_tab = sorted(range(nb_directions), key=lambda k: distances_tabs[i][k])
+
+        neighboring_tab.append(tmp_sorted_tab[0:neighboring_size])
+
+def computeDistance(posA, posB, weights, nb_objectives):
+    distance = 0.0
+    for i in range(nb_objectives):
+        distance += abs(weights[i][posA] - weights[i][posB])
+    return distance
 
 #return the neighboring of the direction in pos or the complete index table following the probality deltaN
 def getNeighborsOf(pos, deltaN):
@@ -27,6 +36,18 @@ def getNeighborsOf(pos, deltaN):
        return full_neighbors, directions_nb
 
     return neighboring_tab[pos], neighboring_size
+
+
+"""
+def initNeighboringTab(nb_directions, nghb_size):
+    global neighboring_tab, full_neighbors, neighboring_size, directions_nb
+
+    directions_nb    = nb_directions
+    neighboring_size = nghb_size
+    full_neighbors = [i for i in range(directions_nb)]
+
+    for pos in range(0, nb_directions):
+        neighboring_tab.append(getNeighborsInclusive(pos, neighboring_size))
 
 
 #return the neighboring_size indice of elements that are the nearest from pos in a list of size directions_nb
@@ -62,6 +83,7 @@ def getNeighborsInclusive(pos, neighboring_size):
         pos_right = directions_nb
 
     return t[pos_left : pos_right]
+"""
 
 
     return t[pos_left : pos_right], neighboring_size

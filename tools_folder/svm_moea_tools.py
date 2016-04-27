@@ -137,7 +137,7 @@ def runTcheby():
     directions = dec.getDirections(nb_functions, nb_objectives)
 
     #init the neighboring constant
-    nt.initNeighboringTab(nb_functions, neighboring_size)
+    nt.initNeighboringTab(nb_functions, neighboring_size, directions, nb_objectives)
 
     #giving global visibility to the best_decisions to get the result at the end
     approx_pareto_front = best_decisions
