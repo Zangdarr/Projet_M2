@@ -84,6 +84,3 @@ def getNeighborsInclusive(pos, neighboring_size):
 
     return t[pos_left : pos_right]
 """
-
-
-    return t[pos_left : pos_right], neighboring_size
