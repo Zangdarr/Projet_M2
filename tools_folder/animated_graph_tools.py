@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
-from decomposition_tools import genRatio_fctbase2
 import random
 import math
 
