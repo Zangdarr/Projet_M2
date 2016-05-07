@@ -56,26 +56,38 @@ training_neighborhood_size = 5
 #---------------------------------------------------------------------------------------------------------------------
 
 def problemFactory(problem, problem_size):
+    global number_of_functions
+    
     if(problem == "UF1"):
         import UF1_functions as fct
+        number_of_functions = 100
     elif(problem == "UF2"):
         import UF2_functions as fct
+        number_of_functions = 100
     elif(problem == "UF3"):
         import UF3_functions as fct
+        number_of_functions = 100
     elif(problem == "UF4"):
         import UF4_functions as fct
+        number_of_functions = 100
     elif(problem == "UF5"):
         import UF5_functions as fct
+        number_of_functions = 100
     elif(problem == "UF6"):
         import UF6_functions as fct
+        number_of_functions = 100
     elif(problem == "UF7"):
         import UF7_functions as fct
+        number_of_functions = 100
     elif(problem == "UF8"):
         import UF8_functions as fct
+        number_of_functions = 210
     elif(problem == "UF9"):
         import UF9_functions as fct
+        number_of_functions = 210
     elif(problem == "UF10"):
         import UF10_functions as fct
+        number_of_functions = 210
 
     return fct.getObjectives(), fct.getFrontPareto, fct.getProblemTitle(), fct.getSearchSpace(problem_size)
 
