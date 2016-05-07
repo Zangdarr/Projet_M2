@@ -1,5 +1,7 @@
 import copy
 
+WEIGHT2D_FILE = "../tools_folder/SLD-2objs-100wei.ws"
+WEIGHT3D_FILE = "../tools_folder/SLD-3objs-210wei.ws"
 #-----------------------------------------------------------------------------------------------------------------------------------------------#
 """
 #generate the ratio that will be used on both base functions for the N "new" functions, return a table [2][N + 2]
@@ -21,17 +23,29 @@ def genRatio_fctbase2(N, check=False):
     return (numerateur_f1, numerateur_f2, denominateur)
 """
 
-def getDirections(nb_functions, nb_objectives):
-    if(nb_objectives == 2):
-        return genRatio_fctbase2(nb_functions)
-    elif(nb_objectives == 3):
-        print("Decomposition for 3 objectives not yet implemented")
-        exit()
+def getDirections(nb_directions, nb_objectives):
+    if(nb_objectives == 2 and nb_directions == 100):
+        return getWeightDecompositionFromFile(nb_directions, nb_objectives, WEIGHT2D_FILE)
+    elif(nb_objectives == 3 and nb_directions == 210):
+        return getWeightDecompositionFromFile(nb_directions, nb_objectives, WEIGHT3D_FILE)
     else:
-        print("Not 2 or 3 objectives : ERROR")
+        print("Error in configuration : 2obj and 100 dir or 3obj and 210 dir")
         exit()
 
+def getWeightDecompositionFromFile(nb_directions, nb_objectives, filename):
+    f = open(filename, "r")
+    lines = f.readlines()
+    f.close()
 
+    weights = [[] for i in range(nb_objectives)]
+    for line in lines:
+        splitted_line = line.split(" ")
+        for obj in range(nb_objectives):
+            weights[obj].append(float(splitted_line[obj]))
+
+    return weights
+
+"""
 #generate the ratio that will be used on the N functions, return 2 table  N size
 def genRatio_fctbase2(nb_functions, check=False):
 
@@ -48,3 +62,4 @@ def genRatio_fctbase2(nb_functions, check=False):
     ratio_tab_f2.reverse()
 
     return [ratio_tab_f1, ratio_tab_f2]
+"""
