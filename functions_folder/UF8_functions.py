@@ -66,7 +66,7 @@ def initJ(vector_size):
     for j in range(3, vector_size):
         if(j % 3 == 0):
             j3 += 1
-        elif(j %  3 == 2)):
+        elif(j %  3 == 2):
             j2 += 1
         else:
             j1 += 1
