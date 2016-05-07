@@ -319,7 +319,7 @@ def runTcheby():
             continue
         #graphic update
         #yield arch_to.getArchiveScore(), best_decisions_scores, itera+1, eval_to.getNbEvals(), eval_to.getZstar_with_decal(), pop_size, isReals
-    if(not free_eval and writeOK):
+    if(not free_eval and writeR2OK):
         qual_tools.computeQualityEvaluation()
         qual_tools.generateDiffPredFreeFile()
     return
