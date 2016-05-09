@@ -28,11 +28,8 @@ def getTrainingNeighborsInclusive(pos, neighboring_size, size_l):
     return t[pos_left : pos_right], neighboring_size
 
 def getDirectionsTrainingMatrix(directions):
-    tmp1, tmp2 = directions
-
-    tmp1 = np.transpose(np.matrix(tmp1))
-    tmp2 = np.transpose(np.matrix(tmp2))
-    result = np.hstack((tmp1, tmp2))
+    tmmp = np.array(directions)
+    result = tmmp.T
 
     return result
 
