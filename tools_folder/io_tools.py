@@ -5,7 +5,6 @@ def printObjectives(file_to_write, eval_number,iteration_number,  objectives_tab
     if(iteration_number % modulo == 0):
         tab = [" " for i in range(0, 4+2*nb_objectives)]
         tab[-1] = "\n"
-        tab = [''," ", '', " ", '', " ", '', "\n"]
         for objectives in objectives_table:
             tab[0] = str(iteration_number)
             tab[2] = str(eval_number)
