@@ -7,27 +7,32 @@ sys.path.insert(0,"../tools_folder/")
 import reals_tchebytchev_tools as tcheby
 
 #-----PARAM-----------------
+# default number of directions for MOEAD
 number_of_functions = 100
+# operators that will be used for the [crossover, mutation, reparation]
 operator_fct = [op.DE_Operator, op.polynomial_mutation, op.repair_offspring]
+# generator of possible solutions
 generation_fct = op.genVector
-#Shall it maintain an archive and return it in the result ?
+# boolean that decide if the program should maintain an archive (performance warning : better false)
 manage_archive = False
-#size of the neighbourhood, include the current pos
+# size of the neighborhood for any direction, include the current pos
 neighboring_size = 21
-#slow down process parameter
+# slow down process parameter
 sleeptime = 0
-#number max of replacement for each offspring
-max_decisions_maj = 2 #nr
-#proba to give the neighboring_size. ex : 0 = return always all, 1 = return always neighboring_size
+# number max of replacement in the population for an offspring that has been selected as a candidate
+max_decisions_maj = 2 # nr param
+# proba to consider the neighboring_size instead of all the direction. ex : 0 = return always all directions as the neighborhood, 1 = return always neighboring_size as the neighborhood
 delta_neighbourhood = 0.9
-#proba to do the crossover, evaluate for each item in a single vector
+# proba to apply the crossover to generate the offspring
 CR = 1.0
+# modulation of the crossover impact
 F = 0.5
-
+#
 distrib_index_n = 20
 
 #---------------------------------------------------------------------------------------------------------------------
 
+# Import the correct module regarding parameter and set the number of directions (fixed because the weight come from determined files)
 def problemFactory(problem, problem_size):
     global number_of_functions
 
@@ -64,6 +69,7 @@ def problemFactory(problem, problem_size):
 
     return fct.getObjectives(), fct.getFrontPareto, fct.getProblemTitle(), fct.getSearchSpace(problem_size)
 
+# launcher of the real-time graphical version of the algorithm. No result files will be generated. The mutation probability is decided in this function.
 def runOneTime(problem, problem_size, nb_iterations):
        global number_of_functions, operator_fct, generation_fct, neighboring_size, max_decisions_maj, delta_neighbourhood, CR, F, distrib_index_n, manage_archive, sleeptime
 
@@ -73,7 +79,7 @@ def runOneTime(problem, problem_size, nb_iterations):
 
        tcheby.getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation_fct, pareto_front_fct, number_of_functions, nb_iterations, neighboring_size, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, manage_archive, -1, sleeptime)
 
-
+# launcher of the version of the algorithm that generate result files. No graphical view avalaible. The mutation probability is decided in this function.
 def experimentWith(problem, file_to_write, problem_size,  nb_iterations, param_print_every):
        global number_of_functions, operator_fct, generation_fct, neighboring_size, max_decisions_maj, delta_neighbourhood, CR, F, distrib_index_n, manage_archive, sleeptime
 
