@@ -2,29 +2,17 @@
 
 import sys
 sys.path.insert(0, "../functions_folder/")
-#import UF1_functions as fct
 import operators_functions as op
 sys.path.insert(0,"../tools_folder/")
-#import svm_moea_tools as svr
 
 #-----PARAM-----------------
-#start_fct    = fct.getObjectives()
 number_of_functions = 100
 operator_fct = [op.DE_Operator, op.polynomial_mutation, op.repair_offspring]
 generation_fct = op.genVector
-#start_fct_len = len(start_fct)
-#pareto_front_fct = fct.getFrontPareto
-#problem_title = fct.getProblemTitle()
 #Shall it maintain an archive and return it in the result ?
 manage_archive = False
-#stop critera : number of iterations
-#nb_iterations = 100 #######################################
-#data parameter : size of the input
-#problem_size = 10 #######################################
 #size of the neighbourhood, include the current pos
 neighboring_size = 21
-#number of new funtions to be generated
-#N_new_fct = number_of_functions - start_fct_len #population size - nb objective function
 #slow down process parameter
 sleeptime = 0
 #number max of replacement for each offspring
@@ -34,30 +22,16 @@ delta_neighbourhood = 0.9
 #proba to do the crossover, evaluate for each item in a single vector
 CR = 1.0
 F = 0.5
-#proba to do the mutation, evaluate for each item in a single vector
-#pm = 1 / problem_size
 #
 distrib_index_n = 20
-#number of offspring that will be generated for each functions
-#nb_samples = 1
 #size of the neighborhood that will be used for the model training
 training_neighborhood_size = 5
-#strategy used for the training step "single" / "all" / "neighbors"
-#strategy = 'neighbors'
-
-#search_space = fct.getSearchSpace(problem_size)
-
-#####################################################################################################################
-
-#number of functions that will be used for the algorithm
-#nb_functions = start_fct_len + N_new_fct
-
 
 #---------------------------------------------------------------------------------------------------------------------
 
 def problemFactory(problem, problem_size):
     global number_of_functions
-    
+
     if(problem == "UF1"):
         import UF1_functions as fct
         number_of_functions = 100
