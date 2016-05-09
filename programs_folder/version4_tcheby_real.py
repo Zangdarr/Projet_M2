@@ -32,7 +32,7 @@ distrib_index_n = 20
 
 #---------------------------------------------------------------------------------------------------------------------
 
-# Import the correct module regarding parameter and set the number of directions (fixed because the weight come from determined files)
+# Import the correct module regarding 'problem' parameter and set the number of directions (fixed because the weight come from determined files)
 def problemFactory(problem, problem_size):
     global number_of_functions
 
