@@ -175,11 +175,13 @@ def runTcheby():
 
     #iterations loop
     for itera in range(nb_iterations):
-        #Update model
-        training_inputs, training_outputs, training_set_size, training_scores = train_to.getTrainingSet(model_directions, best_decisions, best_decisions_scores ,eval_to.getZstar_with_decal(), strategy, nb_functions, training_neighborhood_size)
+        if(not free_eval):
+            #Update model
+            training_inputs, training_outputs, training_set_size, training_scores = train_to.getTrainingSet(model_directions, best_decisions, best_decisions_scores ,eval_to.getZstar_with_decal(), strategy, nb_functions, training_neighborhood_size)
 
-        clf.fit(training_inputs, training_outputs)
-        if(writeR2OK):
+            clf.fit(training_inputs, training_outputs)
+
+        if(writeR2OK and not free_eval):
             training_inputs_tcheby      = eval_to.getManyTcheby(training_inputs, training_scores, eval_to.getZstar_with_decal(), training_set_size)
 
             random_index = numpy.arange(0,training_set_size)
@@ -247,7 +249,7 @@ def runTcheby():
             has_changed = eval_to.min_update_Z_star(mix_scores, nb_objectives)
 
             #retraining of the model with the new z_star
-            if(has_changed):
+            if(has_changed and not free_eval):
                 train_to.updateTrainingZstar(eval_to.getZstar_with_decal())
                 training_outputs = train_to.retrainSet(training_inputs, training_scores, eval_to.getZstar_with_decal(), training_set_size, nb_objectives)
                 clf.fit(training_inputs, training_outputs)
