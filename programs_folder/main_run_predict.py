@@ -1,5 +1,4 @@
 import version5_reals_prediction as v5
-import sys
 
 
 problem_size               = 10          # 10 30
