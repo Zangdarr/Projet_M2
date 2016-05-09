@@ -34,7 +34,7 @@ from sklearn.metrics import r2_score
 
 #-------------------------------------------------------------------------------
 archiveOK = False
-NO_FILE_TO_WRITE = -1
+NO_FILE_TO_WRITE = "none"
 approx_pareto_front = None
 
 #-------------------------------------------------------------------------------
@@ -60,7 +60,7 @@ def getFrontParetoWithGraphic(problem_title, start_fct, operator_fct, generation
     #random initialisation
     init_decisions = init_to.initRandom(generation_fct, nb_functions, problem_size, search_space)
     #algorithm parameters
-    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, -1, filter_strat, free_eval, -1, -1, -1, -1]
+    param = [start_fct, nb_functions, nb_iterations, neighboring_size, init_decisions, problem_size, max_decisions_maj, delta_neighbourhood, CR, search_space, F, distrib_index_n, pm, operator_fct, nb_samples, training_neighborhood_size, strategy, "none", filter_strat, free_eval, -1, "none", "none", "none"]
     #function that will be called by runAnimatedGraph before it's end
     end_function = getResult
     #launch the graphic view and the algorithm
