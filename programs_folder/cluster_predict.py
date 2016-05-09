@@ -13,7 +13,7 @@ if("freeeval" in algo_name):
     filenameSCORE = "none"
 
     file_to_write = open(filename, 'a')
-    v5.experimentWith(algo_name, problem, file_to_write, int(problem_size), int(nb_samples), int(nb_iterations), -1, strategy, filter_strat, int(param_print_every), file_to_writeR2, filenameDIR, filenameSCORE)
+    v5.experimentWith(algo_name, problem, file_to_write, int(problem_size), int(nb_samples), int(nb_iterations), -1, strategy, filter_strat, int(param_print_every), filenameR2, filenameDIR, filenameSCORE)
     file_to_write.close()
 
 else:
