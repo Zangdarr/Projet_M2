@@ -7,7 +7,7 @@ import random
 def genBS(taille):
     bstr = []
     for i in range(taille):
-       r = random.SystemRandom().randint(0,1)
+       r = random.randint(0,1)
        if(r):
            bstr.append(1)
        else:
@@ -39,11 +39,11 @@ def f2(bin_str):
 ########################################################################
 
 def mixOperator(l, k, CR):
-    r = random.SystemRandom().randint(1,len(l)-1)
+    r = random.randint(1,len(l)-1)
     if(r< 1-CR):
         return l
-    r = random.SystemRandom().randint(1,len(l)-1)
-    o = random.SystemRandom().randint(0,1)
+    r = random.randint(1,len(l)-1)
+    o = random.randint(0,1)
     if(o):
         mix = l[0:r] + k[r:]
     else:
@@ -60,7 +60,7 @@ def onebitflip(bitstring):
 
     l_bs = bitstring.copy()
     l = len(bitstring)
-    r = random.SystemRandom().randint(0,l-1)
+    r = random.randint(0,l-1)
 
     l_bs[r] = 0 if l_bs[r] == 1 else 1
 
@@ -74,7 +74,7 @@ def bitflip(bitstring, flip=1):
     l_bs = bitstring.copy()
 
     for i in range(bs_len):
-        r = random.SystemRandom().random()
+        r = random.random()
         if(r < prob_flip):
             l_bs[i] = 0 if l_bs[i] == 1 else 1
 
