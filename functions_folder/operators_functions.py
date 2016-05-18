@@ -10,7 +10,7 @@ def genVector(size, search_space):
     for i in range(len_search_space):
        lim_b, lim_h = search_space[i][1]
        for j in range(search_space[i][0]):
-         r = random.SystemRandom().uniform(lim_b,lim_h)
+         r = random.uniform(lim_b,lim_h)
          vector.append(r)
     return vector
 
@@ -29,7 +29,7 @@ def repair_offspring(offspring, search_space):
         for j in range(tmp_len):
             pos = prev + j
             if(offspring[pos] > lim_h or offspring[pos] < lim_b):
-                tmp.append(random.SystemRandom().uniform(lim_b,lim_h))
+                tmp.append(random.uniform(lim_b,lim_h))
             else:
                 tmp.append(offspring[pos])
         prev = tmp_len
@@ -44,7 +44,7 @@ def DE_Operator(x_r1, x_r2, x_r3, F, vector_size, CR):
     mix = []
     for i in range(vector_size):
 
-        r = random.SystemRandom().random()
+        r = random.random()
         if(r < 1 - CR):
             mix.append(x_r1)
         else:
@@ -68,7 +68,7 @@ def bk_ak(search_space):
     return tmp
 
 def sigmak(distrib_index_n):
-    rand = random.SystemRandom().random()
+    rand = random.random()
 
     if(rand < 0.5):
        tmp = (2*rand)**(1.0/(distrib_index_n+1)) -1
@@ -82,7 +82,7 @@ def polynomial_mutation(mix, vector_size, search_space, distrib_index_n, pm):
     bk_ak_tab = bk_ak(search_space)
 
     for i in range(vector_size):
-        r = random.SystemRandom().random()
+        r = random.random()
         if(r < 1 - pm):
             mix_bis.append(mix[i])
         else:
