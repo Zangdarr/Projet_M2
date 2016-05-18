@@ -78,7 +78,7 @@ def numberdir_score(free_eval, param):
 
     score_best_free = max(offspring_result_free)
     best_indexes_free = [i for i, j in enumerate(offspring_result_free) if j == score_best_free]
-    choice_free = random.SystemRandom().choice(best_indexes_free)
+    choice_free = random.choice(best_indexes_free)
 
     choice = -1
     if(free_eval):
@@ -86,7 +86,7 @@ def numberdir_score(free_eval, param):
     else:
         score_best_pred = max(offspring_result_pred)
         best_indexes_pred = [i for i, j in enumerate(offspring_result_pred) if j == score_best_pred]
-        choice_pred = random.SystemRandom().choice(best_indexes_pred)
+        choice_pred = random.choice(best_indexes_pred)
         save_best_free_pred_score = offspring_result_pred[choice_free]
         save_best_pred_free_score = offspring_result_free[choice_pred]
         choice = choice_pred
