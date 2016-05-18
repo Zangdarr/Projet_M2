@@ -12,7 +12,7 @@ def get_n_indices_of(n, size_l):
     indices = []
     k = 0
     while k < n :
-        r = random.SystemRandom().randint(0,size_l-1)
+        r = random.randint(0,size_l-1)
         if(not(r in indices)):
             indices.append(r)
             k += 1
