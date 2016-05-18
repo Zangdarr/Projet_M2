@@ -1,6 +1,4 @@
-import random
 import math
-import numpy
 
 ########################################################################
 # Parameters from CEC'09
