@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+import numpy as np
 
 title = "Default title"
 axe_x_name = "Default x axe"
