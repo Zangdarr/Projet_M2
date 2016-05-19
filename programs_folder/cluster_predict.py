@@ -1,9 +1,13 @@
 import sys
 import version5_reals_prediction as v5
+import random
+
 
 args = sys.argv
 
 _, problem, algo_name, problem_size, strategy, nb_samples, filter_strat, run, nb_iterations, param_print_every, result_folder = args
+
+random.seed(run)
 
 if("freeeval" in algo_name):
     filename = result_folder + "/" + problem + "_" + algo_name +"_PS-" + str(problem_size) + "_S-none" + "_L-" + str(nb_samples) + "_TS--1" + "_FS-" + filter_strat +"_R-"+ str(run) +".txt"
