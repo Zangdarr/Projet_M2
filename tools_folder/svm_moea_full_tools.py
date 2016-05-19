@@ -232,7 +232,7 @@ def runTcheby():
             iot.printR2(file_to_writeR2, eval_to.getNbEvals(), itera,  R2, R2_cv_mean, MSE_cv_mean , MAE_cv_mean, MDAE_cv_mean, RMSE_cv_mean, problem_size, print_every=1)
 
         #random course through the directions
-        random.SystemRandom().shuffle(id_directions)
+        random.shuffle(id_directions)
 
         #functions loop
         for f in id_directions:
@@ -273,7 +273,7 @@ def runTcheby():
             cmpt_best_maj = 0
 
             #random course through the neighbors list
-            random.SystemRandom().shuffle(f_neighbors)
+            random.shuffle(f_neighbors)
 
             #course through the neighbors list
             for j in f_neighbors:
