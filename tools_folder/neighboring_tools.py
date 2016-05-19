@@ -31,7 +31,7 @@ def computeDistance(posA, posB, weights, nb_objectives):
 def getNeighborsOf(pos, deltaN):
     global neighboring_tab, full_neighbors, neighboring_size, directions_nb
 
-    rnd = random.SystemRandom().random()
+    rnd = random.random()
     if( not(rnd < deltaN)):
        return full_neighbors, directions_nb
 
