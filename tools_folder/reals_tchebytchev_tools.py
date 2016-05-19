@@ -129,11 +129,17 @@ def runTcheby():
     if(writeOK):
         iot.printObjectives(file_to_write, eval_to.getNbEvals(), 0, best_decisions_scores, problem_size, nb_objectives)
 
+    #IDs tab to allow a random course through the directions in the main loop
+    id_directions = [i for i in range(nb_functions)]
+
     #iterations loop
     for itera in range(nb_iterations):
 
+        #random course through the directions
+        random.shuffle(id_directions)
+
         #functions loop
-        for f in range(nb_functions):
+        for f in id_directions:
 
             #get all the indice of neighbors of a function in a certain distance of f and include f in
             f_neighbors, current_neighbourhing_size = nt.getNeighborsOf(f, delta_neighbourhood)
