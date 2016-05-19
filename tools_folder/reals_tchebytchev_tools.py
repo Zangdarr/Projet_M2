@@ -154,7 +154,7 @@ def runTcheby():
             cmpt_best_maj = 0
 
             #random course through the neighbors list
-            random.SystemRandom().shuffle(f_neighbors)
+            random.shuffle(f_neighbors)
 
             #course through the neighbors list
             for j in f_neighbors:
