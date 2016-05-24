@@ -296,7 +296,10 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
             for data in f_input_data:
                 tmp_free = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
                 current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0] , population_scores[f_neighbors[f]], z_star)
-                diff_score_free += max(0, current_gtcheby - tmp_free)
+                if(normalize):
+                    diff_score_free += max(0, (current_gtcheby - tmp_free) / current_gtcheby )
+                else:
+                    diff_score_free += max(0, current_gtcheby - tmp_free)
                 f +=1
             diff_score_free /= float(f)
 
