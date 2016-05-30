@@ -284,7 +284,8 @@ def runTcheby():
 
 
                 #compute g_tcheby
-                wj = (directions[0][j],directions[1][j])
+                #wj = (directions[0][j],directions[1][j])
+                wj = [directions[obj][j] for obj in range(0,nb_objectives)]
                 g_mix = eval_to.g_tcheby(wj, mix_scores, eval_to.getZstar_with_decal())
                 g_best = eval_to.g_tcheby(wj, best_decisions_scores[j], eval_to.getZstar_with_decal())
 
