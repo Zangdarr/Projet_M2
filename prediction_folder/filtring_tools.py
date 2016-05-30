@@ -248,6 +248,8 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
     index_best_free = -1
     score_best_free = 0
     save_best_free_pred_score = -1
+
+    nb_fct = len(start_fct)
     for offspring in list_offspring:
         id_offspring += 1
         diff_score_pred = 0
@@ -270,7 +272,7 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
                         diff_score_free += max(0, current_gtcheby - tmp_free)
                else:
 
-                   current_pred = model.predict([f_input_data[f][0:2] + population_indiv[f_neighbors[f]]])[0]
+                   current_pred = model.predict([f_input_data[f][0:nb_fct] + population_indiv[f_neighbors[f]]])[0]
                    if(normalize):
                        diff_score_pred += max(0, (current_pred - tmp_pred) / current_pred )
                        diff_score_free += max(0, (current_pred - tmp_free) / current_pred )
@@ -425,7 +427,7 @@ def AverageScalar(free_eval, param, normalize, withTruescore):
                        average_score_pred += ( tmp_pred / current_gtcheby )
                        average_score_free += ( tmp_free / current_gtcheby )
                    else:
-                       current_pred = model.predict([f_input_data[f][0:2] + population_indiv[f_neighbors[f]]])[0]
+                       current_pred = model.predict([f_input_data[f][0:nb_fct] + population_indiv[f_neighbors[f]]])[0]
                        average_score_pred += ( tmp_pred / current_pred )
                        average_score_free += ( tmp_free / current_pred )
                else:
@@ -497,14 +499,16 @@ def getInputData(f_neighbors, model_directions, offspring):
 
 
 def computeTchebyFreeEval(data, start_fct, problem_size, z_star):
-    w = data[0:2]
-    offs = data[2:]
+    nb_fct = len(start_fct)
+    w = data[0:nb_fct]
+    offs = data[nb_fct:]
     score_eval = eval_to.free_eval(start_fct, offs, problem_size)
     return eval_to.g_tcheby(w, score_eval, z_star)
 
 def predict_and_quality(model, data_free, data_pred, start_fct, problem_size, g, d):
-    w = data_free[0:2]
-    offs = data_free[2:]
+    nb_fct = len(start_fct)
+    w = data_free[0:nb_fct]
+    offs = data_free[nb_fct:]
     score_freeeval = eval_to.free_eval(start_fct, offs, problem_size)
     tcheby_freeeval = eval_to.g_tcheby(w, score_freeeval, train_to.getTrainingZstar())
     tcheby_predict  = model.predict(data_pred)
