@@ -40,7 +40,15 @@ def min_update_Z_star(new_scores, nb_objectives):
 
 #evaluate the distance of a solution from the z-optimal solution
 def g_tcheby(dir, score, opt_scores):
-    return max(dir[0]*abs(score[0]-opt_scores[0]),dir[1]*abs(score[1]-opt_scores[1]))
+    #return max(dir[0]*abs(score[0]-opt_scores[0]),dir[1]*abs(score[1]-opt_scores[1]))
+    mmax = 0.0
+    i = 0
+    for sc in score:
+        tmp = dir[i]*abs(sc -opt_scores[i])
+        if(mmax < tmp):
+            mmax = tmp
+        i += 1
+    return mmax
 
 def getManyTcheby(training_inputs, training_scores, z_star, training_set_size):
     tab_tcheby = []
