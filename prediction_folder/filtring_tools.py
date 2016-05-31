@@ -17,8 +17,6 @@ def model_based_filtring(filter_strat, free_eval,  param):
         return AverageScalar(free_eval, param, True, True)
     elif(filter_strat == 'AvSclNormP'):
         return AverageScalar(free_eval, param, True, False)
-    elif(filter_strat == 'best'):
-        return best_score(free_eval, param)
     elif(filter_strat == 'AvImprG'):
         return AverageImprovement(free_eval, param, False, True)
     elif(filter_strat == 'AvImprP'):
@@ -27,6 +25,12 @@ def model_based_filtring(filter_strat, free_eval,  param):
         return AverageImprovement(free_eval, param, True, True)
     elif(filter_strat == 'AvImprNormP'):
         return AverageImprovement(free_eval, param, True, False)
+    elif(filter_strat == 'BestScl'):
+        return BestScalar(free_eval, param, False, False)
+    elif(filter_strat == 'BestSclNormG'):
+        return BestScalar(free_eval, param, True, True)
+    elif(filter_strat == 'BestSclNormP'):
+        return BestScalar(free_eval, param, True, False)
     elif(filter_strat == 'bestdiff'):
         return bestdiff_score(free_eval, param)
     elif(filter_strat == 'by_direction'):
@@ -327,10 +331,9 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
     return list_offspring[index_best]
 
 
-#Return the candidat that minimizes the score among the direction within the neighborhood of the current direction
-def best_score(free_eval, param):
+#Return the candidat that got the minimal value for the direction which got the minimale value among the directions in the neighborhood
+def BestScalar(free_eval, param, normalize, withTruescore):
     global MAX_INTEGER
-
     current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores, population_indiv = param
 
 
@@ -352,9 +355,18 @@ def best_score(free_eval, param):
            for data in f_input_data_pred:
                tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
                tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star)
-               min_score_pred = min(tmp_pred, min_score_pred)
-               min_score_free = min(tmp_free, min_score_free)
-
+               if(normalize):
+                   if(withTruescore):
+                       current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
+                       min_score_pred = min(tmp_pred / current_gtcheby, min_score_pred)
+                       min_score_free = min(tmp_free / current_gtcheby, min_score_free)
+                   else:
+                       current_pred = model.predict([f_input_data[f][0:nb_fct] + population_indiv[f_neighbors[f]]])[0]
+                       min_score_pred = min(tmp_pred / current_pred, min_score_pred)
+                       min_score_free = min(tmp_free / current_pred, min_score_free)
+               else:
+                   min_score_pred = min(tmp_pred, min_score_pred)
+                   min_score_free = min(tmp_free, min_score_free)
                f +=1
            if(index_best_pred == -1):
                 index_best_pred = id_offspring
@@ -367,10 +379,16 @@ def best_score(free_eval, param):
            else :
                 pass
 
-        else:
+        else: # free_eval
+            f = 0
             for data in f_input_data:
                 tmp_free = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
-                min_score_free = min(tmp_free, min_score_free)
+                if(normalize):
+                    current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
+                    min_score_free = min(tmp_free / current_gtcheby , min_score_free)
+                else:# normalize false
+                    min_score_free = min(tmp_free, min_score_free)
+                f += 1
 
         if(index_best_free == -1):
             index_best_free = id_offspring
