@@ -35,12 +35,12 @@ def model_based_filtring(filter_strat, free_eval,  param):
         return bestdiff_score(free_eval, param)
     elif(filter_strat == 'by_direction'):
         return by_direction_score(free_eval, param)
-    elif(filter_strat == 'numberdir'):
-        return numberdir_score(free_eval, param)
+    elif(filter_strat == 'NumberImpr'):
+        return NumberOfImprovement(free_eval, param)
 
 
 #Return a candidat randomly selected within those that improve the maximum of direction within the current direction neighborhood
-def numberdir_score(free_eval, param):
+def NumberOfImprovement(free_eval, param):
 
     current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores, population_indiv = param
 
