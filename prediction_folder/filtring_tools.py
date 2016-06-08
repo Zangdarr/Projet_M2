@@ -65,8 +65,8 @@ def NumberOfImprovement(free_eval, param):
            f_input_data_pred = np.matrix(f_input_data)
            f = 0
            for data in f_input_data_pred:
-               tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
-               tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star)
+               tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f], nb_fct)
+               tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star, nb_fct)
                current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
                if(current_gtcheby > tmp_pred):
                    numberdir_score_pred += 1
@@ -78,7 +78,7 @@ def NumberOfImprovement(free_eval, param):
         else:
             f = 0
             for data in f_input_data:
-                tmp_free = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
+                tmp_free = computeTchebyFreeEval(data, start_fct, problem_size, z_star, nb_fct)
                 current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0] , population_scores[f_neighbors[f]], z_star)
                 if(current_gtcheby > tmp_free):
                     numberdir_score_free += 1
@@ -134,7 +134,7 @@ def by_direction_score(free_eval, param):
 
         if(not free_eval):
            f_input_data_pred = np.matrix(f_input_data)
-           tmp_pred = predict_and_quality(model, f_input_data, f_input_data_pred, start_fct, problem_size, current_g, current_f)
+           tmp_pred = predict_and_quality(model, f_input_data, f_input_data_pred, start_fct, problem_size, current_g, current_f, nb_fct)
            score_eval = eval_to.free_eval(start_fct, offspring, problem_size)
            tmp_free = eval_to.g_tcheby(current_f_w, score_eval, z_star)
 
@@ -198,8 +198,8 @@ def BestImpr(free_eval, param, normalize, withTruescore):
            f_input_data_pred = np.matrix(f_input_data)
            f = 0
            for data in f_input_data_pred:
-               tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
-               tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star)
+               tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f], nb_fct)
+               tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star, nb_fct)
                if(normalize):
                    if(withTruescore):
                        current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
@@ -234,7 +234,7 @@ def BestImpr(free_eval, param, normalize, withTruescore):
         else: # free_eval
             f = 0
             for data in f_input_data:
-                tmp_free = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
+                tmp_free = computeTchebyFreeEval(data, start_fct, problem_size, z_star, nb_fct)
                 current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0] , population_scores[f_neighbors[f]], z_star)
                 if(normalize):
                     diff_score_free = max(diff_score_free, (current_gtcheby - tmp_free) / current_gtcheby )
@@ -289,8 +289,8 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
            f_input_data_pred = np.matrix(f_input_data)
            f = 0
            for data in f_input_data_pred:
-               tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
-               tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star)
+               tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f], nb_fct)
+               tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star, nb_fct)
                current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
                if(withTruescore):
                     if(normalize):
@@ -325,7 +325,7 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
         else:
             f = 0
             for data in f_input_data:
-                tmp_free = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
+                tmp_free = computeTchebyFreeEval(data, start_fct, problem_size, z_star, nb_fct)
                 current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0] , population_scores[f_neighbors[f]], z_star)
                 if(normalize):
                     diff_score_free += max(0, (current_gtcheby - tmp_free) / current_gtcheby )
@@ -378,8 +378,8 @@ def BestScalar(free_eval, param, normalize, withTruescore):
            f_input_data_pred = np.matrix(f_input_data)
            f = 0
            for data in f_input_data_pred:
-               tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
-               tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star)
+               tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f], nb_fct)
+               tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star, nb_fct)
                if(normalize):
                    if(withTruescore):
                        current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
@@ -407,7 +407,7 @@ def BestScalar(free_eval, param, normalize, withTruescore):
         else: # free_eval
             f = 0
             for data in f_input_data:
-                tmp_free = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
+                tmp_free = computeTchebyFreeEval(data, start_fct, problem_size, z_star, nb_fct)
                 if(normalize):
                     current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
                     min_score_free = min(tmp_free / current_gtcheby , min_score_free)
@@ -462,8 +462,8 @@ def AverageScalar(free_eval, param, normalize, withTruescore):
            f_input_data_pred = np.matrix(f_input_data)
            f = 0
            for data in f_input_data_pred:
-               tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f])
-               tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star)
+               tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f], nb_fct)
+               tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star, nb_fct)
                if(normalize):
                    if(withTruescore):
                        current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
@@ -495,7 +495,7 @@ def AverageScalar(free_eval, param, normalize, withTruescore):
         else: # free_eval
             f = 0
             for data in f_input_data:
-                tmp_free = computeTchebyFreeEval(data, start_fct, problem_size, z_star)
+                tmp_free = computeTchebyFreeEval(data, start_fct, problem_size, z_star, nb_fct)
                 if(normalize):
                     current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
                     average_score_free += ( tmp_free / current_gtcheby )
@@ -541,15 +541,13 @@ def getInputData(f_neighbors, model_directions, offspring):
     return l
 
 
-def computeTchebyFreeEval(data, start_fct, problem_size, z_star):
-    nb_fct = len(start_fct)
+def computeTchebyFreeEval(data, start_fct, problem_size, z_star, nb_fct):
     w = data[0:nb_fct]
     offs = data[nb_fct:]
     score_eval = eval_to.free_eval(start_fct, offs, problem_size)
     return eval_to.g_tcheby(w, score_eval, z_star)
 
-def predict_and_quality(model, data_free, data_pred, start_fct, problem_size, g, d):
-    nb_fct = len(start_fct)
+def predict_and_quality(model, data_free, data_pred, start_fct, problem_size, g, d, nb_fct):
     w = data_free[0:nb_fct]
     offs = data_free[nb_fct:]
     score_freeeval = eval_to.free_eval(start_fct, offs, problem_size)
