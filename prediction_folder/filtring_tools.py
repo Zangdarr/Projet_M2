@@ -119,6 +119,9 @@ def by_direction_score(free_eval, param):
     save_best_pred_free_score = MAX_INTEGER
     save_best_free_pred_score = MAX_INTEGER
 
+    index_best_free_list = []
+    index_best_pred_list = []
+
     current_f_w = model_directions[current_f].tolist()[0]
 
     for offspring in list_offspring:
@@ -139,13 +142,15 @@ def by_direction_score(free_eval, param):
            tmp_free = eval_to.g_tcheby(current_f_w, score_eval, z_star)
 
            if(index_best_pred == -1):
-               index_best_pred = id_offspring
                score_best_pred = tmp_pred
                save_best_pred_free_score = tmp_free
+               index_best_pred_list = [id_offspring]
            elif(tmp_pred < score_best_pred):
-               index_best_pred = id_offspring
                score_best_pred = tmp_pred
                save_best_pred_free_score = tmp_free
+               index_best_pred_list = [id_offspring]
+           elif(tmp_pred == score_best_pred):
+               index_best_pred_list.append(id_offspring)
            else:
                pass
 
@@ -154,16 +159,20 @@ def by_direction_score(free_eval, param):
             tmp_free = eval_to.g_tcheby(current_f_w, score_eval, z_star)
 
         if(index_best_free == -1):
-            index_best_free = id_offspring
             score_best_free = tmp_free
             save_best_free_pred_score = tmp_pred
+            index_best_free_list = [id_offspring]
         elif(tmp_free < score_best_free):
-            index_best_free = id_offspring
             score_best_free = tmp_free
             save_best_free_pred_score = tmp_pred
+            index_best_free_list = [id_offspring]
+        elif(tmp_free == score_best_free):
+            index_best_free_list.append(id_offspring)
         else :
             pass
 
+    index_best_pred = random.choice(index_best_pred_list)
+    index_best_free = random.choice(index_best_free_list)
     index_best = -1
     if(free_eval):
         index_best = index_best_free
@@ -188,6 +197,10 @@ def BestImpr(free_eval, param, normalize, withTruescore):
     index_best_free = -1
     score_best_free = -1 * MAX_INTEGER
     save_best_free_pred_score = -1
+
+    index_best_free_list = []
+    index_best_pred_list = []
+
     for offspring in list_offspring:
         id_offspring += 1
         diff_score_pred = -1 * MAX_INTEGER
@@ -221,13 +234,15 @@ def BestImpr(free_eval, param, normalize, withTruescore):
                f +=1
 
            if(index_best_pred == -1):
-                 index_best_pred = id_offspring
                  score_best_pred = diff_score_pred
                  save_best_pred_free_score = diff_score_free
+                 index_best_pred_list = [id_offspring]
            elif(diff_score_pred > score_best_pred):
-                 index_best_pred = id_offspring
                  score_best_pred = diff_score_pred
                  save_best_pred_free_score = diff_score_free
+                 index_best_pred_list = [id_offspring]
+           elif(diff_score_pred == score_best_pred):
+                 index_best_pred_list.append(id_offspring)
            else :
                  pass
 
@@ -243,16 +258,20 @@ def BestImpr(free_eval, param, normalize, withTruescore):
                 f += 1
 
         if(index_best_free == -1):
-            index_best_free = id_offspring
             score_best_free = diff_score_free
             save_best_free_pred_score = diff_score_pred
+            index_best_free_list = [id_offspring]
         elif(diff_score_free > score_best_free):
-            index_best_free = id_offspring
             score_best_free = diff_score_free
             save_best_free_pred_score = diff_score_pred
+            index_best_free_list = [id_offspring]
+        elif(diff_score_free == score_best_free):
+            index_best_free_list.append(id_offspring)
         else :
             pass
 
+    index_best_pred = random.choice(index_best_pred_list)
+    index_best_free = random.choice(index_best_free_list)
     index_best = -1
     if(free_eval):
          index_best = index_best_free
@@ -277,6 +296,9 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
     index_best_free = -1
     score_best_free = 0
     save_best_free_pred_score = -1
+
+    index_best_free_list = []
+    index_best_pred_list = []
 
     nb_fct = len(start_fct)
     for offspring in list_offspring:
@@ -313,13 +335,15 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
            diff_score_pred /= float(f)
            diff_score_free /= float(f)
            if(index_best_pred == -1):
-                 index_best_pred = id_offspring
                  score_best_pred = diff_score_pred
                  save_best_pred_free_score = diff_score_free
+                 index_best_pred_list = [id_offspring]
            elif(diff_score_pred > score_best_pred):
-                 index_best_pred = id_offspring
                  score_best_pred = diff_score_pred
                  save_best_pred_free_score = diff_score_free
+                 index_best_pred_list = [id_offspring]
+           elif(diff_score_pred == score_best_pred):
+                 index_best_pred_list.append(id_offspring)
            else :
                  pass
         else:
@@ -335,16 +359,20 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
             diff_score_free /= float(f)
 
         if(index_best_free == -1):
-            index_best_free = id_offspring
             score_best_free = diff_score_free
             save_best_free_pred_score = diff_score_pred
+            index_best_free_list = [id_offspring]
         elif(diff_score_free > score_best_free):
-            index_best_free = id_offspring
             score_best_free = diff_score_free
             save_best_free_pred_score = diff_score_pred
+            index_best_free_list = [id_offspring]
+        elif(diff_score_free == score_best_free):
+            index_best_free_list.append(id_offspring)
         else :
             pass
 
+    index_best_pred = random.choice(index_best_pred_list)
+    index_best_free = random.choice(index_best_free_list)
     index_best = -1
     if(free_eval):
          index_best = index_best_free
@@ -369,6 +397,10 @@ def BestScalar(free_eval, param, normalize, withTruescore):
     index_best_free = -1
     score_best_free = MAX_INTEGER
     save_best_free_pred_score = -1
+
+    index_best_free_list = []
+    index_best_pred_list = []
+
     for offspring in list_offspring:
         id_offspring += 1
         min_score_pred = MAX_INTEGER
@@ -394,13 +426,15 @@ def BestScalar(free_eval, param, normalize, withTruescore):
                    min_score_free = min(tmp_free, min_score_free)
                f +=1
            if(index_best_pred == -1):
-                index_best_pred = id_offspring
                 score_best_pred = min_score_pred
                 save_best_pred_free_score = min_score_free
+                index_best_pred_list = [id_offspring]
            elif(min_score_pred < score_best_pred):
-                index_best_pred = id_offspring
                 score_best_pred = min_score_pred
                 save_best_pred_free_score = min_score_free
+                index_best_pred_list = [id_offspring]
+           elif(min_score_pred == score_best_pred):
+               index_best_pred_list.append(id_offspring)
            else :
                 pass
 
@@ -416,16 +450,20 @@ def BestScalar(free_eval, param, normalize, withTruescore):
                 f += 1
 
         if(index_best_free == -1):
-            index_best_free = id_offspring
             score_best_free = min_score_free
             save_best_free_pred_score = min_score_pred
+            index_best_free_list = [id_offspring]
         elif(min_score_free < score_best_free):
-            index_best_free = id_offspring
             score_best_free = min_score_free
             save_best_free_pred_score = min_score_pred
+            index_best_free_list = [id_offspring]
+        elif(min_score_free == score_best_free):
+            index_best_free_list.append(id_offspring)
         else :
             pass
 
+    index_best_pred = random.choice(index_best_pred_list)
+    index_best_free = random.choice(index_best_free_list)
     index_best = -1
     if(free_eval):
          index_best = index_best_free
@@ -451,6 +489,10 @@ def AverageScalar(free_eval, param, normalize, withTruescore):
     index_best_free = -1
     score_best_free = MAX_INTEGER
     save_best_free_pred_score = -1
+
+    index_best_free_list = []
+    index_best_pred_list = []
+
     for offspring in list_offspring:
         id_offspring += 1
         average_score_pred = 0
@@ -482,13 +524,15 @@ def AverageScalar(free_eval, param, normalize, withTruescore):
            average_score_pred /= float(count)
            average_score_free /= float(count)
            if(index_best_pred == -1):
-                index_best_pred = id_offspring
                 score_best_pred = average_score_pred
                 save_best_pred_free_score = average_score_free
+                index_best_pred_list = [id_offspring]
            elif(average_score_pred < score_best_pred):
-                index_best_pred = id_offspring
                 score_best_pred = average_score_pred
                 save_best_pred_free_score = average_score_free
+                index_best_pred_list = [id_offspring]
+           elif(average_score_pred == score_best_pred):
+                index_best_pred_list.append(id_offspring)
            else :
                 pass
 
@@ -506,16 +550,20 @@ def AverageScalar(free_eval, param, normalize, withTruescore):
             average_score_free /= float(count)
 
         if(index_best_free == -1):
-            index_best_free = id_offspring
             score_best_free = average_score_free
             save_best_free_pred_score = average_score_pred
+            index_best_free_list = [id_offspring]
         elif(average_score_free < score_best_free):
-            index_best_free = id_offspring
             score_best_free = average_score_free
             save_best_free_pred_score = average_score_pred
+            index_best_free_list = [id_offspring]
+        elif(average_score_free == score_best_free):
+            index_best_free_list.append(id_offspring)
         else :
             pass
 
+    index_best_pred = random.choice(index_best_pred_list)
+    index_best_free = random.choice(index_best_free_list)
     index_best = -1
     if(free_eval):
          index_best = index_best_free
