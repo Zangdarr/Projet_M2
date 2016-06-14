@@ -385,15 +385,13 @@ def BestScalar(free_eval, param, normalize, withTruescore):
 
 
     id_offspring = -1
-    index_best_pred = -1
     score_best_pred = MAX_INTEGER
     save_best_pred_free_score = -1
-    index_best_free = -1
     score_best_free = MAX_INTEGER
     save_best_free_pred_score = -1
 
-    index_best_free_list = []
-    index_best_pred_list = []
+    index_best_free_list = -1
+    index_best_pred_list = -1
 
     for offspring in list_offspring:
         id_offspring += 1
@@ -419,7 +417,7 @@ def BestScalar(free_eval, param, normalize, withTruescore):
                    min_score_pred = min(tmp_pred, min_score_pred)
                    min_score_free = min(tmp_free, min_score_free)
                f +=1
-           if(index_best_pred == -1):
+           if(index_best_pred_list == -1):
                 score_best_pred = min_score_pred
                 save_best_pred_free_score = min_score_free
                 index_best_pred_list = [id_offspring]
@@ -443,7 +441,7 @@ def BestScalar(free_eval, param, normalize, withTruescore):
                     min_score_free = min(tmp_free, min_score_free)
                 f += 1
 
-        if(index_best_free == -1):
+        if(index_best_free_list == -1):
             score_best_free = min_score_free
             save_best_free_pred_score = min_score_pred
             index_best_free_list = [id_offspring]
