@@ -189,15 +189,13 @@ def BestImpr(free_eval, param, normalize, withTruescore):
 
 
     id_offspring = -1
-    index_best_pred = -1
     score_best_pred = -1 * MAX_INTEGER
     save_best_pred_free_score = -1
-    index_best_free = -1
     score_best_free = -1 * MAX_INTEGER
     save_best_free_pred_score = -1
 
-    index_best_free_list = []
-    index_best_pred_list = []
+    index_best_free_list = -1
+    index_best_pred_list = -1
 
     for offspring in list_offspring:
         id_offspring += 1
@@ -231,7 +229,7 @@ def BestImpr(free_eval, param, normalize, withTruescore):
                        diff_score_free = max(diff_score_free, current_pred - tmp_free)
                f +=1
 
-           if(index_best_pred == -1):
+           if(index_best_pred_list == -1):
                  score_best_pred = diff_score_pred
                  save_best_pred_free_score = diff_score_free
                  index_best_pred_list = [id_offspring]
@@ -255,7 +253,7 @@ def BestImpr(free_eval, param, normalize, withTruescore):
                     diff_score_free = max(diff_score_free, current_gtcheby - tmp_free)
                 f += 1
 
-        if(index_best_free == -1):
+        if(index_best_free_list == -1):
             score_best_free = diff_score_free
             save_best_free_pred_score = diff_score_pred
             index_best_free_list = [id_offspring]
