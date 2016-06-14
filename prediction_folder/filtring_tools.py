@@ -286,15 +286,13 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
 
 
     id_offspring = -1
-    index_best_pred = -1
     score_best_pred = 0
     save_best_pred_free_score = -1
-    index_best_free = -1
     score_best_free = 0
     save_best_free_pred_score = -1
 
-    index_best_free_list = []
-    index_best_pred_list = []
+    index_best_free_list = -1
+    index_best_pred_list = -1
 
     nb_fct = len(start_fct)
     for offspring in list_offspring:
@@ -330,7 +328,7 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
 
            diff_score_pred /= float(f)
            diff_score_free /= float(f)
-           if(index_best_pred == -1):
+           if(index_best_pred_list == -1):
                  score_best_pred = diff_score_pred
                  save_best_pred_free_score = diff_score_free
                  index_best_pred_list = [id_offspring]
@@ -354,7 +352,7 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
                 f +=1
             diff_score_free /= float(f)
 
-        if(index_best_free == -1):
+        if(index_best_free_list == -1):
             score_best_free = diff_score_free
             save_best_free_pred_score = diff_score_pred
             index_best_free_list = [id_offspring]
