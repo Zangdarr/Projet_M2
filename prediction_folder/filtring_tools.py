@@ -475,15 +475,13 @@ def AverageScalar(free_eval, param, normalize, withTruescore):
 
 
     id_offspring = -1
-    index_best_pred = -1
     score_best_pred = MAX_INTEGER
     save_best_pred_free_score = -1
-    index_best_free = -1
     score_best_free = MAX_INTEGER
     save_best_free_pred_score = -1
 
-    index_best_free_list = []
-    index_best_pred_list = []
+    index_best_free_list = -1
+    index_best_pred_list = -1
 
     for offspring in list_offspring:
         id_offspring += 1
@@ -515,7 +513,7 @@ def AverageScalar(free_eval, param, normalize, withTruescore):
 
            average_score_pred /= float(count)
            average_score_free /= float(count)
-           if(index_best_pred == -1):
+           if(index_best_pred_list == -1):
                 score_best_pred = average_score_pred
                 save_best_pred_free_score = average_score_free
                 index_best_pred_list = [id_offspring]
@@ -541,7 +539,7 @@ def AverageScalar(free_eval, param, normalize, withTruescore):
                 f += 1
             average_score_free /= float(count)
 
-        if(index_best_free == -1):
+        if(index_best_free_list == -1):
             score_best_free = average_score_free
             save_best_free_pred_score = average_score_pred
             index_best_free_list = [id_offspring]
