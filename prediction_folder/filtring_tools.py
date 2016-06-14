@@ -112,15 +112,13 @@ def by_direction_score(free_eval, param):
     current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores, population_indiv, nb_fct = param
 
     id_offspring = -1
-    index_best_pred = -1
-    index_best_free = -1
     score_best_pred = MAX_INTEGER
     score_best_free = MAX_INTEGER
     save_best_pred_free_score = MAX_INTEGER
     save_best_free_pred_score = MAX_INTEGER
 
-    index_best_free_list = []
-    index_best_pred_list = []
+    index_best_free_list = -1
+    index_best_pred_list = -1
 
     current_f_w = model_directions[current_f].tolist()[0]
 
@@ -141,7 +139,7 @@ def by_direction_score(free_eval, param):
            score_eval = eval_to.free_eval(start_fct, offspring, problem_size)
            tmp_free = eval_to.g_tcheby(current_f_w, score_eval, z_star)
 
-           if(index_best_pred == -1):
+           if(index_best_pred_list == -1):
                score_best_pred = tmp_pred
                save_best_pred_free_score = tmp_free
                index_best_pred_list = [id_offspring]
@@ -158,7 +156,7 @@ def by_direction_score(free_eval, param):
             score_eval = eval_to.free_eval(start_fct, offspring, problem_size)
             tmp_free = eval_to.g_tcheby(current_f_w, score_eval, z_star)
 
-        if(index_best_free == -1):
+        if(index_best_free_list == -1):
             score_best_free = tmp_free
             save_best_free_pred_score = tmp_pred
             index_best_free_list = [id_offspring]
