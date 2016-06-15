@@ -42,11 +42,13 @@ def model_based_filtring(filter_strat, free_eval,  param):
     elif(filter_strat == 'by_direction'):
         return by_direction_score(free_eval, param)
     elif(filter_strat == 'NumberImpr'):
-        return NumberOfImprovement(free_eval, param)
+        return NumberOfImprovement(free_eval, param, True)
+    elif(filter_strat == 'NumberImprP'):
+        return NumberOfImprovement(free_eval, param, False)
 
 
 #Return a candidat randomly selected within those that improve the maximum of direction within the current direction neighborhood
-def NumberOfImprovement(free_eval, param):
+def NumberOfImprovement(free_eval, param, withTruescore):
 
     current_g, current_f, model, model2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, z_star, population_scores, population_indiv, nb_fct = param
 
@@ -67,7 +69,11 @@ def NumberOfImprovement(free_eval, param):
            for data in f_input_data_pred:
                tmp_pred = predict_and_quality(model, f_input_data[f], data, start_fct, problem_size, current_g, f_neighbors[f], nb_fct)
                tmp_free = computeTchebyFreeEval(f_input_data[f], start_fct, problem_size, z_star, nb_fct)
-               current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
+               if(withTruescore):
+                   current_gtcheby = eval_to.g_tcheby(model_directions[f_neighbors[f]].tolist()[0], population_scores[f_neighbors[f]], z_star)
+               else:
+                   current_gtcheby = model.predict([f_input_data[f][0:nb_fct] + population_indiv[f_neighbors[f]]])[0]
+
                if(current_gtcheby > tmp_pred):
                    numberdir_score_pred += 1
                if(current_gtcheby > tmp_free):
