@@ -123,8 +123,8 @@ def by_direction_score(free_eval, param):
     save_best_pred_free_score = MAX_INTEGER
     save_best_free_pred_score = MAX_INTEGER
 
-    index_best_free_list = -1
-    index_best_pred_list = -1
+    index_best_free_list = [-1]
+    index_best_pred_list = [-1]
 
     current_f_w = model_directions[current_f].tolist()[0]
 
@@ -145,7 +145,7 @@ def by_direction_score(free_eval, param):
            score_eval = eval_to.free_eval(start_fct, offspring, problem_size)
            tmp_free = eval_to.g_tcheby(current_f_w, score_eval, z_star)
 
-           if(index_best_pred_list == -1):
+           if(index_best_pred_list[0] == -1):
                score_best_pred = tmp_pred
                save_best_pred_free_score = tmp_free
                index_best_pred_list = [id_offspring]
@@ -162,7 +162,7 @@ def by_direction_score(free_eval, param):
             score_eval = eval_to.free_eval(start_fct, offspring, problem_size)
             tmp_free = eval_to.g_tcheby(current_f_w, score_eval, z_star)
 
-        if(index_best_free_list == -1):
+        if(index_best_free_list[0] == -1):
             score_best_free = tmp_free
             save_best_free_pred_score = tmp_pred
             index_best_free_list = [id_offspring]
@@ -200,8 +200,8 @@ def BestImpr(free_eval, param, normalize, withTruescore):
     score_best_free = -1 * MAX_INTEGER
     save_best_free_pred_score = -1
 
-    index_best_free_list = -1
-    index_best_pred_list = -1
+    index_best_free_list = [-1]
+    index_best_pred_list = [-1]
 
     for offspring in list_offspring:
         id_offspring += 1
@@ -235,7 +235,7 @@ def BestImpr(free_eval, param, normalize, withTruescore):
                        diff_score_free = max(diff_score_free, current_pred - tmp_free)
                f +=1
 
-           if(index_best_pred_list == -1):
+           if(index_best_pred_list[0] == -1):
                  score_best_pred = diff_score_pred
                  save_best_pred_free_score = diff_score_free
                  index_best_pred_list = [id_offspring]
@@ -259,7 +259,7 @@ def BestImpr(free_eval, param, normalize, withTruescore):
                     diff_score_free = max(diff_score_free, current_gtcheby - tmp_free)
                 f += 1
 
-        if(index_best_free_list == -1):
+        if(index_best_free_list[0] == -1):
             score_best_free = diff_score_free
             save_best_free_pred_score = diff_score_pred
             index_best_free_list = [id_offspring]
@@ -297,8 +297,8 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
     score_best_free = 0
     save_best_free_pred_score = -1
 
-    index_best_free_list = -1
-    index_best_pred_list = -1
+    index_best_free_list = [-1]
+    index_best_pred_list = [-1]
 
     nb_fct = len(start_fct)
     for offspring in list_offspring:
@@ -334,7 +334,7 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
 
            diff_score_pred /= float(f)
            diff_score_free /= float(f)
-           if(index_best_pred_list == -1):
+           if(index_best_pred_list[0] == -1):
                  score_best_pred = diff_score_pred
                  save_best_pred_free_score = diff_score_free
                  index_best_pred_list = [id_offspring]
@@ -358,7 +358,7 @@ def AverageImprovement  (free_eval, param, normalize, withTruescore):
                 f +=1
             diff_score_free /= float(f)
 
-        if(index_best_free_list == -1):
+        if(index_best_free_list[0] == -1):
             score_best_free = diff_score_free
             save_best_free_pred_score = diff_score_pred
             index_best_free_list = [id_offspring]
@@ -396,8 +396,8 @@ def BestScalar(free_eval, param, normalize, withTruescore):
     score_best_free = MAX_INTEGER
     save_best_free_pred_score = -1
 
-    index_best_free_list = -1
-    index_best_pred_list = -1
+    index_best_free_list = [-1]
+    index_best_pred_list = [-1]
 
     for offspring in list_offspring:
         id_offspring += 1
@@ -423,7 +423,7 @@ def BestScalar(free_eval, param, normalize, withTruescore):
                    min_score_pred = min(tmp_pred, min_score_pred)
                    min_score_free = min(tmp_free, min_score_free)
                f +=1
-           if(index_best_pred_list == -1):
+           if(index_best_pred_list[0] == -1):
                 score_best_pred = min_score_pred
                 save_best_pred_free_score = min_score_free
                 index_best_pred_list = [id_offspring]
@@ -447,7 +447,7 @@ def BestScalar(free_eval, param, normalize, withTruescore):
                     min_score_free = min(tmp_free, min_score_free)
                 f += 1
 
-        if(index_best_free_list == -1):
+        if(index_best_free_list[0] == -1):
             score_best_free = min_score_free
             save_best_free_pred_score = min_score_pred
             index_best_free_list = [id_offspring]
@@ -486,8 +486,8 @@ def AverageScalar(free_eval, param, normalize, withTruescore):
     score_best_free = MAX_INTEGER
     save_best_free_pred_score = -1
 
-    index_best_free_list = -1
-    index_best_pred_list = -1
+    index_best_free_list = [-1]
+    index_best_pred_list = [-1]
 
     for offspring in list_offspring:
         id_offspring += 1
@@ -519,7 +519,7 @@ def AverageScalar(free_eval, param, normalize, withTruescore):
 
            average_score_pred /= float(count)
            average_score_free /= float(count)
-           if(index_best_pred_list == -1):
+           if(index_best_pred_list[0] == -1):
                 score_best_pred = average_score_pred
                 save_best_pred_free_score = average_score_free
                 index_best_pred_list = [id_offspring]
@@ -545,7 +545,7 @@ def AverageScalar(free_eval, param, normalize, withTruescore):
                 f += 1
             average_score_free /= float(count)
 
-        if(index_best_free_list == -1):
+        if(index_best_free_list[0] == -1):
             score_best_free = average_score_free
             save_best_free_pred_score = average_score_pred
             index_best_free_list = [id_offspring]
