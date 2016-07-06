@@ -94,7 +94,7 @@ def getTrainingSetSingle(training_directions, training_individuals, individuals_
         if(individual in training_individuals[0:individual_id]):
             continue
 
-        direction = training_directions[individual_id%100]
+        direction = training_directions[individual_id]
         current_dir = direction.tolist()[0]
         training_input = []
         training_input.extend(current_dir)
