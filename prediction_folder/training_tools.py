@@ -90,7 +90,7 @@ def getTrainingSetSingle(training_directions, training_individuals, individuals_
 
     for individual in training_individuals:
         individual_id += 1
-        print(individual_id, "  ", individual_id%population_size)
+
         if(individual in training_individuals[0:individual_id]):
             continue
 
