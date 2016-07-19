@@ -6,7 +6,6 @@ sys.path.insert(0, "../tools_folder/")
 import copy
 import math
 import random
-import time
 import numpy
 
 import animated_graph_tools as gph
