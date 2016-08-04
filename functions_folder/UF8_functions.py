@@ -99,7 +99,7 @@ def f2(x_vector, vector_size):
     x_2 = x_vector[1]
 
     tmp1 = math.cos(0.5 * x_1 * math.pi)
-    tmp2 = math.cos(0.5 * x_2 * math.pi)
+    tmp2 = math.sin(0.5 * x_2 * math.pi)
     tmp3 = 2.0 / abs(j2)
 
     sum_j = 0

@@ -239,7 +239,7 @@ def runTcheby():
             list_offspring = samp_to.extended_sampling(f, f_neighbors, sampling_param, nb_samples)
 
             #apply a filter on the offspring list and select the best one
-            filter_param = [itera, f, clf, clf2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, eval_to.getZstar_with_decal(), best_decisions_scores, best_decisions]
+            filter_param = [itera, f, clf, clf2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, eval_to.getZstar_with_decal(), best_decisions_scores, best_decisions, nb_objectives]
             best_candidate = filt_to.model_based_filtring(filter_strat, free_eval, filter_param)
 
             #evaluation of the newly made solution
@@ -271,7 +271,8 @@ def runTcheby():
                     break
 
                 #compute g_tcheby
-                wj = (directions[0][j],directions[1][j])
+                #wj = (directions[0][j],directions[1][j])
+                wj = [directions[obj][j] for obj in range(0,nb_objectives)]
                 g_mix = eval_to.g_tcheby(wj, mix_scores, eval_to.getZstar_with_decal())
                 g_best = eval_to.g_tcheby(wj, best_decisions_scores[j], eval_to.getZstar_with_decal())
 

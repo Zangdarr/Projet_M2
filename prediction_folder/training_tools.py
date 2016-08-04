@@ -48,7 +48,7 @@ def getTrainingSet(training_directions, training_individuals, individuals_object
     if(strategy == 'all'):
         return getTrainingSetAll(training_directions, training_individuals, individuals_objectives, z_star)
     elif(strategy == 'single'):
-        return getTrainingSetSingle(training_directions, training_individuals, individuals_objectives, z_star)
+        return getTrainingSetSingle(training_directions, training_individuals, individuals_objectives, z_star, population_size)
     elif(strategy == 'neighbors'):
         return getTrainingSetNeighbors(training_directions, training_individuals, individuals_objectives, z_star, population_size, training_neighborhood_size)
 
@@ -82,7 +82,7 @@ def getTrainingSetNeighbors(training_directions, training_individuals, individua
     return training_inputs, training_outputs, len(training_inputs), training_scores
 
 
-def getTrainingSetSingle(training_directions, training_individuals, individuals_objectives, z_star):
+def getTrainingSetSingle(training_directions, training_individuals, individuals_objectives, z_star, population_size):
     individual_id    = -1
     training_inputs  = []
     training_outputs = []
@@ -94,7 +94,7 @@ def getTrainingSetSingle(training_directions, training_individuals, individuals_
         if(individual in training_individuals[0:individual_id]):
             continue
 
-        direction = training_directions[individual_id%100]
+        direction = training_directions[individual_id%population_size]
         current_dir = direction.tolist()[0]
         training_input = []
         training_input.extend(current_dir)
