@@ -82,6 +82,8 @@ def algorithmsFactory(algo_name):
         import svm_moea_full_tools as algo
     elif(algo_name == "NuSVR-freeeval"):
         import svm_moea_tools as algo
+    elif(algo_name == "RndFO-pop"):
+        import rndfo_moea_tools as algo
 
     return algo.getFrontParetoWithGraphic, algo.getFrontParetoWithoutGraphic
 
