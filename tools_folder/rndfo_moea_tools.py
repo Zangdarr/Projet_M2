@@ -238,7 +238,7 @@ def runTcheby():
             list_offspring = samp_to.extended_sampling(f, f_neighbors, sampling_param, nb_samples)
 
             #apply a filter on the offspring list and select the best one
-            filter_param = [itera, f, clf, clf2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, eval_to.getZstar_with_decal(), best_decisions_scores, best_decisions]
+            filter_param = [itera, f, clf, clf2, two_models_bool, f_neighbors, list_offspring, model_directions, start_fct, problem_size, eval_to.getZstar_with_decal(), best_decisions_scores, best_decisions, nb_objectives]
             best_candidate = filt_to.model_based_filtring(filter_strat, free_eval, filter_param)
 
             #evaluation of the newly made solution
@@ -296,7 +296,7 @@ def runTcheby():
             continue
 
         #graphic update
-        yield arch_to.getArchiveScore(), best_decisions_scores, itera+1, eval_to.getNbEvals(), eval_to.getZstar_with_decal(), pop_size, isReals
+        #yield arch_to.getArchiveScore(), best_decisions_scores, itera+1, eval_to.getNbEvals(), eval_to.getZstar_with_decal(), pop_size, isReals
     if(not free_eval and writeR2OK):
         qual_tools.computeQualityEvaluation()
         qual_tools.generateDiffPredFreeFile()
