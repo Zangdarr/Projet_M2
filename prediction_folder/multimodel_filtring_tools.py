@@ -181,7 +181,7 @@ def scorefunction_AverageScalar(current_predobjvector, current_freeobjvector, ne
 # Apply the score function BestScalar on an objective vector and return the scores and the function to use to get the best id
 def scorefunction_BestScalar(current_predobjvector, current_freeobjvector, neighborhood_weightvectors, objective_quantity, z_star, neighborhood_size):
     global MAX_INTEGER
-    
+
     #scores
     pred_bestscore = MAX_INTEGER
     free_bestscore = MAX_INTEGER
