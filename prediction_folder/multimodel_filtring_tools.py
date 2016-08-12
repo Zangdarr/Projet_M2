@@ -3,6 +3,8 @@ import random
 import evaluation_tools as eval_to
 import multimodel_quality_tools as qual_to
 
+MAX_INTEGER = 2**30
+
 ######Main
 
 # Main function that perform the filtring of the set of offprings and return the best candidate according to the score function used.
