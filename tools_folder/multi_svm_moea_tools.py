@@ -191,7 +191,6 @@ def runTcheby():
             folds_sizes[:training_set_size % n_folds] += 1
 
             training_inputs_array = numpy.array(training_inputs)
-            training_tcheby_array = numpy.array(training_inputs_tcheby)
 
             R2_cv = [[] for i in range(0, nb_objectives)]
             MSE_cv = [[] for i in range(0, nb_objectives)]
