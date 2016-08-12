@@ -137,6 +137,8 @@ def getBestIndividualId_MaximizationProblem(pred_scores, free_scores):
 def getScoreFunction(scorefunction_name):
     if(scorefunction_name == "AvScl"):
         return scorefunction_AverageScalar, getBestIndividualId_MinimizationProblem
+    elif(scorefunction_name == "BestScl"):
+        return scorefunction_BestScalar, getBestIndividualId_MinimizationProblem
 
 
 ######Score functions
