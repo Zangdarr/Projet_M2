@@ -4,27 +4,32 @@ import evaluation_tools as eval_to
 import multimodel_quality_tools as qual_to
 
 MAX_INTEGER = 2**30
-global_currentdirectionsolution = -1
-global_currentdirectionsolutionscore = -1
-global_currentdirectionid = -1
+global_population = -1
+global_populationscore = -1
+global_directionid = -1
 global_modeltab = -1
+global_neighborhood = -1
+global_neighborhoodindexlist = -1
 ######Main
 
 # Main function that perform the filtring of the set of offprings and return the best candidate according to the score function used.
 def filter_function(scorefunction_name, param):
-    global global_currentdirectionid, global_currentdirectionsolution, global_currentdirectionsolutionscore, global_modeltab
+    global global_population, global_populationscore, global_directionid, global_modeltab, global_neighborhood, global_neighborhoodindexlist
 
     # parameters splitting
     main_g, main_f, model_tab, neighborhood_indexlist, offspring_list, main_weightvectors, objective_functions, problem_size, z_star, main_populationscores, main_population, objective_quantity = param
 
     #global variables setting
-    global_currentdirectionsolution      = main_population[main_f]
-    global_currentdirectionsolutionscore = main_populationscores[main_f]
-    global_currentdirectionid            = main_f
-    global_modeltab                      = model_tab
+    global_population      = main_population
+    global_populationscore = main_populationscores
+    global_directionid     = main_f
+    global_modeltab        = model_tab
 
     # get the weight vectors regarding the current neighborhood
     neighborhood_weightvectors = getNeighborhoodWeightVectors(neighborhood_indexlist, main_weightvectors)
+
+    global_neighborhood = neighborhood_weightvectors
+    global_neighborhoodindexlist = neighborhood_indexlist
 
     # get the objective vectors by applying the prediction of the models on the offsprings
     pred_objectivevectors = applyPredictions(model_tab, offspring_list, objective_quantity)
@@ -201,26 +206,33 @@ def scorefunction_BestScalar(current_predobjvector, current_freeobjvector, neigh
 # Apply the score function BestScalar on an objective vector and return the scores and the function to use to get the best id
 def scorefunction_BestImprovement(current_predobjvector, current_freeobjvector, neighborhood_weightvectors, objective_quantity, z_star, neighborhood_size):
 
-    # get the current direction's best solution scores
-    main_currentdirectionbestobjectivevector = global_currentdirectionsolutionscore
-    # get the current direction's best solution
-    main_currentdirectionbestsolution = np.array(global_currentdirectionsolution).reshape(1, -1)
-    # get the predicted score for the current best solution with the present models
-    current_mainbestsolutionpredictedobjectivevector = [global_modeltab[m].predict(main_currentdirectionbestsolution) for m in range(objective_quantity)]
+    #prepare the population for prediction
+    current_bestsolution = np.array(global_population)
+    #get the predicted score for the current best solution with the present models
+    current_mainbestsolutionpredictedobjectivevector = [global_modeltab[m].predict(current_bestsolution) for m in range(objective_quantity)]
 
     #scores
     pred_bestscore = 0.0
     free_bestscore = 0.0
 
     #for each weight vector
-    for current_weightvector in neighborhood_weightvectors:
+    for loop_neighbor in range(int(neighborhood_size)):
+        # get current neighbor's id
+        current_neighbor = global_neighborhoodindexlist[loop_neighbor]
+
+        # get current neighbor's weight vector
+        current_weightvector = neighborhood_weightvectors[loop_neighbor]
+
         # get tchebycheff for the current weight vector
         current_predtcheby = eval_to.g_tcheby(current_weightvector, current_predobjvector, z_star)
         current_freetcheby = eval_to.g_tcheby(current_weightvector, current_freeobjvector, z_star)
 
-        # get the tchebytcheff of the current best solution
-        main_predtcheby = eval_to.g_tcheby(current_weightvector, current_mainbestsolutionpredictedobjectivevector, z_star)
-        main_freetcheby = eval_to.g_tcheby(current_weightvector, main_currentdirectionbestobjectivevector, z_star)
+        # get the current direction's best solution scores for the current neighbor
+        current_neighborobjectivevector = global_populationscore[current_neighbor]
+
+        # get the tchebytcheff of the current best solution for the current neighbor weight vector
+        main_predtcheby = eval_to.g_tcheby(current_weightvector, [current_mainbestsolutionpredictedobjectivevector[m][current_neighbor] for m in range(objective_quantity)], z_star)
+        main_freetcheby = eval_to.g_tcheby(current_weightvector, current_neighborobjectivevector, z_star)
 
         # compute improvement
         current_predimprovement = max(0.0, main_predtcheby - current_predtcheby)
