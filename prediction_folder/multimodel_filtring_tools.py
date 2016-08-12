@@ -201,10 +201,10 @@ def scorefunction_BestScalar(current_predobjvector, current_freeobjvector, neigh
 # Apply the score function BestScalar on an objective vector and return the scores and the function to use to get the best id
 def scorefunction_BestImprovement(current_predobjvector, current_freeobjvector, neighborhood_weightvectors, objective_quantity, z_star, neighborhood_size):
 
-    # get the current direction's best solution and it scores
+    # get the current direction's best solution scores
     main_currentdirectionbestobjectivevector = global_currentdirectionsolutionscore
-    main_currentdirectionbestsolution = np.array(global_currentdirectionsolution)
-    main_currentdirectionbestsolution = main_currentdirectionbestsolution.reshape(1, -1)
+    # get the current direction's best solution
+    main_currentdirectionbestsolution = np.array(global_currentdirectionsolution).reshape(1, -1)
     # get the predicted score for the current best solution with the present models
     current_mainbestsolutionpredictedobjectivevector = [global_modeltab[m].predict(main_currentdirectionbestsolution) for m in range(objective_quantity)]
 
