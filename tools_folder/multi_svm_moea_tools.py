@@ -163,7 +163,7 @@ def runTcheby():
         writeR2OK = True
         file_to_writeR2_LIST = [file_to_writeR2]
         for i in range(nb_objectives):
-            newfilenameR2 = "R2-model"+ str(i+2)+filenameDIR[3:]
+            newfilenameR2 = filenameDIR.replace("DIR", "R2-model"+ str(i+2))
             file_to_writeR2_LIST.append(open(newfilenameR2, 'a'))
 
     ############################################################################
