@@ -163,6 +163,26 @@ def scorefunction_AverageScalar(current_predobjvector, current_freeobjvector, ne
     #return the scores
     return pred_averagescore, free_averagescore
 
+# Apply the score function BestScalar on an objective vector and return the scores and the function to use to get the best id
+def scorefunction_BestScalar(current_predobjvector, current_freeobjvector, neighborhood_weightvectors, objective_quantity, z_star, neighborhood_size):
+    global MAX_INTEGER
+    
+    #scores
+    pred_bestscore = MAX_INTEGER
+    free_bestscore = MAX_INTEGER
+
+    #for each weight vector
+    for current_weightvector in neighborhood_weightvectors:
+        # get tchebycheff for the current weight vector
+        current_predtcheby = eval_to.g_tcheby(current_weightvector, current_predobjvector, z_star)
+        current_freetcheby = eval_to.g_tcheby(current_weightvector, current_freeobjvector, z_star)
+        # keep the best
+        pred_bestscore = min(pred_bestscore, current_predtcheby)
+        free_bestscore = min(free_bestscore, current_freetcheby)
+
+    #return the scores
+    return pred_bestscore, free_bestscore
+
 
 #####Quality measurement functions
 
