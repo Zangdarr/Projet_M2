@@ -8,7 +8,7 @@ import evaluation_tools as eval_to
 def getTrainingSet(solution_list, solution_objectives):
     training_inputs = np.array(solution_list)
     training_outputslist = np.array(solution_objectives).T
-    return training_inputs, training_outputslist, training_inputs.size
+    return training_inputs, training_outputslist, len(training_inputs)
 
 def multimodel_fit(model_tab, training_inputs, training_outputslist):
     current_i = 0
