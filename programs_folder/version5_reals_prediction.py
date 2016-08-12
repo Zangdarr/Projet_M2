@@ -84,6 +84,8 @@ def algorithmsFactory(algo_name):
         import svm_moea_tools as algo
     elif(algo_name == "RndFO-pop"):
         import rndfo_moea_tools as algo
+    elif(algo_name == "Nobj-NuSVR-pop"):
+        import multi_svm_moea_tools as algo
 
     return algo.getFrontParetoWithGraphic, algo.getFrontParetoWithoutGraphic
 
