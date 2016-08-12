@@ -4,24 +4,24 @@ import evaluation_tools as eval_to
 import multimodel_quality_tools as qual_to
 
 MAX_INTEGER = 2**30
-global_currentpopulation = []
-global_currentpopulationscore = []
+global_currentdirectionsolution = -1
+global_currentdirectionsolutionscore = -1
 global_currentdirectionid = -1
-global_modeltab = []
+global_modeltab = -1
 ######Main
 
 # Main function that perform the filtring of the set of offprings and return the best candidate according to the score function used.
 def filter_function(scorefunction_name, param):
-    global global_currentdirectionid, global_currentpopulationscore, global_currentpopulation
+    global global_currentdirectionid, global_currentdirectionsolution, global_currentdirectionsolutionscore, global_modeltab
 
     # parameters splitting
     main_g, main_f, model_tab, neighborhood_indexlist, offspring_list, main_weightvectors, objective_functions, problem_size, z_star, main_populationscores, main_population, objective_quantity = param
 
     #global variables setting
-    global_currentpopulation = main_population
-    global_currentpopulationscore = main_populationscores
-    global_currentdirectionid = main_f
-    global_modeltab = model_tab
+    global_currentdirectionsolution      = main_population[main_f]
+    global_currentdirectionsolutionscore = main_populationscores[main_f]
+    global_currentdirectionid            = main_f
+    global_modeltab                      = model_tab
 
     # get the weight vectors regarding the current neighborhood
     neighborhood_weightvectors = getNeighborhoodWeightVectors(neighborhood_indexlist, main_weightvectors)
@@ -200,7 +200,13 @@ def scorefunction_BestScalar(current_predobjvector, current_freeobjvector, neigh
 
 # Apply the score function BestScalar on an objective vector and return the scores and the function to use to get the best id
 def scorefunction_BestImprovement(current_predobjvector, current_freeobjvector, neighborhood_weightvectors, objective_quantity, z_star, neighborhood_size):
-    global global_currentdirectionid, global_currentpopulationscore, global_modeltab, global_currentpopulation
+
+    # get the current direction's best solution and it scores
+    main_currentdirectionbestobjectivevector = global_currentdirectionsolutionscore
+    main_currentdirectionbestsolution = np.array(global_currentdirectionsolution)
+    main_currentdirectionbestsolution = main_currentdirectionbestsolution.reshape(1, -1)
+    # get the predicted score for the current best solution with the present models
+    current_mainbestsolutionpredictedobjectivevector = [global_modeltab[m].predict(main_currentdirectionbestsolution) for m in range(objective_quantity)]
 
     #scores
     pred_bestscore = 0.0
@@ -212,14 +218,9 @@ def scorefunction_BestImprovement(current_predobjvector, current_freeobjvector, 
         current_predtcheby = eval_to.g_tcheby(current_weightvector, current_predobjvector, z_star)
         current_freetcheby = eval_to.g_tcheby(current_weightvector, current_freeobjvector, z_star)
 
-        # get the current weight vector best solution to compute the current best solution free Tchebycheff
-        main_currentdirectionbestobjectivevector = global_currentpopulationscore(global_currentdirectionid)
+        # get the tchebytcheff of the current best solution
+        main_predtcheby = eval_to.g_tcheby(current_weightvector, current_mainbestsolutionpredictedobjectivevector, z_star)
         main_freetcheby = eval_to.g_tcheby(current_weightvector, main_currentdirectionbestobjectivevector, z_star)
-
-        # get the current direction's best solution to predict the objective vector of it
-        main_currentdirectionbestsolution = global_currentpopulation[global_currentdirectionid]
-        current_mainbestsolutionpredictedobjectivevector = [global_modeltab[m].predict(main_currentdirectionbestsolution) for m in objective_quantity]
-        main_predtcheby = eval_to.g_tcheby(current_weightvector,  current_mainbestsolutionpredictedobjectivevector, z_star)
 
         # compute improvement
         current_predimprovement = max(0.0, main_predtcheby - current_predtcheby)
