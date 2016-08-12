@@ -152,6 +152,8 @@ def getBestIndividualId_MaximizationProblem(pred_scores, free_scores):
 def getScoreFunction(scorefunction_name):
     if(scorefunction_name == "AvScl"):
         return scorefunction_AverageScalar, getBestIndividualId_MinimizationProblem
+    elif(scorefunction_name == "AvImprP"):
+        return scorefunction_AverageImprovement, getBestIndividualId_MaximizationProblem
     elif(scorefunction_name == "BestScl"):
         return scorefunction_BestScalar, getBestIndividualId_MinimizationProblem
     elif(scorefunction_name == "BestImprP"):
@@ -179,6 +181,50 @@ def scorefunction_AverageScalar(current_predobjvector, current_freeobjvector, ne
     #ponderation of the sums to get the average scores
     pred_averagescore = current_predscoresum / neighborhood_size
     free_averagescore = current_freescoresum / neighborhood_size
+
+    #return the scores
+    return pred_averagescore, free_averagescore
+
+def scorefunction_AverageImprovement(current_predobjvector, current_freeobjvector, neighborhood_weightvectors, objective_quantity, z_star, neighborhood_size):
+
+    #prepare the population for prediction
+    current_bestsolution = np.array(global_population)
+    #get the predicted score for the current best solution with the present models
+    current_mainbestsolutionpredictedobjectivevector = [global_modeltab[m].predict(current_bestsolution) for m in range(objective_quantity)]
+    #scores
+    pred_averagescoresum = 0.0
+    free_averagescoresum = 0.0
+
+    #for each weight vector
+    for loop_neighbor in range(int(neighborhood_size)):
+        # get current neighbor's id
+        current_neighbor = global_neighborhoodindexlist[loop_neighbor]
+
+        # get current neighbor's weight vector
+        current_weightvector = neighborhood_weightvectors[loop_neighbor]
+
+        # get tchebycheff for the current weight vector
+        current_predtcheby = eval_to.g_tcheby(current_weightvector, current_predobjvector, z_star)
+        current_freetcheby = eval_to.g_tcheby(current_weightvector, current_freeobjvector, z_star)
+
+        # get the current direction's best solution scores for the current neighbor
+        current_neighborobjectivevector = global_populationscore[current_neighbor]
+
+        # get the tchebytcheff of the current best solution for the current neighbor weight vector
+        main_predtcheby = eval_to.g_tcheby(current_weightvector, [current_mainbestsolutionpredictedobjectivevector[m][current_neighbor] for m in range(objective_quantity)], z_star)
+        main_freetcheby = eval_to.g_tcheby(current_weightvector, current_neighborobjectivevector, z_star)
+
+        # compute improvement
+        current_predimprovement = max(0.0, main_predtcheby - current_predtcheby)
+        current_freeimprovement = max(0.0, main_freetcheby - current_freetcheby)
+
+        # keep the best
+        pred_averagescoresum += current_predimprovement
+        free_averagescoresum += current_freeimprovement
+
+        #ponderation of the sums to get the average scores
+        pred_averagescore = pred_averagescoresum / neighborhood_size
+        free_averagescore = free_averagescoresum / neighborhood_size
 
     #return the scores
     return pred_averagescore, free_averagescore
