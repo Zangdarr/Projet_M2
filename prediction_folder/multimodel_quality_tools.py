@@ -110,11 +110,11 @@ def computeQualityEvaluation():
             towriteSTAR.append( '\n' )
 
 
-        filenameDIR_corrected = filenameDIR.replace("DIR_UF", ("DIR-model" + str(m) + "_UF"))
+        filenameDIR_corrected = filenameDIR.replace("DIR_UF", ("DIR-model" + str(m+1) + "_UF"))
         fd = open(filenameDIR_corrected, 'a')
         fd.write(''.join(towrite))
         fd.close()
-        filenameDIRSTAR = filenameDIR.replace("DIR_UF", ("DIRSTAR-model" + str(m) + "_UF"))
+        filenameDIRSTAR = filenameDIR.replace("DIR_UF", ("DIRSTAR-model" + str(m+1) + "_UF"))
         fd = open(filenameDIRSTAR, 'a')
         fd.write(''.join(towriteSTAR))
         fd.close()
