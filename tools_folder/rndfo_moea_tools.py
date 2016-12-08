@@ -180,6 +180,7 @@ def runTcheby():
 
             clf.fit(training_inputs, training_outputs)
 
+        '''
         if(writeR2OK and not free_eval):
             training_inputs_tcheby      = eval_to.getManyTcheby(training_inputs, training_scores, eval_to.getZstar_with_decal(), training_set_size)
 
@@ -224,7 +225,7 @@ def runTcheby():
             R2_cv_mean = numpy.mean(R2_cv)
 
             iot.printR2(file_to_writeR2, eval_to.getNbEvals(), itera,  R2, R2_cv_mean, MSE_cv_mean , MAE_cv_mean, MDAE_cv_mean, RMSE_cv_mean, problem_size, print_every=1)
-
+        '''
         #random course through the directions
         random.shuffle(id_directions)
 
