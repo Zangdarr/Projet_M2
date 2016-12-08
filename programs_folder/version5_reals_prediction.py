@@ -86,6 +86,10 @@ def algorithmsFactory(algo_name):
         import rndfo_moea_tools as algo
     elif(algo_name == "Nobj-NuSVR-pop"):
         import multi_svm_moea_tools as algo
+    elif(algo_name == "NuSVR-fifo"):
+        import svm_moea_fifo_tools as algo
+    elif(algo_name == "RndFO-fifo"):
+        import rndfo_moea_fifo_tools as algo
 
     return algo.getFrontParetoWithGraphic, algo.getFrontParetoWithoutGraphic
 
