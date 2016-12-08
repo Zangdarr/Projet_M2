@@ -53,6 +53,29 @@ def getTrainingSet(training_directions, training_individuals, individuals_object
         return getTrainingSetNeighbors(training_directions, training_individuals, individuals_objectives, z_star, population_size, training_neighborhood_size)
 
 
+def getFifoBasedTrainingSet(directions, training_individuals, individuals_objectives, individual_directions ,z_star, strategy, size, training_neighborhood_size):
+    training_inputs  = []
+    training_outputs = []
+    training_scores  = []
+
+    for individual_id in range(0, size):
+        if(training_individuals[individual_id] in training_individuals[0:individual_id]):
+            continue
+
+        direction = directions[individual_directions[individual_id]]
+        current_dir = direction.tolist()[0]
+        training_input = []
+        training_input.extend(current_dir)
+        training_input.extend(training_individuals[individual_id])
+
+        training_output = eval_to.g_tcheby(current_dir, individuals_objectives[individual_id], z_star)
+
+        training_inputs.append(training_input)
+        training_outputs.append(training_output)
+        training_scores.append(individuals_objectives[individual_id])
+
+    return training_inputs, training_outputs, len(training_inputs), training_scores
+
 def getTrainingSetNeighbors(training_directions, training_individuals, individuals_objectives, z_star, population_size, training_neighborhood_size):
     individual_id    = -1
     training_inputs  = []
